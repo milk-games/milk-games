@@ -36,5 +36,4 @@ public class Season {
     public Season(String name) {
         this.name = name;
     }
-
 }
