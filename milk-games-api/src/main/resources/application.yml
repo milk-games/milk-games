@@ -1,0 +1,20 @@
+server:
+    port: ${PORT}
+
+spring:
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL8Dialect
+        generate-ddl: true
+        hibernate:
+            ddl-auto: create
+    datasource:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://${MYSQL_HOSTNAME}:${MYSQL_PORT}/${MYSQL_DATABASE}
+        username: ${MYSQL_USER}
+        password: ${MYSQL_PASSWORD}
+
+logging:
+    level:
+        jdbc:
+            sqltiming: DEBUG
+            resultsettable: DEBUG
