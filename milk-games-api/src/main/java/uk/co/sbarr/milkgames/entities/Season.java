@@ -23,8 +23,8 @@ public class Season {
     @Column(nullable = false)
     private String name;
 
-    // @OneToMany(mappedBy = "season", cascade = CascadeType.ALL)
-    // private List<Tournament> tournaments;
+    @OneToMany(mappedBy = "season", cascade = CascadeType.ALL)
+    private List<Tournament> tournaments;
 
     @ManyToMany
     @JoinTable(name = "season_players", joinColumns = @JoinColumn(name = "season_id"),

@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-// import uk.co.sbarr.milkgames.entities.relationships.SeasonPlayer;
 
 @Entity
 @Getter
@@ -23,8 +22,8 @@ public class Player {
     @Column(nullable = false)
     private String name;
 
-    // @ManyToMany(mappedBy = "players")
-    // private List<Tournament> tournaments;
+    @ManyToMany(mappedBy = "players")
+    private List<Tournament> tournaments;
 
     @ManyToMany(mappedBy = "players")
     private Set<Season> seasons = new HashSet<>();
