@@ -6,15 +6,15 @@
 
     <properties>
         <java.version>20</java.version>
-        <maven.compiler.source>20</maven.compiler.source>
-        <maven.compiler.target>20</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <lombok.version>1.18.26</lombok.version>
     </properties>
 
     <groupId>uk.co.sbarr</groupId>
-    <artifactId>discovery</artifactId>
+    <artifactId>milk-games</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>discovery</name>
+    <name>milk-games</name>
     <packaging>pom</packaging>
     <description>Sbarr.co.uk milk-games</description>
 
@@ -39,6 +39,6 @@
     </dependencyManagement>
 
     <modules>
-        <module>milk-games</module>
+        <module>milk-game-api</module>
     </modules>
 </project>

@@ -1,0 +1,50 @@
+players table
+    id: unique ID for each player
+    name: name of the player
+    email: email address of the player
+    created_at: timestamp for when the player was added to the database
+
+seasons table
+    id: unique ID for each season
+    name: name of the season (e.g. "Spring 2023", "Summer 2023")
+    start_date: start date of the season
+    end_date: end date of the season
+    created_at: timestamp for when the season was added to the database
+
+games table
+    id: unique ID for each game
+    name: name of the game (e.g. "Chess", "Poker", "Fortnite")
+    created_at: timestamp for when the game was added to the database
+
+tournaments table
+    id: unique ID for each tournament
+    season_id: foreign key referencing the season the tournament belongs to
+    game_id: foreign key referencing the game the tournament is associated with
+    name: name of the tournament (e.g. "Week 1 Tournament", "Month 2 Tournament")
+    start_date: start date of the tournament
+    end_date: end date of the tournament
+    created_at: timestamp for when the tournament was added to the database 
+
+teams table
+    id: unique ID for each team
+    tournament_id: foreign key referencing the tournament the team belongs to
+    name: name of the team
+    created_at: timestamp for when the team was added to the database
+
+matches table
+    id: unique ID for each match
+    tournament_id: foreign key referencing the tournament the match belongs to
+    match_date: date the match took place
+    created_at: timestamp for when the match was added to the database
+
+player_matches table
+    id: unique ID for each player match
+    player_id: foreign key referencing the player who participated in the match
+    match_id: foreign key referencing the match the player participated in
+    team_id: foreign key referencing the team the player was on (if applicable)
+    points_earned: number of points earned by the player in the match (based on your point system)
+    created_at: timestamp for when the player match was added to the database
+
+games table
+    id: unique ID for each game
+    name: name of the game
