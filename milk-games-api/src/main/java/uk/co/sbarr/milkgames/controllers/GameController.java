@@ -1,10 +1,10 @@
-package uk.co.sbarr.milkgames.player;
+package uk.co.sbarr.milkgames.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/player")
-public class PlayerController {
+@RequestMapping(value = "/game")
+public class GameController {
 
 }

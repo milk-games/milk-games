@@ -1,10 +1,10 @@
-package uk.co.sbarr.milkgames.team;
+package uk.co.sbarr.milkgames.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/team")
-public class TeamController {
+@RequestMapping(value = "/player")
+public class PlayerController {
 
 }

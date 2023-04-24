@@ -11,6 +11,11 @@ seasons table
     end_date: end date of the season
     created_at: timestamp for when the season was added to the database
 
+season_players table
+    season_id (foreign key to the seasons table)
+    player_id (foreign key to the players table)
+    points (integer, representing the number of points the player has earned in the season)
+
 games table
     id: unique ID for each game
     name: name of the game (e.g. "Chess", "Poker", "Fortnite")

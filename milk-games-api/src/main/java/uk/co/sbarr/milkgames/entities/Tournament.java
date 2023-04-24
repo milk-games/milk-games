@@ -1,4 +1,4 @@
-package uk.co.sbarr.milkgames.tournament;
+package uk.co.sbarr.milkgames.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,12 +1,13 @@
-package uk.co.sbarr.milkgames.team;
+package uk.co.sbarr.milkgames.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
+@Getter
 @Table(name = "teams")
 public class Team {
     @Id
-    @Getter
     private Long id;
+
 }
