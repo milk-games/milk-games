@@ -5,15 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <java.version>20</java.version>
+        <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <lombok.version>1.18.26</lombok.version>
+
+        <global.version>0.0.1-SNAPSHOT</global.version>
     </properties>
 
     <groupId>uk.co.sbarr</groupId>
     <artifactId>milk-games</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${global.version}</version>
     <name>milk-games</name>
     <packaging>pom</packaging>
     <description>Sbarr.co.uk milk-games</description>
@@ -31,7 +33,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>3.0.5</version>
+                <version>3.0.6</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -39,6 +41,6 @@
     </dependencyManagement>
 
     <modules>
-        <module>milk-game-api</module>
+        <module>milk-games-api</module>
     </modules>
 </project>

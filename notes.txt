@@ -1,7 +1,7 @@
 players table
     id: unique ID for each player
     name: name of the player
-    email: email address of the player
+    ign: in game name of player
     created_at: timestamp for when the player was added to the database
 
 seasons table
@@ -21,15 +21,29 @@ tournaments table
     season_id: foreign key referencing the season the tournament belongs to
     game_id: foreign key referencing the game the tournament is associated with
     name: name of the tournament (e.g. "Week 1 Tournament", "Month 2 Tournament")
+    player_limit: maximum number of players
+    players: current number of players signed up
+    elimination_type: single/double/round robin
+    team_size: how many people per team
+    prize_pool: how much prize
     start_date: start date of the tournament
     end_date: end date of the tournament
-    created_at: timestamp for when the tournament was added to the database 
+    created_at: timestamp for when the tournament was added to the database
+
+tournament_players table
+    player_id: foreign key referencing the player
+    tournament_id: foreign key referencing the tournament
 
 teams table
     id: unique ID for each team
     tournament_id: foreign key referencing the tournament the team belongs to
     name: name of the team
     created_at: timestamp for when the team was added to the database
+
+team_players table
+    team_id: foreign key referencing the team 
+    player_id: foreign key referencing the player
+    tournament_id: foreign key referencing the tournament
 
 matches table
     id: unique ID for each match
