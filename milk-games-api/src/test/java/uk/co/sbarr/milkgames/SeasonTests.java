@@ -5,7 +5,10 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import uk.co.sbarr.milkgames.entities.Player;
 import uk.co.sbarr.milkgames.entities.Season;
 import uk.co.sbarr.milkgames.entities.Tournament;
@@ -17,8 +20,10 @@ import uk.co.sbarr.milkgames.repositories.SeasonRepository;
 import uk.co.sbarr.milkgames.repositories.TournamentRepository;
 
 @SpringBootTest
-@Transactional
 public class SeasonTests {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     private SeasonRepository seasonRepo;
@@ -33,6 +38,7 @@ public class SeasonTests {
     private TournamentRepository tournamentRepo;
 
     @Test
+    @Transactional
     public void canAddPlayersToSeasons() {
         Season season1 = new Season("Season 1");
         Season season2 = new Season("Season 2");
@@ -55,13 +61,20 @@ public class SeasonTests {
         seasonPlayerRepo.save(seasonPlayer12);
         seasonPlayerRepo.save(seasonPlayer21);
 
-        assertEquals(0, seasonPlayerRepo.findById(new SeasonPlayerPK(1l, 1l)).get().getPoints());
-        assertEquals(10, seasonPlayerRepo.findById(new SeasonPlayerPK(1l, 2l)).get().getPoints());
-        assertEquals(5, seasonPlayerRepo.findById(new SeasonPlayerPK(2l, 1l)).get().getPoints());
-        assertEquals(0, seasonPlayerRepo.findById(new SeasonPlayerPK(2l, 2l)).get().getPoints());
+        entityManager.flush();
+
+        assertEquals(0, seasonPlayerRepo
+                .findById(new SeasonPlayerPK(season1.getId(), player1.getId())).get().getPoints());
+        assertEquals(10, seasonPlayerRepo
+                .findById(new SeasonPlayerPK(season1.getId(), player2.getId())).get().getPoints());
+        assertEquals(5, seasonPlayerRepo
+                .findById(new SeasonPlayerPK(season2.getId(), player1.getId())).get().getPoints());
+        assertEquals(0, seasonPlayerRepo
+                .findById(new SeasonPlayerPK(season2.getId(), player2.getId())).get().getPoints());
     }
 
     @Test
+    @Transactional
     public void canAddTournamentsToSeasons() {
         Season season1 = new Season("Season 1");
         Season season2 = new Season("Season 2");
@@ -76,5 +89,15 @@ public class SeasonTests {
         LocalDate now = LocalDate.now();
         Tournament t1 = new Tournament("Tournament 1", season1, "single", 16, 2, 10,
                 now.plusDays(1), now.plusDays(2));
+
+        t1.getPlayers().add(player1);
+        t1.getPlayers().add(player2);
+
+        tournamentRepo.save(t1);
+        entityManager.persist(t1);
+        entityManager.flush();
+
+        Player p = playerRepo.findById(player1.getId()).get();
+        assertEquals(1, p.getTournaments().size());
     }
 }

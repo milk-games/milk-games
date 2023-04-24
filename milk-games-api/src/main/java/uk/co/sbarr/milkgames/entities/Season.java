@@ -24,7 +24,7 @@ public class Season {
     private String name;
 
     @OneToMany(mappedBy = "season", cascade = CascadeType.ALL)
-    private List<Tournament> tournaments;
+    private Set<Tournament> tournaments = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "season_players", joinColumns = @JoinColumn(name = "season_id"),

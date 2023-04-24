@@ -1,7 +1,10 @@
 package uk.co.sbarr.milkgames.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -19,8 +22,8 @@ public class Tournament {
     private String name;
     private String eliminationType;
 
-    private int playerLimit;
     private int teamSize;
+    private int teamLimit;
 
     private double prizePool;
 
@@ -31,9 +34,9 @@ public class Tournament {
     // private Game game;
 
     @ManyToMany
-    @JoinTable(name = "tournament_player", joinColumns = @JoinColumn(name = "tournament_id"),
+    @JoinTable(name = "tournament_players", joinColumns = @JoinColumn(name = "tournament_id"),
             inverseJoinColumns = @JoinColumn(name = "player_id"))
-    private List<Player> players;
+    private Set<Player> players = new HashSet<>();
 
     public Tournament() {}
 
@@ -42,12 +45,12 @@ public class Tournament {
         this.season = season;
     }
 
-    public Tournament(String name, Season season, String eliminationType, int playerLimit,
+    public Tournament(String name, Season season, String eliminationType, int teamLimit,
             int teamSize, double prizePool, LocalDate start, LocalDate end) {
         this.name = name;
         this.season = season;
         this.eliminationType = eliminationType;
-        this.playerLimit = playerLimit;
+        this.teamLimit = teamLimit;
         this.teamSize = teamSize;
         this.prizePool = prizePool;
         this.startDate = start;

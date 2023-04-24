@@ -23,7 +23,7 @@ public class Player {
     private String name;
 
     @ManyToMany(mappedBy = "players")
-    private List<Tournament> tournaments;
+    private Set<Tournament> tournaments = new HashSet<>();
 
     @ManyToMany(mappedBy = "players")
     private Set<Season> seasons = new HashSet<>();
