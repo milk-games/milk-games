@@ -17,7 +17,7 @@ public class Tournament {
     private Long id;
 
     @ManyToOne
-    @JsonView(View.Player.class)
+    @JsonView({View.Player.class, View.Tournament.class})
     private Season season;
 
     @JsonView(View.Entity.class)
@@ -45,7 +45,7 @@ public class Tournament {
     // private Game game;
 
     @OneToMany(mappedBy = "tournament")
-    @JsonView(View.Season.class)
+    @JsonView({View.Season.class, View.Tournament.class})
     private Set<Team> teams = new HashSet<>();
 
     public Tournament() {}

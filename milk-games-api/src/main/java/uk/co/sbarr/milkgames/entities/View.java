@@ -9,4 +9,10 @@ public interface View {
 
     public static interface Season extends Entity {
     }
+
+    public static interface Tournament extends Entity {
+    }
+
+    public static interface Team extends Entity {
+    }
 }
