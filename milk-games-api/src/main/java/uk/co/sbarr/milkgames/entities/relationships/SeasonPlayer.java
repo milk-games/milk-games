@@ -1,9 +1,11 @@
 package uk.co.sbarr.milkgames.entities.relationships;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Getter;
 import uk.co.sbarr.milkgames.entities.Player;
 import uk.co.sbarr.milkgames.entities.Season;
+import uk.co.sbarr.milkgames.entities.View;
 import uk.co.sbarr.milkgames.entities.relationships.pk.SeasonPlayerPK;
 
 @Entity
@@ -22,9 +24,11 @@ public class SeasonPlayer {
     @ManyToOne
     @MapsId("playerId")
     @JoinColumn(name = "player_id")
+    @JsonView(View.Season.class)
     private Player player;
 
     @Column(columnDefinition = "INT DEFAULT 0")
+    @JsonView(View.Season.class)
     private int points;
 
     public SeasonPlayer() {}

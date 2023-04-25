@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,18 +21,20 @@ import uk.co.sbarr.milkgames.entities.relationships.SeasonPlayer;
 public class Season {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.Entity.class)
     private Long id;
 
     @Column(nullable = false)
+    @JsonView(View.Entity.class)
     private String name;
 
     @OneToMany(mappedBy = "season", cascade = CascadeType.ALL)
+    @JsonView(View.Season.class)
     private Set<Tournament> tournaments = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "season_players", joinColumns = @JoinColumn(name = "season_id"),
-            inverseJoinColumns = @JoinColumn(name = "player_id"))
-    private Set<Player> players = new HashSet<>();
+    @OneToMany(mappedBy = "season")
+    @JsonView(View.Season.class)
+    private Set<SeasonPlayer> seasonPlayers = new HashSet<>();
 
     public Season() {}
 

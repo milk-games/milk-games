@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MilkGamesApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MilkGamesApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(MilkGamesApplication.class, args);
+    }
 }
