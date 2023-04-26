@@ -15,4 +15,7 @@ public interface View {
 
     public static interface Team extends Entity {
     }
+
+    public static interface Match extends Entity {
+    }
 }

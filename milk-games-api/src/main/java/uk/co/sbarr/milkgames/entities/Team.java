@@ -18,7 +18,7 @@ public class Team {
     private Long id;
 
     @ManyToOne
-    @JsonView(View.Player.class)
+    @JsonView({View.Player.class, View.Match.class})
     private Tournament tournament;
 
     @Column(nullable = false)
@@ -31,7 +31,7 @@ public class Team {
     @ManyToMany
     @JoinTable(name = "team_players", joinColumns = @JoinColumn(name = "team_id"),
             inverseJoinColumns = @JoinColumn(name = "player_id"))
-    @JsonView({View.Season.class, View.Tournament.class})
+    @JsonView({View.Season.class, View.Tournament.class, View.Match.class})
     private Set<Player> players = new HashSet<>();
 
     public Team() {}

@@ -13,6 +13,7 @@ import uk.co.sbarr.milkgames.entities.Season;
 import uk.co.sbarr.milkgames.entities.Team;
 import uk.co.sbarr.milkgames.entities.Tournament;
 import uk.co.sbarr.milkgames.entities.relationships.SeasonPlayer;
+import uk.co.sbarr.milkgames.repositories.MatchRepository;
 import uk.co.sbarr.milkgames.repositories.PlayerRepository;
 import uk.co.sbarr.milkgames.repositories.SeasonPlayerRepository;
 import uk.co.sbarr.milkgames.repositories.SeasonRepository;
@@ -30,6 +31,9 @@ public class Seeder implements CommandLineRunner {
 
     @Autowired
     TournamentRepository tournamentRepository;
+
+    @Autowired
+    MatchRepository matchRepository;
 
     @Autowired
     TeamRepository teamRepository;
@@ -69,8 +73,8 @@ public class Seeder implements CommandLineRunner {
 
         teamRepository.save(team1);
         teamRepository.save(team2);
-
-        tournamentRepository.save(tournament1);
+        tournament1.initialiseBracket();
+        matchRepository.saveAll(tournament1.getMatches());
 
         seasonPlayerRepository.save(new SeasonPlayer(season1, player1));
         seasonPlayerRepository.save(new SeasonPlayer(season1, player2));

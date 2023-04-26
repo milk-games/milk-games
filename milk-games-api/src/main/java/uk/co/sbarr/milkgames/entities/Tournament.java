@@ -17,7 +17,7 @@ public class Tournament {
     private Long id;
 
     @ManyToOne
-    @JsonView({View.Player.class, View.Tournament.class})
+    @JsonView({View.Player.class, View.Tournament.class, View.Match.class})
     private Season season;
 
     @JsonView(View.Entity.class)
@@ -47,6 +47,10 @@ public class Tournament {
     @OneToMany(mappedBy = "tournament")
     @JsonView({View.Season.class, View.Tournament.class})
     private Set<Team> teams = new HashSet<>();
+
+    @OneToMany(mappedBy = "tournament")
+    @JsonView(View.Tournament.class)
+    private Set<Match> matches = new HashSet<>();
 
     public Tournament() {}
 
@@ -81,6 +85,18 @@ public class Tournament {
             teams.add(team);
         } else {
             throw new Exception("This tournament has reached the maximum number of teams");
+        }
+    }
+
+    public void initialiseBracket() {
+        int numRounds = (int) (Math.log(teamLimit) / Math.log(2));
+
+        for (int round = 1; round <= numRounds; round++) {
+            int numMatches = teamLimit / round;
+            for (int matchNum = 1; matchNum <= numMatches; matchNum++) {
+                Match match = new Match(this, round, matchNum);
+                matches.add(match);
+            }
         }
     }
 
