@@ -6,11 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
-import uk.co.sbarr.milkgames.entities.Match;
 import uk.co.sbarr.milkgames.entities.Tournament;
 import uk.co.sbarr.milkgames.entities.View;
-import uk.co.sbarr.milkgames.entities.relationships.pk.MatchPK;
-import uk.co.sbarr.milkgames.repositories.MatchRepository;
 import uk.co.sbarr.milkgames.repositories.TournamentRepository;
 
 @RestController

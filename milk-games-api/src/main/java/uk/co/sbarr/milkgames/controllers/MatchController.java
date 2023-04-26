@@ -25,7 +25,6 @@ public class MatchController {
     @JsonView(View.Match.class)
     public ResponseEntity<Match> getTournamentById(@PathVariable long tournamentId,
             @PathVariable long round, @PathVariable long matchNum) {
-        System.out.println("Binging");
         Optional<Match> match =
                 matchRepository.findById(new MatchPK(tournamentId, round, matchNum));
         if (match.isPresent()) {

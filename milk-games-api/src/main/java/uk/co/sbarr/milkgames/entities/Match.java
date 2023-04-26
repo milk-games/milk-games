@@ -1,5 +1,6 @@
 package uk.co.sbarr.milkgames.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -13,6 +14,7 @@ import uk.co.sbarr.milkgames.entities.relationships.pk.MatchPK;
 public class Match {
 
     @EmbeddedId
+    @JsonProperty("details")
     @JsonView(View.Entity.class)
     private MatchPK id;
 

@@ -8,19 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 import uk.co.sbarr.milkgames.entities.Team;
 import uk.co.sbarr.milkgames.entities.View;
-import uk.co.sbarr.milkgames.repositories.SeasonPlayerRepository;
 import uk.co.sbarr.milkgames.repositories.TeamRepository;
 
 @RestController
 @RequestMapping(value = "/team")
 public class TeamController {
     private TeamRepository repository;
-    private SeasonPlayerRepository seasonPlayerRepository;
 
-    public TeamController(TeamRepository repository,
-            SeasonPlayerRepository seasonPlayerRepository) {
+    public TeamController(TeamRepository repository) {
         this.repository = repository;
-        this.seasonPlayerRepository = seasonPlayerRepository;
     }
 
     @RequestMapping(value = "/{id}")
