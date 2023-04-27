@@ -18,7 +18,7 @@ public class Team {
     private Long id;
 
     @ManyToOne
-    @JsonView({View.Player.class, View.Match.class})
+    @JsonView({View.Player.class})
     private Tournament tournament;
 
     @Column(nullable = false)

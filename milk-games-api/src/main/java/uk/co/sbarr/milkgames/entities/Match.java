@@ -2,7 +2,6 @@ package uk.co.sbarr.milkgames.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -60,5 +59,10 @@ public class Match {
 
     public void setTeam2(Team team) {
         this.team2 = team;
+    }
+
+    public void setStats(String stats) {
+
+
     }
 }

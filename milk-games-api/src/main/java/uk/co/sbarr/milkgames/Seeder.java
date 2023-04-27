@@ -7,12 +7,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
+import uk.co.sbarr.milkgames.entities.Game;
 import uk.co.sbarr.milkgames.entities.Player;
 import uk.co.sbarr.milkgames.entities.Season;
 import uk.co.sbarr.milkgames.entities.Team;
 import uk.co.sbarr.milkgames.entities.Tournament;
 import uk.co.sbarr.milkgames.entities.relationships.SeasonPlayer;
+import uk.co.sbarr.milkgames.repositories.GameRepository;
 import uk.co.sbarr.milkgames.repositories.MatchRepository;
 import uk.co.sbarr.milkgames.repositories.PlayerRepository;
 import uk.co.sbarr.milkgames.repositories.SeasonPlayerRepository;
@@ -39,6 +40,9 @@ public class Seeder implements CommandLineRunner {
     TeamRepository teamRepository;
 
     @Autowired
+    GameRepository gameRepository;
+
+    @Autowired
     SeasonPlayerRepository seasonPlayerRepository;
 
     @Override
@@ -58,8 +62,11 @@ public class Seeder implements CommandLineRunner {
         playerRepository.saveAll(players);
         seasonRepository.save(season1);
 
+        Game game1 = new Game("League of Legends", "league_of_legends.json");
+        gameRepository.save(game1);
+
         LocalDate now = LocalDate.now();
-        Tournament tournament1 = new Tournament("Tournament 1", season1, "single", 4, 2, 0,
+        Tournament tournament1 = new Tournament("Tournament 1", season1, "single", game1, 4, 2, 0,
                 now.plusDays(1), now.plusDays(2));
 
         tournamentRepository.save(tournament1);
@@ -89,7 +96,7 @@ public class Seeder implements CommandLineRunner {
         tournament1.initialiseBracket();
         tournament1.randomiseBracket();
         matchRepository.saveAll(tournament1.getMatches());
- 
+
         seasonPlayerRepository.save(new SeasonPlayer(season1, player1));
         seasonPlayerRepository.save(new SeasonPlayer(season1, player2));
         seasonPlayerRepository.save(new SeasonPlayer(season1, player3));

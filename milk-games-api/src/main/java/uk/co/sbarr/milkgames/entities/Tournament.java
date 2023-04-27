@@ -10,6 +10,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Getter;
+import uk.co.sbarr.milkgames.entities.relationships.pk.MatchPK;
 
 @Entity
 @Getter
@@ -45,8 +46,9 @@ public class Tournament {
     @JsonView(View.Entity.class)
     private LocalDate endDate;
 
-    // @ManyToOne
-    // private Game game;
+    @ManyToOne
+    @JsonView(View.Tournament.class)
+    private Game game;
 
     @OneToMany(mappedBy = "tournament")
     @JsonView({View.Season.class, View.Tournament.class})
@@ -63,11 +65,12 @@ public class Tournament {
         this.season = season;
     }
 
-    public Tournament(String name, Season season, String eliminationType, int teamLimit,
+    public Tournament(String name, Season season, String eliminationType, Game game, int teamLimit,
             int teamSize, double prizePool, LocalDate start, LocalDate end) {
         this.name = name;
         this.season = season;
         this.eliminationType = eliminationType;
+        this.game = game;
         this.teamLimit = teamLimit;
         this.teamSize = teamSize;
         this.prizePool = prizePool;
@@ -118,16 +121,26 @@ public class Tournament {
         Iterator<Match> matchIterator = matches.iterator();
 
         int byes = teamLimit - teams.size();
-        int matchesPerBye = numMatches / byes; 
+        int matchesPerBye = numMatches / byes;
 
-        for (int i = 1; i <= numMatches; i++) {
+        while (matchIterator.hasNext()) {
             Match match = matchIterator.next();
-            if (match.getId().getRound() == 1) {
+            MatchPK matchId = match.getId();
+            if (matchId.getRound() == 1) {
                 match.setTeam1(teamIterator.next());
-                if (match.getId().getMatchNum() % matchesPerBye == 0 && i < byes * matchesPerBye) {
+                if (matchId.getMatchNum() % matchesPerBye == 0) {
                     match.setTeam2(null);
                 } else {
                     match.setTeam2(teamIterator.next());
+                }
+
+                System.out.print(matchId.getRound() + ", " + matchId.getMatchNum() + ": ");
+
+                if (match.getTeam2() == null) {
+                    System.out.println(match.getTeam1().getName() + " vs (Bye)");
+                } else {
+                    System.out.println(
+                            match.getTeam1().getName() + " vs " + match.getTeam2().getName());
                 }
             }
         }
