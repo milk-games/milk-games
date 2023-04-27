@@ -22,6 +22,7 @@ import uk.co.sbarr.milkgames.entities.Match;
 import uk.co.sbarr.milkgames.entities.View;
 import uk.co.sbarr.milkgames.entities.relationships.pk.MatchPK;
 import uk.co.sbarr.milkgames.repositories.MatchRepository;
+import uk.co.sbarr.milkgames.schemas.InvalidStatException;
 import uk.co.sbarr.milkgames.schemas.Stats;
 
 @RestController
@@ -65,12 +66,28 @@ public class MatchController {
     }
 
     @RequestMapping(value = "/stats", method = RequestMethod.POST, params = {"round", "match"})
-    public ResponseEntity<Void> setMatchStats(@PathVariable long tournamentId, long round,
+    public ResponseEntity<String> setMatchStats(@PathVariable long tournamentId, long round,
             long match, @RequestBody Stats stats) throws JsonProcessingException {
-        String json = objectMapper.writeValueAsString(stats);
+        try {
+            stats.validate();
+        } catch (InvalidStatException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
+        Optional<Match> optionalMatch = matchRepository
+                .findByTournamentIdAndId_RoundAndId_MatchNum(tournamentId, round, match);
+        if (optionalMatch.isPresent()) {
+            String json = objectMapper.writeValueAsString(stats);
+            System.out.println(json);
 
-        System.out.println(stats.getClass());
-        return ResponseEntity.ok().build();
+            Match m = optionalMatch.get();
+            m.setStats(json);
+
+            matchRepository.save(m);
+
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

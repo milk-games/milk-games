@@ -2,12 +2,13 @@
     "type": "LeagueOfLegends",
     "blueTeam": {
         "players": [
-
-        ]
+            {}
+        ],
+        "bing": "true"
     },
     "redTeam": {
         "players": [
-                    
+            {}
         ]
     }
 }

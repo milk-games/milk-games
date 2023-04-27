@@ -62,7 +62,6 @@ public class Match {
     }
 
     public void setStats(String stats) {
-
-
+        this.stats = stats;
     }
 }

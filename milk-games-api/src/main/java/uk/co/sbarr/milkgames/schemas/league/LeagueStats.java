@@ -1,16 +1,23 @@
 package uk.co.sbarr.milkgames.schemas.league;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import uk.co.sbarr.milkgames.schemas.Stats;
+import uk.co.sbarr.milkgames.schemas.annotations.NotNull;
 
 @Getter
 @Setter
 public class LeagueStats extends Stats {
-    @JsonProperty(required = true)
+    @NotNull
     private Team blueTeam;
-
-    @JsonProperty(required = true)
     private Team redTeam;
+
+    // @Override
+    // public void validate() throws InvalidStatException {
+    //     if (blueTeam == null || redTeam == null)
+    //         throw new InvalidStatException(this, "Cannot be null", "blueTeam", "redTeam");
+
+    //     blueTeam.validate();
+    //     redTeam.validate();
+    // }
 }
