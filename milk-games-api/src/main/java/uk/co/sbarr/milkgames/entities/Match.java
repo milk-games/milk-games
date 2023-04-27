@@ -2,6 +2,8 @@ package uk.co.sbarr.milkgames.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -20,17 +22,30 @@ public class Match {
     private MatchPK id;
 
     @ManyToOne
-    @MapsId("tournamentId")
     @JsonView(View.Match.class)
+    @MapsId("tournamentId")
     private Tournament tournament;
 
     @ManyToOne
     @JsonView(View.Match.class)
-    private Team team_1;
+    private Team team1;
 
     @ManyToOne
     @JsonView(View.Match.class)
-    private Team team_2;
+    private Team team2;
+
+    @JsonView(View.Entity.class)
+    private long team1Points;
+
+    @JsonView(View.Entity.class)
+    private long team2Points;
+
+    @JsonView(View.Match.class)
+    private long winningTeam;
+
+    @Column(columnDefinition = "json")
+    @JsonView(View.Match.class)
+    private String stats;
 
     public Match() {}
 
@@ -40,10 +55,10 @@ public class Match {
     }
 
     public void setTeam1(Team team) {
-        this.team_1 = team;
+        this.team1 = team;
     }
 
     public void setTeam2(Team team) {
-        this.team_2 = team;
+        this.team2 = team;
     }
 }

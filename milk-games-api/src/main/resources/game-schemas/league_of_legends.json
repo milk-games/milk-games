@@ -1,0 +1,129 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+      "blueTeam": {
+        "type": "object",
+        "properties": {
+          "players": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "champion": {
+                  "type": "string",
+                  "description": "The champion chosen by the player"
+                },
+                "kills": {
+                  "type": "integer",
+                  "description": "The number of kills the player got"
+                },
+                "deaths": {
+                  "type": "integer",
+                  "description": "The number of deaths the player had"
+                },
+                "assists": {
+                  "type": "integer",
+                  "description": "The number of assists the player had"
+                },
+                "gold": {
+                  "type": "integer",
+                  "description": "The amount of gold the player earned"
+                },
+                "cs": {
+                  "type": "integer",
+                  "description": "The number of minions and monsters the player killed"
+                }
+              },
+              "required": [
+                "champion",
+                "kills",
+                "deaths",
+                "assists",
+                "gold",
+                "cs"
+              ]
+            },
+            "description": "The list of players on the blue team"
+          },
+          "dragons": {
+            "type": "integer",
+            "description": "The number of dragons the blue team killed"
+          },
+          "barons": {
+            "type": "integer",
+            "description": "The number of barons the blue team killed"
+          }
+        },
+        "required": [
+          "players",
+          "dragons",
+          "barons"
+        ]
+      },
+      "redTeam": {
+        "type": "object",
+        "properties": {
+          "players": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "champion": {
+                  "type": "string",
+                  "description": "The champion chosen by the player"
+                },
+                "kills": {
+                  "type": "integer",
+                  "description": "The number of kills the player got"
+                },
+                "deaths": {
+                  "type": "integer",
+                  "description": "The number of deaths the player had"
+                },
+                "assists": {
+                  "type": "integer",
+                  "description": "The number of assists the player had"
+                },
+                "gold": {
+                  "type": "integer",
+                  "description": "The amount of gold the player earned"
+                },
+                "cs": {
+                  "type": "integer",
+                  "description": "The number of minions and monsters the player killed"
+                }
+              },
+              "required": [
+                "champion",
+                "kills",
+                "deaths",
+                "assists",
+                "gold",
+                "cs"
+              ]
+            },
+            "description": "The list of players on the red team"
+          },
+          "dragons": {
+            "type": "integer",
+            "description": "The number of dragons the red team killed"
+          },
+          "barons": {
+            "type": "integer",
+            "description": "The number of barons the red team killed"
+          }
+        },
+        "required": [
+          "players",
+          "dragons",
+          "barons"
+        ]
+      }
+    },
+    "required": [
+      "blueTeam",
+      "redTeam"
+    ]
+  }
+  

@@ -49,8 +49,10 @@ public class Seeder implements CommandLineRunner {
         Player player2 = new Player("Player 2");
         Player player3 = new Player("Player 3");
         Player player4 = new Player("Player 4");
+        Player player5 = new Player("Player 5");
+        Player player6 = new Player("Player 6");
 
-        List<Player> players = Arrays.asList(player1, player2, player3, player4);
+        List<Player> players = Arrays.asList(player1, player2, player3, player4, player5, player6);
         // season1.getPlayers().addAll(players);
 
         playerRepository.saveAll(players);
@@ -60,8 +62,11 @@ public class Seeder implements CommandLineRunner {
         Tournament tournament1 = new Tournament("Tournament 1", season1, "single", 4, 2, 0,
                 now.plusDays(1), now.plusDays(2));
 
+        tournamentRepository.save(tournament1);
+
         Team team1 = tournament1.createTeam("Team 1");
         Team team2 = tournament1.createTeam("Team 2");
+        Team team3 = tournament1.createTeam("Team 3");
 
         team1.addPlayer(player1);
         team1.addPlayer(player2);
@@ -69,19 +74,28 @@ public class Seeder implements CommandLineRunner {
         team2.addPlayer(player3);
         team2.addPlayer(player4);
 
-        tournamentRepository.save(tournament1);
+        team3.addPlayer(player5);
+        team3.addPlayer(player6);
 
         teamRepository.save(team1);
         teamRepository.save(team2);
-        tournament1.initialiseBracket();
-        tournament1.getMatches().forEach((key, match) -> {
-            matchRepository.save(match);
-        });
+        teamRepository.save(team3);
 
+        tournament1.addTeam(team1);
+        tournament1.addTeam(team2);
+        tournament1.addTeam(team3);
+
+        tournamentRepository.save(tournament1);
+        tournament1.initialiseBracket();
+        tournament1.randomiseBracket();
+        matchRepository.saveAll(tournament1.getMatches());
+ 
         seasonPlayerRepository.save(new SeasonPlayer(season1, player1));
         seasonPlayerRepository.save(new SeasonPlayer(season1, player2));
         seasonPlayerRepository.save(new SeasonPlayer(season1, player3));
         seasonPlayerRepository.save(new SeasonPlayer(season1, player4));
+        seasonPlayerRepository.save(new SeasonPlayer(season1, player5));
+        seasonPlayerRepository.save(new SeasonPlayer(season1, player6));
     }
 
 }

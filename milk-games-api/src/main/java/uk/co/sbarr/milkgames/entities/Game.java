@@ -15,5 +15,7 @@ public class Game {
 
     private String name;
 
+    private String statsSchema;
+
     public Game(String name) {}
 }

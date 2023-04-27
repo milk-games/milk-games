@@ -3,16 +3,13 @@ package uk.co.sbarr.milkgames.entities;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Getter;
-import uk.co.sbarr.milkgames.entities.relationships.pk.MatchPK;
 
 @Entity
 @Getter
@@ -55,11 +52,9 @@ public class Tournament {
     @JsonView({View.Season.class, View.Tournament.class})
     private Set<Team> teams = new HashSet<>();
 
-    // @OneToMany(mappedBy = "tournament")
-    // @JsonView(View.Tournament.class)
-    // @MapKeyJoinColumn(name = "id")
-    private Map<MatchPK, Match> matches = new HashMap<>();
-    // private Set<Match> matches = new HashSet<>();
+    @OneToMany(mappedBy = "tournament")
+    @JsonView(View.Tournament.class)
+    private Set<Match> matches = new HashSet<>();
 
     public Tournament() {}
 
@@ -109,7 +104,7 @@ public class Tournament {
             int numMatches = (teamLimit / 2) / round;
             for (int matchNum = 1; matchNum <= numMatches; matchNum++) {
                 Match match = new Match(this, round, matchNum);
-                matches.put(match.getId(), match);
+                matches.add(match);
             }
         }
     }
@@ -120,21 +115,22 @@ public class Tournament {
         List<Team> teams = new ArrayList<>(this.teams);
         Collections.shuffle(teams);
         Iterator<Team> teamIterator = teams.iterator();
+        Iterator<Match> matchIterator = matches.iterator();
 
         int byes = teamLimit - teams.size();
         int matchesPerBye = numMatches / byes; 
 
         for (int i = 1; i <= numMatches; i++) {
-            MatchPK key = new MatchPK(id, 1, i);
-            Match match = matches.get(key);
-
-            match.setTeam1(teamIterator.next());
-            if (i % matchesPerBye == 0 && i < byes * matchesPerBye) {
-                match.setTeam2(null);
-            } else {
-                match.setTeam2(teamIterator.next());
+            Match match = matchIterator.next();
+            if (match.getId().getRound() == 1) {
+                match.setTeam1(teamIterator.next());
+                if (match.getId().getMatchNum() % matchesPerBye == 0 && i < byes * matchesPerBye) {
+                    match.setTeam2(null);
+                } else {
+                    match.setTeam2(teamIterator.next());
+                }
             }
         }
-        
     }
+
 }

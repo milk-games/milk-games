@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Embeddable
+@SuppressWarnings("unused")
 public class SeasonPlayerPK implements Serializable {
     private static final long serialVersionUID = 1l;
 
