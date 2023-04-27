@@ -57,7 +57,7 @@ public class Seeder implements CommandLineRunner {
         seasonRepository.save(season1);
 
         LocalDate now = LocalDate.now();
-        Tournament tournament1 = new Tournament("Tournament 1", season1, "single", 2, 2, 0,
+        Tournament tournament1 = new Tournament("Tournament 1", season1, "single", 4, 2, 0,
                 now.plusDays(1), now.plusDays(2));
 
         Team team1 = tournament1.createTeam("Team 1");
@@ -74,7 +74,9 @@ public class Seeder implements CommandLineRunner {
         teamRepository.save(team1);
         teamRepository.save(team2);
         tournament1.initialiseBracket();
-        matchRepository.saveAll(tournament1.getMatches());
+        tournament1.getMatches().forEach((key, match) -> {
+            matchRepository.save(match);
+        });
 
         seasonPlayerRepository.save(new SeasonPlayer(season1, player1));
         seasonPlayerRepository.save(new SeasonPlayer(season1, player2));

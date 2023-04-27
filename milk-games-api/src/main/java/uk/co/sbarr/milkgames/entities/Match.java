@@ -7,15 +7,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
+import lombok.Getter;
 import uk.co.sbarr.milkgames.entities.relationships.pk.MatchPK;
 
 @Entity
+@Getter
 @Table(name = "matches")
 public class Match {
 
     @EmbeddedId
     @JsonProperty("details")
-    @JsonView(View.Entity.class)
     private MatchPK id;
 
     @ManyToOne

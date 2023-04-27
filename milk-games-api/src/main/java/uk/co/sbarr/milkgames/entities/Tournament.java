@@ -1,11 +1,18 @@
 package uk.co.sbarr.milkgames.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Getter;
+import uk.co.sbarr.milkgames.entities.relationships.pk.MatchPK;
 
 @Entity
 @Getter
@@ -48,9 +55,11 @@ public class Tournament {
     @JsonView({View.Season.class, View.Tournament.class})
     private Set<Team> teams = new HashSet<>();
 
-    @OneToMany(mappedBy = "tournament")
-    @JsonView(View.Tournament.class)
-    private Set<Match> matches = new HashSet<>();
+    // @OneToMany(mappedBy = "tournament")
+    // @JsonView(View.Tournament.class)
+    // @MapKeyJoinColumn(name = "id")
+    private Map<MatchPK, Match> matches = new HashMap<>();
+    // private Set<Match> matches = new HashSet<>();
 
     public Tournament() {}
 
@@ -89,16 +98,43 @@ public class Tournament {
     }
 
     public void initialiseBracket() {
+
+        int exponent = (int) Math.ceil(Math.log(teams.size()) / Math.log(2));
+        teamLimit = (int) Math.pow(2, exponent);
+
+        // TODO: different implementation for different elimination styles
         int numRounds = (int) (Math.log(teamLimit) / Math.log(2));
 
         for (int round = 1; round <= numRounds; round++) {
-            int numMatches = teamLimit / round;
+            int numMatches = (teamLimit / 2) / round;
             for (int matchNum = 1; matchNum <= numMatches; matchNum++) {
                 Match match = new Match(this, round, matchNum);
-                matches.add(match);
+                matches.put(match.getId(), match);
             }
         }
     }
 
+    public void randomiseBracket() {
+        int numMatches = (teamLimit / 2);
 
+        List<Team> teams = new ArrayList<>(this.teams);
+        Collections.shuffle(teams);
+        Iterator<Team> teamIterator = teams.iterator();
+
+        int byes = teamLimit - teams.size();
+        int matchesPerBye = numMatches / byes; 
+
+        for (int i = 1; i <= numMatches; i++) {
+            MatchPK key = new MatchPK(id, 1, i);
+            Match match = matches.get(key);
+
+            match.setTeam1(teamIterator.next());
+            if (i % matchesPerBye == 0 && i < byes * matchesPerBye) {
+                match.setTeam2(null);
+            } else {
+                match.setTeam2(teamIterator.next());
+            }
+        }
+        
+    }
 }

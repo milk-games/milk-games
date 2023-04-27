@@ -2,6 +2,8 @@ package uk.co.sbarr.milkgames.entities.relationships.pk;
 
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonView;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import uk.co.sbarr.milkgames.entities.View;

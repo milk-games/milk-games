@@ -1,7 +1,9 @@
 package uk.co.sbarr.milkgames.controllers;
 
 
+import java.util.List;
 import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,14 +23,28 @@ public class MatchController {
         this.matchRepository = repository;
     }
 
-    @RequestMapping(value = "/{round}/{matchNum}")
+    @RequestMapping
     @JsonView(View.Match.class)
-    public ResponseEntity<Match> getTournamentById(@PathVariable long tournamentId,
-            @PathVariable long round, @PathVariable long matchNum) {
-        Optional<Match> match =
-                matchRepository.findById(new MatchPK(tournamentId, round, matchNum));
-        if (match.isPresent()) {
-            return ResponseEntity.ok(match.get());
+    public ResponseEntity<List<Match>> getTournamntMatches(@PathVariable long tournamentId) {
+        List<Match> matches = matchRepository.findAllByTournamentId(tournamentId);
+        return ResponseEntity.ok(matches);
+    }
+
+    @RequestMapping(params = {"round"})
+    @JsonView(View.Match.class)
+    public ResponseEntity<List<Match>> getTournamentRoudnMatches(@PathVariable long tournamentId, long round) {
+        List<Match> matches = matchRepository.findAllByTournamentIdAndId_Round(tournamentId, round);
+        return ResponseEntity.ok(matches);
+    }
+
+    @RequestMapping(params = {"round", "match"})
+    @JsonView(View.Match.class)
+    public ResponseEntity<Match> getTournamentRoundMatch(@PathVariable long tournamentId,
+            long round, long match) {
+        Optional<Match> optionalMatch =
+                matchRepository.findById(new MatchPK(tournamentId, round, match));
+        if (optionalMatch.isPresent()) {
+            return ResponseEntity.ok(optionalMatch.get());
         } else {
             return ResponseEntity.notFound().build();
         }
