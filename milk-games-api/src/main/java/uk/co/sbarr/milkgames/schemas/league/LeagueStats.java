@@ -15,8 +15,6 @@ public class LeagueStats extends Stats {
     @NotNull
     private Team redTeam;
 
-    private int x = 135;
-
     // @Override
     // public void validate() throws InvalidStatException {
     //     if (blueTeam == null || redTeam == null)
