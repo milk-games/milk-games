@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import uk.co.sbarr.milkgames.schemas.Stats;
 import uk.co.sbarr.milkgames.schemas.validator.annotations.NotNull;
-import uk.co.sbarr.milkgames.schemas.validator.annotations.NumberValidation;
 
 @Getter
 @Setter

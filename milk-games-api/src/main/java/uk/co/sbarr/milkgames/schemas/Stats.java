@@ -10,7 +10,11 @@ import uk.co.sbarr.milkgames.schemas.validator.SchemaValidator;
 @JsonSubTypes({@Type(value = LeagueStats.class, name = "LeagueOfLegends")})
 public abstract class Stats {
 
-    public void validate() throws InvalidStatException {
-        new SchemaValidator(this).validate();
+    public void validate() {
+        try {
+            new SchemaValidator(this).validate();
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }
