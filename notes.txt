@@ -67,3 +67,36 @@ player_matches table
 games table
     id: unique ID for each game
     name: name of the game
+
+
+
+
+
+User Stories:
+
+Seasons:
+    - View season history
+    - Create a season
+
+    Season:
+        - View Leaderboard
+        - Create a tournament
+        - View upcoming tournaments (schedule)
+        - View stats per game over all tournaments
+
+        Tournament:
+            - Create a team
+            - View Details
+            - View stats over all matches
+            - Initialize Bracket
+            - View Bracket
+
+            Team:
+                - Add a player 
+                - View Players
+            
+            Match:
+                - View teams
+                    - Players
+                - View stats
+

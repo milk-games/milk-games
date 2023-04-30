@@ -46,6 +46,8 @@ public class Tournament {
     @JsonView(View.Entity.class)
     private LocalDate endDate;
 
+    // round score limits
+
     @ManyToOne
     @JsonView(View.Tournament.class)
     private Game game;
