@@ -8,31 +8,33 @@ import uk.co.sbarr.milkgames.schemas.validator.annotations.Validate;
 
 public class SchemaValidator {
 
-    private String name;
     private Object object;
 
-
     public SchemaValidator(Object object) {
-        this.name = name;
         this.object = object;
     }
 
-    public void validate() throws IllegalArgumentException, IllegalAccessException {
-        System.out.println("Validating " + object.getClass().getName());
+    public String validate() throws IllegalArgumentException, IllegalAccessException {
         Field[] fields = object.getClass().getDeclaredFields();
+
+        String validationMessage = null;
 
         for (Field field : fields) {
             field.setAccessible(true);
             Object value = field.get(object);
 
-            validateFields(field);
+            String validation = validateField(field);
+            if (validation != null)
+                return field.getName() + ": " + validation;
             if (value.getClass().isAnnotationPresent(Validate.class)) {
-                new SchemaValidator(value).validate();
+                validationMessage = new SchemaValidator(value).validate();
             }
         }
+
+        return validationMessage;
     }
 
-    private void validateFields(Field field) {
+    private String validateField(Field field) {
         Annotation[] annotations = field.getDeclaredAnnotations();
         for (Annotation annotation : annotations) {
             if (canValidate(annotation)) {
@@ -43,17 +45,22 @@ public class SchemaValidator {
                             (ValidationMethods) annotationMethod.invoke(annotation);
                     field.setAccessible(true);
                     Object value = field.get(object);
-                    boolean valid = method.validate(value, annotation);
+                    String validation = method.validate(value, annotation);
 
-                    // TODO: handle valid
+                    if (validation != null)
+                        return validation;
                 } catch (NoSuchMethodException e) {
                     System.err.println(field.getName()
                             + " cannot be validated as the validation annotation does not have a method");
+                    return "Unexpected validation Error";
                 } catch (Exception e) {
                     System.err.println(e.getMessage());
+                    return "Unexpected validation error";
                 }
             }
         }
+
+        return null;
     }
 
     private boolean canValidate(Annotation annotation) {

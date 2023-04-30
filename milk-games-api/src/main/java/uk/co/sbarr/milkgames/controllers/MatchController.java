@@ -18,7 +18,6 @@ import uk.co.sbarr.milkgames.entities.Match;
 import uk.co.sbarr.milkgames.entities.View;
 import uk.co.sbarr.milkgames.entities.relationships.pk.MatchPK;
 import uk.co.sbarr.milkgames.repositories.MatchRepository;
-import uk.co.sbarr.milkgames.schemas.InvalidStatException;
 import uk.co.sbarr.milkgames.schemas.Stats;
 
 @RestController
@@ -64,10 +63,9 @@ public class MatchController {
     @RequestMapping(value = "/stats", method = RequestMethod.POST, params = {"round", "match"})
     public ResponseEntity<String> setMatchStats(@PathVariable long tournamentId, long round,
             long match, @RequestBody Stats stats) throws JsonProcessingException {
-        try {
-            stats.validate();
-        } catch (InvalidStatException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        String validationMessage = stats.validate();
+        if (validationMessage != null) {
+            return ResponseEntity.badRequest().body(validationMessage);
         }
 
         Optional<Match> optionalMatch = matchRepository

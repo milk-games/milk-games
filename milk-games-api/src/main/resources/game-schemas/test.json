@@ -3,14 +3,15 @@
     "blueTeam": {
         "players": [
             {
-                
+                "champion": "aatrox"
             }
-        ],
-        "bing": "true"
+        ]
     },
     "redTeam": {
         "players": [
-            {}
+            {
+                "champion": "bingpot"
+            }
         ]
     }
 }
