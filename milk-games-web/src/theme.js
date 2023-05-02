@@ -20,11 +20,19 @@ const theme = extendTheme({
       dark: '#8FA78D',
     },
     header: {
-      dark: '#444',
-      light: 'orange.100',
+      dark: '#505050',
+      light: '#F9F0D0',
+      wave1: {
+        dark: '#303030',
+        light: '#E4DBB9',
+      },
+      wave2: {
+        dark: '#404040',
+        light: '#EEE5C4',
+      },
     },
     background: {
-      dark: '#222',
+      dark: '#202020',
       light: 'orange.50',
     },
     ...colours,
@@ -38,7 +46,13 @@ const theme = extendTheme({
       '.header': {
         background: theme.colors.header[colorMode],
       },
-      '.header-wave': {
+      '.wave-1': {
+        fill: theme.colors.header.wave1[colorMode],
+      },
+      '.wave-2': {
+        fill: theme.colors.header.wave2[colorMode],
+      },
+      '.wave-3': {
         fill: theme.colors.header[colorMode],
       },
       '.sidebar': {
