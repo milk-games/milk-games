@@ -45,7 +45,7 @@ const HeaderV2 = () => {
 
         <chakra.svg
           className="header-wave"
-          viewBox="0 0 1440 89"
+          viewBox="0 0 1439 89"
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
           position="absolute"
