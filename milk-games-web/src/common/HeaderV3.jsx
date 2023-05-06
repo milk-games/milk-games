@@ -9,13 +9,8 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
-import waves from '../resources/waves.svg';
-import shading from '../resources/shading.svg';
-import shadow from '../resources/Shadow.svg';
-import highlight from '../resources/Highlight.svg';
 import logo from '../resources/logo.png';
-import { getColor } from '../util/theme-utils';
-import MilkButton from './components/MilkButton';
+import { getColor } from '../utils/theme-utils';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
 const HeaderV3 = () => {
@@ -39,15 +34,13 @@ const HeaderV3 = () => {
         <ColorModeSwitcher justifySelf="flex-end" />
       </Flex>
 
-      <Box>
+      <Box h="70px" className="header-wave">
         <chakra.svg
-          className="header-wave"
           viewBox="0 0 1440 108"
           xmlns="http://www.w3.org/2000/svg"
           w="100%"
-          h="70px"
+          h="inherit"
           preserveAspectRatio="none"
-          position="absolute"
         >
           <chakra.path
             d="M-1 43.8204V10H1440V60C1416.93 60 1408.42 75.1442 1385.74 78.5C1331.45 86.5345 1308.78 42.746 1253.88 38C1158.16 29.7254 1118.88 99.7921 1022.97 106.5C884.416 116.19 820.767 3.02838 683.538 21C605.64 31.2016 552.606 67.2217 465.243 62C425.003 59.5949 404.543 46.8458 364.297 44.5C273.47 39.206 224.042 101.072 138.431 90.5C80.0255 83.2877 61.258 43.8204 -1 43.8204Z"

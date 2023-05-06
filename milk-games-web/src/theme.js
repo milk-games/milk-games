@@ -33,7 +33,7 @@ const theme = extendTheme({
     },
     background: {
       dark: '#202020',
-      light: 'orange.50',
+      light: '#FFF4DE',
     },
     ...colours,
   },
@@ -45,6 +45,9 @@ const theme = extendTheme({
       },
       '.header': {
         background: theme.colors.header[colorMode],
+      },
+      '.header-wave': {
+        background: theme.colors.background[colorMode],
       },
       '.wave-1': {
         fill: theme.colors.header.wave1[colorMode],

@@ -1,5 +1,6 @@
 package uk.co.sbarr.milkgames.entities;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -24,7 +25,14 @@ public class Season {
     @JsonView(View.Entity.class)
     private String name;
 
+    @JsonView(View.Entity.class)
+    private LocalDate startDate;
+
+    @JsonView(View.Entity.class)
+    private LocalDate endDate;
+
     @OneToMany(mappedBy = "season", cascade = CascadeType.ALL)
+    @OrderBy("startDate ASC")
     @JsonView(View.Season.class)
     private Set<Tournament> tournaments = new HashSet<>();
 
@@ -34,7 +42,9 @@ public class Season {
 
     public Season() {}
 
-    public Season(String name) {
+    public Season(String name, LocalDate start, LocalDate end) {
         this.name = name;
+        this.startDate = start;
+        this.endDate = end;
     }
 }

@@ -1,11 +1,13 @@
 package uk.co.sbarr.milkgames;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 import uk.co.sbarr.milkgames.entities.Game;
 import uk.co.sbarr.milkgames.entities.Player;
@@ -47,7 +49,10 @@ public class Seeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Season season1 = new Season("Season 1");
+
+        LocalDateTime datetime = LocalDateTime.now();
+        LocalDate date = LocalDate.now();
+        Season season1 = new Season("Season 1", date.minusMonths(1), date.plusMonths(5));
 
         Player player1 = new Player("Player 1");
         Player player2 = new Player("Player 2");
@@ -65,11 +70,16 @@ public class Seeder implements CommandLineRunner {
         Game game1 = new Game("League of Legends", "league_of_legends.json");
         gameRepository.save(game1);
 
-        LocalDate now = LocalDate.now();
         Tournament tournament1 = new Tournament("Tournament 1", season1, "single", game1, 4, 2, 0,
-                now.plusDays(1), now.plusDays(2));
+                datetime.plusDays(1), datetime.plusDays(2));
+        Tournament tournament2 = new Tournament("Tournament 2", season1, "single", game1, 4, 2, 0,
+                datetime.minusDays(1), datetime.minusDays(2));
+        Tournament tournament3 = new Tournament("Tournament 3", season1, "single", game1, 4, 2, 0,
+                datetime.plusDays(5).plusHours(2), datetime.plusDays(8).plusHours(5));
 
         tournamentRepository.save(tournament1);
+        tournamentRepository.save(tournament2);
+        tournamentRepository.save(tournament3);
 
         Team team1 = tournament1.createTeam("Team 1");
         Team team2 = tournament1.createTeam("Team 2");

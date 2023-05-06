@@ -1,5 +1,6 @@
 package uk.co.sbarr.milkgames.controllers;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,17 @@ public class SeasonController {
 
     public SeasonController(SeasonRepository repository) {
         this.repository = repository;
+    }
+
+    @RequestMapping
+    @JsonView(View.Season.class)
+    public ResponseEntity<Season> getCurrentSeason() {
+        Optional<Season> optional = repository.findCurrentSeason(LocalDate.now());
+        if (optional.isPresent()) {
+            return ResponseEntity.ok(optional.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @RequestMapping(value = "/{id}")

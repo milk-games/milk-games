@@ -15,4 +15,5 @@ public @interface ArrayValidation {
     long minLength() default -1;
 
     long maxLength() default -1;
+
 }
