@@ -55,54 +55,7 @@ const headers = [
 ];
 
 const SeasonLeaderboard = ({ data = [] }) => {
-  return (
-    <PaginationTable headers={headers} data={data} />
-    // <TableContainer>
-    //   <Table variant="simple">
-    //     <Thead>
-    //       <Tr>
-    //         <Th w="100%">Player</Th>
-    //         <Th minW="55px" isNumeric>
-    //           Tournaments
-    //         </Th>
-    //         <Th
-    //           minW="30px"
-    //           isNumeric
-    //           display={{ base: 'none', sm: 'table-cell' }}
-    //         >
-    //           Matches
-    //         </Th>
-    //         <Th minW="30px" isNumeric>
-    //           Points
-    //         </Th>
-    //         <Th
-    //           minW="30px"
-    //           isNumeric
-    //           display={{ base: 'none', sm: 'table-cell' }}
-    //         >
-    //           Avg
-    //         </Th>
-    //       </Tr>
-    //     </Thead>
-    //     <Tbody>
-    //       <Tr>
-    //         <Td className="key-cell">Bing</Td>
-    //         <Td isNumeric>1</Td>
-    //         <Td isNumeric display={{ base: 'none', sm: 'table-cell' }}>
-    //           2
-    //         </Td>
-    //         <Td isNumeric>3</Td>
-    //         <Td isNumeric display={{ base: 'none', sm: 'table-cell' }}>
-    //           {(3 / 1).toFixed(1)}
-    //         </Td>
-    //       </Tr>
-    //     </Tbody>
-    //     <Tfoot>
-    //       <Tr></Tr>
-    //     </Tfoot>
-    //   </Table>
-    // </TableContainer>
-  );
+  return <PaginationTable headers={headers} data={data} />;
 };
 
 export default SeasonLeaderboard;
