@@ -1,6 +1,5 @@
 package uk.co.sbarr.milkgames.entities;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,6 +46,9 @@ public class Tournament {
     @JsonView(View.Entity.class)
     private LocalDateTime endDate;
 
+    @JsonView(View.Entity.class)
+    private boolean finished;
+
     // round score limits
 
     @ManyToOne
@@ -79,6 +81,7 @@ public class Tournament {
         this.prizePool = prizePool;
         this.startDate = start;
         this.endDate = end;
+        this.finished = false;
     }
 
     public Team createTeam(String name) throws Exception {

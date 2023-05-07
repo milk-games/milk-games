@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Flex,
   Grid,
   GridItem,
@@ -15,6 +16,8 @@ import { useState, useEffect } from 'react';
 import { getColor } from '../utils/theme-utils';
 import { TimeFormatter } from '../utils';
 import TournamentCard from '../common/components/TournamentCard';
+import SeasonLeaderboard from './SeasonLeaderboard';
+import SectionHeading from '../common/components/SectionHeading';
 
 const Season = () => {
   const { colorMode } = useColorMode();
@@ -28,11 +31,6 @@ const Season = () => {
     });
   }, []);
 
-  /**
-   * Get upcoming matches
-   * Get leaderboard
-   */
-
   return (
     <Box w="100%">
       <Box>
@@ -44,7 +42,7 @@ const Season = () => {
             alignItems="center"
             flexDir="column"
             h="80vh"
-            maxH={{ base: '650px', md: '850px' }}
+            maxH={{ base: '700px', md: '850px' }}
           >
             <Heading size="4xl" color={getColor('accent', colorMode)}>
               {season.name}
@@ -59,34 +57,22 @@ const Season = () => {
       </Box>
 
       <Box
-        className="content"
         mx="auto"
-        w={{ base: 'lg', md: '3xl', lg: '4xl' }}
+        w={{ base: '100%', md: '3xl', lg: '4xl' }}
+        p={{ base: 4, md: 4 }}
       >
-        <Grid
-          templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
-          gap="48"
-          rowGap={0}
-        >
-          <GridItem textAlign={{ md: 'right' }} mb={-2}>
-            <Text fontSize="xl" letterSpacing={2}>
-              TOURNAMENTS
-            </Text>
-          </GridItem>
-          <GridItem />
-          <GridItem textAlign={{ md: 'right' }}>
-            <Text fontWeight="bold" fontSize="5xl" mt={-2}>
-              Upcoming
-            </Text>
-          </GridItem>
-          <GridItem verticalAlign="bottom">
-            <Text textAlign="justify">
-              The upcoming tournaments of the season Keep track of the dates and
-              times so you don’t miss out on your chance to become the milk
-              champion!
-            </Text>
-          </GridItem>
-        </Grid>
+        <SectionHeading title="TOURNAMENTS" detail="Upcoming">
+          <Text textAlign="justify">
+            The upcoming tournaments of the season Keep track of the dates and
+            times so you don’t miss out on your chance to become the milk
+            champion!
+          </Text>
+
+          <Button colorScheme="green" mt={4}>
+            see all
+          </Button>
+        </SectionHeading>
+
         <Grid
           templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(3, 1fr)' }}
           gap={8}
@@ -95,6 +81,20 @@ const Season = () => {
         >
           {upcomingTournaments(season)}
         </Grid>
+      </Box>
+
+      <Box
+        mt={24}
+        mx="auto"
+        w={{ base: '100%', md: '3xl', lg: '4xl' }}
+        p={{ base: 4, md: 4 }}
+      >
+        <SectionHeading title="LEADERBOARD" detail="Top Players">
+          <Button colorScheme="green" mt={4}>
+            see all
+          </Button>
+        </SectionHeading>
+        <SeasonLeaderboard data={season.seasonPlayers} />
       </Box>
 
       <Box h="400px"></Box>
@@ -116,8 +116,6 @@ function upcomingTournaments(season) {
 
   let elements = [];
 
-  console.log({ tournaments });
-
   for (let i = 0; i < 3; i++) {
     if (i < tournaments.length) {
       elements.push(
@@ -126,8 +124,11 @@ function upcomingTournaments(season) {
         </GridItem>
       );
     } else {
-      elements.push(<GridItem>No tourney</GridItem>);
-      // tournament skeleton
+      elements.push(
+        <GridItem>
+          <TournamentCard tournament={null} />
+        </GridItem>
+      );
     }
   }
 

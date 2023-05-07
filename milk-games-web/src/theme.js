@@ -1,9 +1,11 @@
 import { extendTheme } from '@chakra-ui/react';
-import colours from './resources/Colours.json';
+import colours from './styles/Colours.json';
+import components from './styles/components';
 
 import buttonShading from './resources/shading.svg';
-
 import '@fontsource/quicksand';
+
+console.log({ components });
 
 const theme = extendTheme({
   fonts: {
@@ -37,6 +39,9 @@ const theme = extendTheme({
     },
     ...colours,
   },
+  components: {
+    ...components,
+  },
   styles: {
     global: ({ colorMode }) => ({
       'html, body': {
@@ -65,4 +70,5 @@ const theme = extendTheme({
   },
 });
 
+console.log({ theme });
 export default theme;

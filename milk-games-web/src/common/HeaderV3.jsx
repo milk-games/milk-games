@@ -11,7 +11,7 @@ import React from 'react';
 
 import logo from '../resources/logo.png';
 import { getColor } from '../utils/theme-utils';
-import { ColorModeSwitcher } from '../ColorModeSwitcher';
+import { ColorModeSwitcher } from './ColorModeSwitcher';
 
 const HeaderV3 = () => {
   const { colorMode } = useColorMode();

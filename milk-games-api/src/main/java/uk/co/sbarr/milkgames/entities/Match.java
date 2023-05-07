@@ -42,6 +42,9 @@ public class Match {
     @JsonView(View.Match.class)
     private long winningTeam;
 
+    @JsonView(View.Entity.class)
+    private boolean finished;
+
     @Column(columnDefinition = "json")
     @JsonView(View.Match.class)
     private String stats;
@@ -51,6 +54,7 @@ public class Match {
     public Match(Tournament tournament, int round, int matchNum) {
         this.id = new MatchPK(tournament.getId(), round, matchNum);
         this.tournament = tournament;
+        this.finished = false;
     }
 
     public void setTeam1(Team team) {
