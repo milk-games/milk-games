@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
+  Flex,
+  IconButton,
   Table,
   TableContainer,
   Tbody,
@@ -11,16 +13,22 @@ import {
   Tr,
 } from '@chakra-ui/react';
 
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+
 const PaginationTable = ({ headers, data = [] }) => {
+  const [page, setPage] = useState(0);
+
   return (
     <TableContainer>
       <Table color="background.light" border="none">
         <Thead bg="brown.900">{mapHeaders(headers)}</Thead>
         <Tbody bg="green.500">{data.map(row => mapRow(row, headers))}</Tbody>
       </Table>
-      <Box bg="brown.900" w="100%" h="40px" p={2}>
-        A
-      </Box>
+      <Flex bg="brown.900" w="100%" h="50px" py={2} px={3} justifyContent="flex-end" alignItems="center">
+        
+        <IconButton size="sm" mx={1} icon={<FaAngleLeft/>} rounded="full"/>
+        <IconButton size="sm" mx={1} icon={<FaAngleRight/>} rounded="full"/>
+      </Flex>
     </TableContainer>
   );
 };
