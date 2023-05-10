@@ -26,7 +26,6 @@ const Season = () => {
 
   useEffect(() => {
     SeasonService.getCurrent().then(season => {
-      console.log({ season });
       setSeason(season);
     });
   }, []);

@@ -24,7 +24,7 @@ const HeaderV3 = () => {
       className="header"
     >
       <Flex p={16} alignItems="center" h={{ base: '100px', md: '200px' }}>
-        <Image src={logo} h="100px" />
+        {/* <Image src={logo} h="100px" /> */}
         <Flex flexDir="column">
           <Heading size="lg" fontFamily="heading">
             Milk
