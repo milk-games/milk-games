@@ -109,8 +109,8 @@ public class Seeder implements CommandLineRunner {
 
         seasonPlayerRepository.save(new SeasonPlayer(season1, player1));
         seasonPlayerRepository.save(new SeasonPlayer(season1, player2));
-        seasonPlayerRepository.save(new SeasonPlayer(season1, player3));
-        seasonPlayerRepository.save(new SeasonPlayer(season1, player4));
+        seasonPlayerRepository.save(new SeasonPlayer(season1, player3, 5));
+        seasonPlayerRepository.save(new SeasonPlayer(season1, player4, 10));
         seasonPlayerRepository.save(new SeasonPlayer(season1, player5));
         seasonPlayerRepository.save(new SeasonPlayer(season1, player6));
     }

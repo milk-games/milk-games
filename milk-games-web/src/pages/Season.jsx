@@ -90,7 +90,7 @@ const Season = () => {
         p={{ base: 4, md: 4 }}
       >
         <SectionHeading title="LEADERBOARD" detail="Top Players">
-          <Button colorScheme="green" mt={4}>
+          <Button colorScheme="green" mt={4} mb={8}>
             see all
           </Button>
         </SectionHeading>

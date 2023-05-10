@@ -38,6 +38,7 @@ public class Season {
 
     @OneToMany(mappedBy = "season")
     @JsonView(View.Season.class)
+    @OrderBy("points DESC")
     private Set<SeasonPlayer> seasonPlayers = new HashSet<>();
 
     public Season() {}

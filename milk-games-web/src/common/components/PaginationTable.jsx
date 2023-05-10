@@ -1,33 +1,129 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Flex,
+  Icon,
   IconButton,
   Table,
   TableContainer,
   Tbody,
   Td,
+  Text,
   Tfoot,
   Th,
   Thead,
   Tr,
 } from '@chakra-ui/react';
 
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import {
+  FaAngleLeft,
+  FaAngleRight,
+  FaArrowDown,
+  FaArrowUp,
+} from 'react-icons/fa';
 
-const PaginationTable = ({ headers, data = [] }) => {
+const PaginationTable = ({ headers, data }) => {
   const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [sortedData, setSortedData] = useState(data);
+  const [sort, setSort] = useState({});
+
+  useEffect(() => {}, [sortedData]);
+  useEffect(() => {
+    setSortedData(data);
+  }, [data]);
+
+  const nextPage = () => {
+    setPage(page + 1);
+  };
+
+  const prevPage = () => {
+    setPage(page - 1);
+  };
+
+  const getLimit = () => {
+    const limit = (page + 1) * rowsPerPage;
+    return limit >= data.length ? data.length : limit;
+  };
+
+  const sortBy = header => {
+    let newSort = { [header.key]: 0 };
+
+    console.log();
+
+    switch (sort[header.key]) {
+      case 1:
+        newSort[header.key] = 0;
+        break;
+      case -1:
+        newSort[header.key] = 1;
+        break;
+      default:
+        console.log('here');
+        newSort[header.key] = -1;
+        console.log(newSort);
+        break;
+    }
+
+    setSort(newSort);
+
+    if (newSort[header.key]) {
+      let sorted = data.sort((rowA, rowB) => {
+        let a = getRowValue(rowA, header);
+        let b = getRowValue(rowB, header);
+
+        if (a == b) {
+          return 0;
+        }
+
+        return a < b ? newSort[header.key] * 1 : newSort[header.key] * -1;
+      });
+      setSortedData([...sorted]);
+    }
+  };
 
   return (
-    <TableContainer>
-      <Table color="background.light" border="none">
-        <Thead bg="brown.900">{mapHeaders(headers)}</Thead>
-        <Tbody bg="green.500">{data.map(row => mapRow(row, headers))}</Tbody>
+    <TableContainer color="background.light">
+      <Table border="none">
+        <Thead bg="brown.900">
+          <Tr>{mapHeaders(headers, sortBy, sort)}</Tr>
+        </Thead>
+        <Tbody bg="green.500" h="270px">
+          {mapData(sortedData, headers, page, rowsPerPage)}
+        </Tbody>
       </Table>
-      <Flex bg="brown.900" w="100%" h="50px" py={2} px={3} justifyContent="flex-end" alignItems="center">
-        
-        <IconButton size="sm" mx={1} icon={<FaAngleLeft/>} rounded="full"/>
-        <IconButton size="sm" mx={1} icon={<FaAngleRight/>} rounded="full"/>
+      <Flex
+        bg="brown.900"
+        w="100%"
+        h="50px"
+        py={2}
+        px={3}
+        justifyContent="flex-end"
+        alignItems="center"
+      >
+        <Box px={2}>
+          <Text>
+            {page * rowsPerPage + 1} - {getLimit()} of {data.length}
+          </Text>
+        </Box>
+        <IconButton
+          colorScheme="green"
+          size="sm"
+          mx={1}
+          icon={<FaAngleLeft />}
+          rounded="full"
+          isDisabled={page === 0}
+          onClick={prevPage}
+        />
+        <IconButton
+          colorScheme="green"
+          size="sm"
+          mx={1}
+          icon={<FaAngleRight />}
+          rounded="full"
+          isDisabled={(page + 1) * rowsPerPage > data.length}
+          onClick={nextPage}
+        />
       </Flex>
     </TableContainer>
   );
@@ -35,11 +131,38 @@ const PaginationTable = ({ headers, data = [] }) => {
 
 /* Helpers */
 
-function mapHeaders(headers) {
+function getRowValue(row, header) {
+  let value = row;
+  const keys = header.key.split('.');
+
+  if (value[keys[0]] != null) {
+    for (let key of keys) {
+      value = value[key];
+    }
+  } else if (header.fn) {
+    value = header.fn(row);
+  } else {
+    value = null;
+  }
+  return value;
+}
+
+function mapHeaders(headers, sortBy, sort) {
   if (!headers) return;
   return headers.map(header => (
-    <Th key={header.name} {...header.style} color="background.light">
-      {header.name}
+    <Th
+      key={header.key}
+      {...header.style}
+      color="background.light"
+      cursor="pointer"
+      border="none"
+      onClick={() => sortBy(header)}
+    >
+      <span>
+        {header.name}
+        {'  '}
+        {getSortIcon(header.key, sort)}
+      </span>
     </Th>
   ));
 }
@@ -48,24 +171,38 @@ function mapRow(row, headers) {
   return (
     <Tr>
       {headers.map(header => {
-        let value = row;
-        if (header.key) {
-          const keys = header.key.split('.');
-          for (let key of keys) {
-            value = value[key];
-          }
-        } else {
-          value = header.fn(row);
-        }
+        let value = getRowValue(row, header);
 
         return (
-          <Td key={header.name} {...header.style} border="none">
+          <Td
+            key={header.name}
+            {...header.style}
+            border="none"
+            m="auto"
+            verticalAlign="top"
+          >
             {value}
           </Td>
         );
       })}
     </Tr>
   );
+}
+
+function mapData(data, headers, page, rowsPerPage) {
+  const start = page * rowsPerPage;
+  const end = start + rowsPerPage;
+  return data.slice(start, end).map(row => mapRow(row, headers));
+}
+
+function getSortIcon(key, sort) {
+  if (sort[key]) {
+    return sort[key] > 0 ? (
+      <FaArrowDown style={{ display: 'inline', verticalAlign: 'middle' }} />
+    ) : (
+      <FaArrowUp style={{ display: 'inline', verticalAlign: 'middle' }} />
+    );
+  }
 }
 
 export default PaginationTable;

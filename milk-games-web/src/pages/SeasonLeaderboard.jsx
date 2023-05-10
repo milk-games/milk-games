@@ -26,6 +26,7 @@ const headers = [
     key: 'tournamentsPlayed',
     style: {
       w: '100%',
+      isNumeric: true,
     },
   },
   {
@@ -34,6 +35,7 @@ const headers = [
     style: {
       minW: '55px',
       display: { base: 'none', md: 'table-cell' },
+      isNumeric: true,
     },
   },
   {
@@ -41,15 +43,18 @@ const headers = [
     key: 'points',
     style: {
       w: '100%',
+      isNumeric: true,
     },
   },
   {
     name: 'Avg',
+    key: 'avg',
     fn: ({ points, tournamentsPlayed }) =>
-      tournamentsPlayed > 0 ? points / tournamentsPlayed : 0,
+      tournamentsPlayed > 0 ? points / tournamentsPlayed : points,
     style: {
       w: '100%',
       display: { base: 'none', md: 'table-cell' },
+      isNumeric: true,
     },
   },
 ];
