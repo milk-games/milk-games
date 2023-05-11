@@ -17,11 +17,11 @@ public class MatchPK implements Serializable {
     private long tournamentId;
 
     @Getter
-    @JsonView(View.Match.class)
+    @JsonView(View.Entity.class)
     private long round;
-    
+
     @Getter
-    @JsonView(View.Match.class)
+    @JsonView(View.Entity.class)
     private long matchNum;
 
     public MatchPK() {}

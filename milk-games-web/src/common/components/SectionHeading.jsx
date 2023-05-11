@@ -7,6 +7,7 @@ const SectionHeading = ({ title, detail, children }) => {
       templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
       gap="48"
       rowGap={0}
+      my={4}
     >
       <GridItem textAlign={{ md: 'right' }} mb={-2}>
         <Text fontSize="xl" letterSpacing={2}>

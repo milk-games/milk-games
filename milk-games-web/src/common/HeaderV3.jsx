@@ -20,7 +20,7 @@ const HeaderV3 = () => {
     <Flex
       w="100%"
       flexDir="column"
-      fill={getColor('header', colorMode)}
+      fill={getColor('bg1', colorMode)}
       className="header"
     >
       <Flex p={16} alignItems="center" h={{ base: '100px', md: '200px' }}>

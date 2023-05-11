@@ -70,7 +70,7 @@ public class Seeder implements CommandLineRunner {
         Game game1 = new Game("League of Legends", "league_of_legends.json");
         gameRepository.save(game1);
 
-        Tournament tournament1 = new Tournament("Tournament 1", season1, "single", game1, 4, 2, 0,
+        Tournament tournament1 = new Tournament("Tournament 1", season1, "single", game1, 8, 2, 0,
                 datetime.plusDays(1), datetime.plusDays(2));
         Tournament tournament2 = new Tournament("Tournament 2", season1, "single", game1, 4, 2, 0,
                 datetime.minusDays(1), datetime.minusDays(2));
@@ -84,6 +84,9 @@ public class Seeder implements CommandLineRunner {
         Team team1 = tournament1.createTeam("Team 1");
         Team team2 = tournament1.createTeam("Team 2");
         Team team3 = tournament1.createTeam("Team 3");
+        Team team4 = tournament1.createTeam("Team 4");
+        Team team5 = tournament1.createTeam("Team 5");
+        Team team7 = tournament1.createTeam("Team 7");
 
         team1.addPlayer(player1);
         team1.addPlayer(player2);
@@ -97,10 +100,16 @@ public class Seeder implements CommandLineRunner {
         teamRepository.save(team1);
         teamRepository.save(team2);
         teamRepository.save(team3);
+        teamRepository.save(team4);
+        teamRepository.save(team5);
+        teamRepository.save(team7);
 
         tournament1.addTeam(team1);
         tournament1.addTeam(team2);
         tournament1.addTeam(team3);
+        tournament1.addTeam(team4);
+        tournament1.addTeam(team5);
+        tournament1.addTeam(team7);
 
         tournamentRepository.save(tournament1);
         tournament1.initialiseBracket();

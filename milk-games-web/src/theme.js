@@ -5,8 +5,6 @@ import components from './styles/components';
 import buttonShading from './resources/shading.svg';
 import '@fontsource/quicksand';
 
-console.log({ components });
-
 const theme = extendTheme({
   fonts: {
     heading: 'Quicksand, sans-serif',
@@ -33,9 +31,21 @@ const theme = extendTheme({
         light: '#EEE5C4',
       },
     },
-    background: {
+    bg: {
       dark: '#202020',
       light: '#FFF4DE',
+      bg3: {
+        dark: '#303030',
+        light: '#E4DBB9',
+      },
+      bg2: {
+        dark: '#404040',
+        light: '#EEE5C4',
+      },
+      bg1: {
+        dark: '#505050',
+        light: '#F9F0D0',
+      },
     },
     ...colours,
   },
@@ -45,30 +55,29 @@ const theme = extendTheme({
   styles: {
     global: ({ colorMode }) => ({
       'html, body': {
-        background: theme.colors.background[colorMode],
+        background: theme.colors.bg[colorMode],
         color: theme.colors.primary[colorMode],
       },
       '.header': {
-        background: theme.colors.header[colorMode],
+        background: theme.colors.bg.bg1[colorMode],
       },
       '.header-wave': {
-        background: theme.colors.background[colorMode],
+        background: theme.colors.bg[colorMode],
       },
       '.wave-1': {
-        fill: theme.colors.header.wave1[colorMode],
+        fill: theme.colors.bg.bg3[colorMode],
       },
       '.wave-2': {
-        fill: theme.colors.header.wave2[colorMode],
+        fill: theme.colors.bg.bg2[colorMode],
       },
       '.wave-3': {
-        fill: theme.colors.header[colorMode],
+        fill: theme.colors.bg.bg1[colorMode],
       },
       '.sidebar': {
-        background: theme.colors.background[colorMode],
+        background: theme.colors.bg[colorMode],
       },
     }),
   },
 });
 
-console.log({ theme });
 export default theme;

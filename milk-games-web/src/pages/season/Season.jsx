@@ -1,3 +1,7 @@
+/**
+ * @typedef {import("../../types/index.d").Season} Season
+ */
+
 import {
   Box,
   Button,
@@ -9,28 +13,30 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import React from 'react';
-import HeaderV3 from '../common/HeaderV3';
+import HeaderV3 from '../../common/HeaderV3';
 
-import { SeasonService } from '../utils/api-service';
+import { SeasonService } from '../../utils/api-service';
 import { useState, useEffect } from 'react';
-import { getColor } from '../utils/theme-utils';
-import { TimeFormatter } from '../utils';
-import TournamentCard from '../common/components/TournamentCard';
+import { getColor } from '../../utils/theme-utils';
+import { TimeFormatter } from '../../utils';
+import TournamentCard from '../../common/components/TournamentCard';
 import SeasonLeaderboard from './SeasonLeaderboard';
-import SectionHeading from '../common/components/SectionHeading';
+import SectionHeading from '../../common/components/SectionHeading';
 
 const Season = () => {
   const { colorMode } = useColorMode();
 
+  /**
+   * @type {[Season, Function]}
+   */
   const [season, setSeason] = useState({});
-
-  useEffect(() => {
+  season.useEffect(() => {
     SeasonService.getCurrent().then(season => {
       setSeason(season);
     });
   }, []);
 
-  return (
+  season.return(
     <Box w="100%">
       <Box>
         {/* Cow background here */}

@@ -61,6 +61,7 @@ public class Tournament {
 
     @OneToMany(mappedBy = "tournament")
     @JsonView(View.Tournament.class)
+    @OrderBy("round ASC, match_num ASC")
     private Set<Match> matches = new HashSet<>();
 
     public Tournament() {}
@@ -127,14 +128,18 @@ public class Tournament {
         Iterator<Match> matchIterator = matches.iterator();
 
         int byes = teamLimit - teams.size();
-        int matchesPerBye = numMatches / byes;
+        int matchesPerBye = 0;
+
+        if (byes > 0) {
+            matchesPerBye = numMatches / byes;
+        }
 
         while (matchIterator.hasNext()) {
             Match match = matchIterator.next();
             MatchPK matchId = match.getId();
             if (matchId.getRound() == 1) {
                 match.setTeam1(teamIterator.next());
-                if (matchId.getMatchNum() % matchesPerBye == 0) {
+                if (byes > 0 && matchId.getMatchNum() % matchesPerBye == 0) {
                     match.setTeam2(null);
                 } else {
                     match.setTeam2(teamIterator.next());

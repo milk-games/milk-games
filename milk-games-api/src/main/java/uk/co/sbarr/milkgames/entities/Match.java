@@ -18,6 +18,7 @@ public class Match {
 
     @EmbeddedId
     @JsonProperty("details")
+    @JsonView(View.Entity.class)
     private MatchPK id;
 
     @ManyToOne
@@ -26,11 +27,11 @@ public class Match {
     private Tournament tournament;
 
     @ManyToOne
-    @JsonView(View.Match.class)
+    @JsonView({View.Tournament.class, View.Match.class})
     private Team team1;
 
     @ManyToOne
-    @JsonView(View.Match.class)
+    @JsonView({View.Tournament.class, View.Match.class})
     private Team team2;
 
     @JsonView(View.Entity.class)
@@ -39,7 +40,7 @@ public class Match {
     @JsonView(View.Entity.class)
     private long team2Points;
 
-    @JsonView(View.Match.class)
+    @JsonView({View.Tournament.class, View.Match.class})
     private long winningTeam;
 
     @JsonView(View.Entity.class)
