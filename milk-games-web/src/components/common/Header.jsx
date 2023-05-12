@@ -9,11 +9,11 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
-import logo from '../resources/logo.png';
-import { getColor } from '../utils/theme-utils';
+import logo from '@assets/logo.png';
+import { getColor } from '@utils/theme-utils';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 
-const HeaderV3 = () => {
+const Header = () => {
   const { colorMode } = useColorMode();
 
   return (
@@ -60,4 +60,4 @@ const HeaderV3 = () => {
   );
 };
 
-export default HeaderV3;
+export default Header;

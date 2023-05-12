@@ -4,11 +4,13 @@ import React, { useEffect } from 'react';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import BracketMatch from './BracketMatch';
 
+/**
+ *
+ * @param {Object} props
+ * @param {Match[]} props.matches
+ * @param {number} teamLimit
+ */
 const Bracket = ({ matches = [], teamLimit = 0 }) => {
-  useEffect(() => {
-    console.log({ matches });
-  }, [matches]);
-
   return (
     <Box boxSize="900px" border="black" cursor="grab" p={4}>
       <ScrollContainer className="scroll-container" style={{ height: '100%' }}>

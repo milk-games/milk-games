@@ -10,7 +10,7 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import React from 'react';
-import { getColor } from '../../utils/theme-utils';
+import { getColor } from '@utils/theme-utils';
 import {
   FaCalendar,
   FaClock,

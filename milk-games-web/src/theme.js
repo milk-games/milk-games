@@ -1,8 +1,8 @@
 import { extendTheme } from '@chakra-ui/react';
-import colours from './styles/Colours.json';
-import components from './styles/components';
+import colours from '@styles/Colours.json';
+import components from '@styles/components';
 
-import buttonShading from './resources/shading.svg';
+import buttonShading from '@assets/shading.svg';
 import '@fontsource/quicksand';
 
 const theme = extendTheme({

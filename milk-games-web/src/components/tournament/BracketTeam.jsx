@@ -1,8 +1,19 @@
+/**
+ * @typedef {import("../../types/index.d").Team} Team
+ */
+
 import { Box, Flex, Text, useColorMode } from '@chakra-ui/react';
 import React from 'react';
 import { getColor } from '../../utils/theme-utils';
+import { dragEnd, dragOver, dragStart } from './bracket/drag-events';
 
-const BracketTeam = ({ team, score }) => {
+/**
+ *
+ * @param {Object} props
+ * @param {Team} props.team
+ * @param {number} score
+ */
+const BracketTeam = ({ team, score, ...rest }) => {
   const { colorMode } = useColorMode();
 
   return (
@@ -11,6 +22,12 @@ const BracketTeam = ({ team, score }) => {
       maxW="100%"
       bg={getColor('bg.bg1', colorMode)}
       rounded="md"
+      cursor="pointer"
+      userSelect="none"
+      draggable="true"
+      onDragStart={e => dragStart(e, team)}
+      onDragOver={dragOver}
+      {...rest}
     >
       <Box
         p={2}

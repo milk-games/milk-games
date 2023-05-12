@@ -4,11 +4,11 @@
 
 import { Box, Flex, Heading, Text, useColorMode } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import HeaderV3 from '../../common/HeaderV3';
-import { TournamentService } from '../../utils/api-service';
-import { getColor } from '../../utils/theme-utils';
-import SectionHeading from '../../common/components/SectionHeading';
-import Bracket from './Bracket';
+import Header from '@components/common/Header';
+import { TournamentService } from '@utils/api-service';
+import { getColor } from '@utils/theme-utils';
+import SectionHeading from '@components/common/SectionHeading';
+import Bracket from './bracket/Bracket';
 
 /**
  *
@@ -25,16 +25,21 @@ const Tournament = () => {
    */
   const [tournament, setTournament] = useState({});
 
+  /**
+   * @type {[Match[], Function]}
+   */
+  const [matches, setMatches] = useState([]);
+
   useEffect(() => {
     TournamentService.get(1).then(tournament => {
-      console.log({ tournament });
+      setMatches(tournament.matches);
       setTournament(tournament);
     });
   }, []);
 
   return (
     <Box w="100%">
-      <HeaderV3 />
+      <Header />
 
       <Box
         mt={24}
@@ -65,10 +70,7 @@ const Tournament = () => {
         p={{ base: 4, md: 4 }}
       >
         <SectionHeading title="BRACKET"></SectionHeading>
-        <Bracket
-          matches={tournament.matches}
-          teamLimit={tournament.teamLimit}
-        />
+        <Bracket matches={matches} teamLimit={tournament.teamLimit} />
 
         {/* Table of the teams? */}
         {/* List of all team cards */}

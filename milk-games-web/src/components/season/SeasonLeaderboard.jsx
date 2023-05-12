@@ -10,8 +10,8 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
-import '../../styles/SeasonLeaderboard.css';
-import PaginationTable from '../../common/components/PaginationTable';
+import '../../assets/styles/SeasonLeaderboard.css';
+import PaginationTable from '../../components/components/PaginationTable';
 
 const headers = [
   {

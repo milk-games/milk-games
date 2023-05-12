@@ -1,15 +1,18 @@
 import React from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
-import Landing from './Landing';
 import theme from './theme';
-import Season from './pages/season/Season';
-import Tournament from './pages/tournament/Tournament';
+import Tournament from '@components/tournament/Tournament';
+
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <Tournament />
-    </ChakraProvider>
+    <Provider store={store}>
+      <ChakraProvider theme={theme}>
+        <Tournament />
+      </ChakraProvider>
+    </Provider>
   );
 }
 

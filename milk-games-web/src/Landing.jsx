@@ -1,14 +1,11 @@
 import React from 'react';
 import { Box, Image } from '@chakra-ui/react';
-import Header from './common/Header';
-import HeaderV2 from './common/HeaderV2';
-import Spill from './resources/spill.png';
-import HeaderV3 from './common/HeaderV3';
+import Header from '@components/common/Header';
 
 const Landing = () => {
   return (
     <Box>
-      <HeaderV3 />
+      <Header />
       {/* <Box
         position="relative"
         overflowX="clip"

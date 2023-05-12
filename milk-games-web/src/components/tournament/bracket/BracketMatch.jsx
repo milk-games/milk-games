@@ -2,10 +2,15 @@
  * @typedef {import("../../types/index.d").Match} Match
  */
 
+/**
+ * @typedef {import("../../types/index.d").Team} Team
+ */
+
 import { Box, Flex, Text, useColorMode } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BracketTeam from './BracketTeam';
-import { getColor } from '../../utils/theme-utils';
+import { getColor } from '@utils/theme-utils';
+import { dragEnd } from './drag-events';
 
 /**
  *
@@ -15,7 +20,20 @@ import { getColor } from '../../utils/theme-utils';
 const BracketMatch = ({ match = {}, options = {}, ...rest }) => {
   const { colorMode } = useColorMode();
 
-  console.log({ match, options });
+  const [team1, setTeam1] = useState({
+    team: match.team1,
+    points: match.team1Points,
+  });
+
+  const [team2, setTeam2] = useState({
+    team: match.team2,
+    points: match.team2Points,
+  });
+
+  useEffect(() => {
+    setTeam1({ ...match.team1, points: match.team1Points });
+    setTeam2({ ...match.team2, points: match.team2Points });
+  }, [match]);
 
   return (
     <Flex
@@ -34,9 +52,17 @@ const BracketMatch = ({ match = {}, options = {}, ...rest }) => {
         bg={getColor('bg.bg2', colorMode)}
         rounded="lg"
       >
-        <BracketTeam team={match?.team1} score={match?.team1Points} />
+        <BracketTeam
+          team={team1}
+          score={team1.points}
+          onDrop={e => dragEnd(e, setTeam1)}
+        />
         <Text my={2}> vs </Text>
-        <BracketTeam team={match?.team2} score={match?.team2Points} />
+        <BracketTeam
+          team={team2}
+          score={team2.points}
+          onDrop={e => dragEnd(e, setTeam2)}
+        />
       </Box>
     </Flex>
   );
@@ -45,7 +71,6 @@ const BracketMatch = ({ match = {}, options = {}, ...rest }) => {
 function getBracketLines({ round, matchNum, teamLimit }) {
   let numRounds = Math.log(teamLimit) / Math.log(2);
 
-  console.log({ numRounds });
   let _before = {
     content: '""',
     display: 'block',

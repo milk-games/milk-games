@@ -13,15 +13,15 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import React from 'react';
-import HeaderV3 from '../../common/HeaderV3';
+import Header from '@components/common/Header';
 
-import { SeasonService } from '../../utils/api-service';
+import { SeasonService } from '@utils/api-service';
 import { useState, useEffect } from 'react';
-import { getColor } from '../../utils/theme-utils';
-import { TimeFormatter } from '../../utils';
-import TournamentCard from '../../common/components/TournamentCard';
+import { getColor } from '@utils/theme-utils';
+import { TimeFormatter } from '@utils';
+import TournamentCard from '@components/tournament/TournamentCard';
 import SeasonLeaderboard from './SeasonLeaderboard';
-import SectionHeading from '../../common/components/SectionHeading';
+import SectionHeading from '@components/common/SectionHeading';
 
 const Season = () => {
   const { colorMode } = useColorMode();
@@ -40,7 +40,7 @@ const Season = () => {
     <Box w="100%">
       <Box>
         {/* Cow background here */}
-        <HeaderV3 />
+        <Header />
         <Box>
           <Flex
             justifyContent="center"
