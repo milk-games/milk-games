@@ -4,7 +4,10 @@
     "paths": {
       "@components/*": ["components/*"],
       "@utils/*": ["utils/*"],
-      "@styles/*": ["styles/*"]
+      "@styles/*": ["styles/*"],
+      "@assets/*": ["assets/*"],
+      "@types/*": ["types/*"],
+      "@actions/*": ["redux/features/*"]
     }
   },
   "exclude": ["node_modules", "build"]

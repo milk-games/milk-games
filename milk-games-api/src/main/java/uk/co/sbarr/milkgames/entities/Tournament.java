@@ -113,7 +113,7 @@ public class Tournament {
         for (int round = 1; round <= numRounds; round++) {
             int numMatches = (teamLimit / 2) / round;
             for (int matchNum = 1; matchNum <= numMatches; matchNum++) {
-                Match match = new Match(this, round, matchNum);
+                Match match = new Match(this, round, matchNum, 2);
                 matches.add(match);
             }
         }

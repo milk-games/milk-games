@@ -1,39 +1,54 @@
 /**
- * @typedef {import("../../types/index.d").Match} Match
- */
-
-/**
- * @typedef {import("../../types/index.d").Team} Team
+ * @typedef {import("@types/index.d").Match} Match
+ * @typedef {import("@types/index.d").Team} Team
  */
 
 import { Box, Flex, Text, useColorMode } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateMatch } from '@actions/tournament';
+
 import BracketTeam from './BracketTeam';
 import { getColor } from '@utils/theme-utils';
-import { dragEnd } from './drag-events';
+
+import { isEqual } from 'lodash';
 
 /**
  *
  * @param {Object} props
  * @param {Match} props.match
  */
-const BracketMatch = ({ match = {}, options = {}, ...rest }) => {
+const BracketMatch = ({ match, options = {}, updateMatch, ...rest }) => {
+  const dispatch = useDispatch();
+  let initialized = false;
+
   const { colorMode } = useColorMode();
+  /**
+   * @type {[Team, Function]}
+   */
+  const [team1, setTeam1] = useState(match.team1);
 
-  const [team1, setTeam1] = useState({
-    team: match.team1,
-    points: match.team1Points,
-  });
+  /**
+   * @type {[Team, Function]}
+   */
+  const [team2, setTeam2] = useState(match.team2);
 
-  const [team2, setTeam2] = useState({
-    team: match.team2,
-    points: match.team2Points,
-  });
+  const [team1Points, setTeam1Points] = useState(match.team1Points);
+  const [team2Points, setTeam2Points] = useState(match.team2Points);
 
   useEffect(() => {
-    setTeam1({ ...match.team1, points: match.team1Points });
-    setTeam2({ ...match.team2, points: match.team2Points });
+    setTeam1(match.team1);
+    setTeam1Points(match.team1Points);
+    setTeam2(match.team2);
+    setTeam2Points(match.team2Points);
   }, [match]);
+
+  useEffect(() => {
+    if (initialized) {
+      const newData = { ...match, team1, team2, team1Points, team2Points };
+      updateMatch(newData);
+    }
+  }, [team1, team2, team1Points, team2Points]);
 
   return (
     <Flex
@@ -54,14 +69,18 @@ const BracketMatch = ({ match = {}, options = {}, ...rest }) => {
       >
         <BracketTeam
           team={team1}
-          score={team1.points}
-          onDrop={e => dragEnd(e, setTeam1)}
+          score={team1Points}
+          scoreLimit={match?.scoreLimit || 1}
+          setTeam={setTeam1}
+          setScore={setTeam1Points}
         />
         <Text my={2}> vs </Text>
         <BracketTeam
           team={team2}
-          score={team2.points}
-          onDrop={e => dragEnd(e, setTeam2)}
+          score={team2Points}
+          scoreLimit={match?.scoreLimit || 1}
+          setTeam={setTeam2}
+          setScore={setTeam2Points}
         />
       </Box>
     </Flex>

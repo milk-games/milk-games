@@ -1,7 +1,14 @@
+/**
+ * @typedef {import("axios/index.d").AxiosInstance} AxiosInstance
+ */
+
 import axios from 'axios';
 
 const apiUrl = 'http://' + process.env.REACT_APP_API_URL + '/';
 
+/**
+ * @type {AxiosInstance}
+ */
 const api = {
   ...axios.create({
     baseURL: apiUrl,

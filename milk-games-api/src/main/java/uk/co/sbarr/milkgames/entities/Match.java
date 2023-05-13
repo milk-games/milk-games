@@ -40,6 +40,9 @@ public class Match {
     @JsonView(View.Entity.class)
     private long team2Points;
 
+    @JsonView(View.Entity.class)
+    private long scoreLimit;
+
     @JsonView({View.Tournament.class, View.Match.class})
     private long winningTeam;
 
@@ -52,10 +55,11 @@ public class Match {
 
     public Match() {}
 
-    public Match(Tournament tournament, int round, int matchNum) {
+    public Match(Tournament tournament, int round, int matchNum, int scoreLimit) {
         this.id = new MatchPK(tournament.getId(), round, matchNum);
         this.tournament = tournament;
         this.finished = false;
+        this.scoreLimit = scoreLimit;
     }
 
     public void setTeam1(Team team) {

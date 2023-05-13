@@ -3,6 +3,7 @@ import { Tournament } from './tournament';
 interface MatchDetails {
   round: number;
   matchNum: number;
+  tournamentId: number;
 }
 
 interface Match {

@@ -1,10 +1,8 @@
 package uk.co.sbarr.milkgames.controllers;
 
-
-import java.net.URL;
 import java.util.List;
 import java.util.Optional;
-
+import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +29,8 @@ public class MatchController {
         this.matchRepository = repository;
         this.objectMapper = new ObjectMapper();
     }
+
+    /** GET Mappings */
 
     @RequestMapping
     @JsonView(View.Match.class)
@@ -83,5 +83,15 @@ public class MatchController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    /** PATCH Mappings */
+    @RequestMapping(params = {"round", "matchNum"}, method = RequestMethod.PATCH)
+    @JsonView(View.Match.class)
+    public ResponseEntity<Void> updateMatch(@RequestBody Match match) {
+
+        System.out.println(match.getTeam1().getName());
+
+        return ResponseEntity.ok(null);
     }
 }

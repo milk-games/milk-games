@@ -14,6 +14,8 @@ import uk.co.sbarr.milkgames.entities.View;
 public class MatchPK implements Serializable {
     private static final long serialVersionUID = 1l;
 
+    @Getter
+    @JsonView(View.Entity.class)
     private long tournamentId;
 
     @Getter

@@ -13,11 +13,46 @@ import { dragEnd, dragOver, dragStart } from './drag-events';
  * @param {Team} props.team
  * @param {number} score
  */
-const BracketTeam = ({ team, score, ...rest }) => {
+const BracketTeam = ({
+  team,
+  score,
+  scoreLimit = 1,
+  setTeam,
+  setScore,
+  updateMatch,
+  ...rest
+}) => {
   const { colorMode } = useColorMode();
+
+  /**
+   * @param {MouseEvent} e
+   */
+  const handlePointsOnClick = e => {
+    if (score > 0 && e.ctrlKey) {
+      updateMatch(score - 1, setScore);
+    } else if (score < scoreLimit && !e.ctrlKey) {
+      updateMatch(score + 1, setScore);
+    }
+  };
+
+  /**
+   * @param {DragEvent} e
+   */
+  const handleDragOver = e => {
+    e.preventDefault();
+  };
+
+  /**
+   * @param {DragEvent} e
+   */
+  const handleDrop = e => {
+    const data = e.dataTransfer.getData('text');
+    updateMatch(JSON.parse(data), setTeam);
+  };
 
   return (
     <Flex
+      {...rest}
       align="center"
       maxW="100%"
       bg={getColor('bg.bg1', colorMode)}
@@ -26,8 +61,8 @@ const BracketTeam = ({ team, score, ...rest }) => {
       userSelect="none"
       draggable="true"
       onDragStart={e => dragStart(e, team)}
-      onDragOver={dragOver}
-      {...rest}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
     >
       <Box
         p={2}
@@ -41,12 +76,13 @@ const BracketTeam = ({ team, score, ...rest }) => {
         </Text>
       </Box>
       <Box
-        bg="brown.700"
+        bg={score == scoreLimit ? 'green.500' : 'brown.700'}
         color="bg.light"
         roundedRight="md"
         p={2}
         minW="40px"
         textAlign="center"
+        onClick={handlePointsOnClick}
       >
         <Text>
           <b>{score}</b>

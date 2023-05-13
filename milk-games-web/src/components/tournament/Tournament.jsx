@@ -1,13 +1,15 @@
 /**
- * @typedef {import("../../types/index.d").Tournament} Tournament
+ * @typedef {import("@types/index.d").Tournament} Tournament
  */
-
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { set } from '@actions/tournament';
 import { Box, Flex, Heading, Text, useColorMode } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+
 import Header from '@components/common/Header';
-import { TournamentService } from '@utils/api-service';
-import { getColor } from '@utils/theme-utils';
 import SectionHeading from '@components/common/SectionHeading';
+
+import { TournamentService } from '@utils/api-service';
 import Bracket from './bracket/Bracket';
 
 /**
@@ -18,22 +20,22 @@ import Bracket from './bracket/Bracket';
  */
 
 const Tournament = () => {
-  const { colorMode } = useColorMode();
+  const dispatch = useDispatch();
 
+  // const tournament = useSelector(state => state.tournament);
   /**
    * @type {[Tournament, Function]}
    */
   const [tournament, setTournament] = useState({});
+  const matches = useRef([]);
 
-  /**
-   * @type {[Match[], Function]}
-   */
-  const [matches, setMatches] = useState([]);
+  const { colorMode } = useColorMode();
 
   useEffect(() => {
     TournamentService.get(1).then(tournament => {
-      setMatches(tournament.matches);
       setTournament(tournament);
+      matches.current = tournament.matches;
+      // dispatch(set(tournament));
     });
   }, []);
 
@@ -70,7 +72,7 @@ const Tournament = () => {
         p={{ base: 4, md: 4 }}
       >
         <SectionHeading title="BRACKET"></SectionHeading>
-        <Bracket matches={matches} teamLimit={tournament.teamLimit} />
+        <Bracket matchesRef={matches} teamLimit={tournament.teamLimit} />
 
         {/* Table of the teams? */}
         {/* List of all team cards */}
