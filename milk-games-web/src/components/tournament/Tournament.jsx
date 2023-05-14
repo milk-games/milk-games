@@ -27,7 +27,6 @@ const Tournament = () => {
    * @type {[Tournament, Function]}
    */
   const [tournament, setTournament] = useState({});
-  const matches = useRef([]);
 
   const { colorMode } = useColorMode();
 
@@ -72,7 +71,7 @@ const Tournament = () => {
         p={{ base: 4, md: 4 }}
       >
         <SectionHeading title="BRACKET"></SectionHeading>
-        <Bracket matchesRef={matches} teamLimit={tournament.teamLimit} />
+        <Bracket matches={tournament.matches} teamLimit={tournament.teamLimit} />
 
         {/* Table of the teams? */}
         {/* List of all team cards */}

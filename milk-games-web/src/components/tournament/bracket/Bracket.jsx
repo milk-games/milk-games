@@ -1,3 +1,7 @@
+/**
+ * @typedef {import("@types/index.d").Match} Match
+ */
+
 import { Box, Flex, IconButton } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 
@@ -9,21 +13,30 @@ import { FaSave } from 'react-icons/fa';
 /**
  *
  * @param {Object} props
- * @param {Match[]} props.matchData
+ * @param {Match[]} props.matches
  * @param {number} teamLimit
  */
-const Bracket = ({ matchesRef, teamLimit = 0 }) => {
+const Bracket = ({ matches, teamLimit = 0 }) => {
   /**
    * @type {[Match[], Function]}
    */
   const [matches, setMatches] = useState([]);
 
   useEffect(() => {
-    setMatches(matchesRef);
-  }, [matchesRef]);
+    setMatches(matches);
+  }, [matches]);
 
-  const updateMatch = (index, match) => {
-    matchesRef.current[index] = match;
+  /**
+   *
+   * @param {Match} updatedMatch
+   */
+  const updateMatch = updatedMatch => {
+    matches.find(
+      ({ details: { tournamentId, round, matchNum } }) =>
+        tournamentId == updatedMatch.details.tournamentId &&
+        round == updatedMatch.details.round &&
+        matchNum == updatedMatch.details.matchNum
+    );
   };
 
   return (
