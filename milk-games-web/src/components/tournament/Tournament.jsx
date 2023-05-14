@@ -4,7 +4,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { set } from '@actions/tournament';
-import { Box, Flex, Heading, Text, useColorMode } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Heading,
+  Spinner,
+  Text,
+  useColorMode,
+} from '@chakra-ui/react';
 
 import Header from '@components/common/Header';
 import SectionHeading from '@components/common/SectionHeading';
@@ -20,21 +27,19 @@ import Bracket from './bracket/Bracket';
  */
 
 const Tournament = () => {
-  const dispatch = useDispatch();
+  const [dataInitialized, setDataInitialized] = useState(false);
 
-  // const tournament = useSelector(state => state.tournament);
   /**
    * @type {[Tournament, Function]}
    */
-  const [tournament, setTournament] = useState({});
+  const [tournament, setTournament] = useState();
 
   const { colorMode } = useColorMode();
 
   useEffect(() => {
     TournamentService.get(1).then(tournament => {
       setTournament(tournament);
-      matches.current = tournament.matches;
-      // dispatch(set(tournament));
+      setDataInitialized(true);
     });
   }, []);
 
@@ -69,9 +74,22 @@ const Tournament = () => {
         mx="auto"
         w={{ base: '100%', md: '3xl', lg: '4xl' }}
         p={{ base: 4, md: 4 }}
+        textAlign="center"
       >
         <SectionHeading title="BRACKET"></SectionHeading>
-        <Bracket matches={tournament.matches} teamLimit={tournament.teamLimit} />
+        {dataInitialized ? (
+          <Bracket
+            matches={tournament.matches}
+            teamLimit={tournament.teamLimit}
+          />
+        ) : (
+          <Spinner size="xl" m="36" p={4} />
+        )}
+
+        {/* <Bracket
+          matches={tournament.matches}
+          teamLimit={tournament.teamLimit}
+        /> */}
 
         {/* Table of the teams? */}
         {/* List of all team cards */}

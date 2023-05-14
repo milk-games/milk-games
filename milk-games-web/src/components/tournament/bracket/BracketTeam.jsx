@@ -19,7 +19,7 @@ const BracketTeam = ({
   scoreLimit = 1,
   setTeam,
   setScore,
-  updateMatch,
+  updateState,
   ...rest
 }) => {
   const { colorMode } = useColorMode();
@@ -28,10 +28,21 @@ const BracketTeam = ({
    * @param {MouseEvent} e
    */
   const handlePointsOnClick = e => {
-    if (score > 0 && e.ctrlKey) {
-      updateMatch(score - 1, setScore);
-    } else if (score < scoreLimit && !e.ctrlKey) {
-      updateMatch(score + 1, setScore);
+    if (team != null) {
+      if (score > 0 && e.ctrlKey) {
+        updateState(setScore, score - 1);
+      } else if (score < scoreLimit && !e.ctrlKey) {
+        updateState(setScore, score + 1);
+      }
+    }
+  };
+
+  /**
+   * @param {MouseEvent} e
+   */
+  const handleTeamOnClick = e => {
+    if (e.ctrlKey) {
+      updateState(setTeam, null);
     }
   };
 
@@ -47,7 +58,7 @@ const BracketTeam = ({
    */
   const handleDrop = e => {
     const data = e.dataTransfer.getData('text');
-    updateMatch(JSON.parse(data), setTeam);
+    updateState(setTeam, JSON.parse(data));
   };
 
   return (
@@ -70,6 +81,7 @@ const BracketTeam = ({
         textOverflow="ellipsis"
         overflow="hidden"
         flexGrow={1}
+        onClick={handleTeamOnClick}
       >
         <Text isTruncated w="100%" textOverflow="ellipsis">
           {team?.name ? team.name : ''}

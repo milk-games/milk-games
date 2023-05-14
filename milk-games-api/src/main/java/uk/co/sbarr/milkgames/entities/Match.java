@@ -8,11 +8,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Getter;
+import lombok.Setter;
 import uk.co.sbarr.milkgames.entities.relationships.pk.MatchPK;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "matches")
 public class Match {
 
@@ -25,6 +28,7 @@ public class Match {
     @JsonView(View.Match.class)
     @MapsId("tournamentId")
     private Tournament tournament;
+
 
     @ManyToOne
     @JsonView({View.Tournament.class, View.Match.class})

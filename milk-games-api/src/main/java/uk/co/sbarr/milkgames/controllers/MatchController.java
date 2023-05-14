@@ -86,12 +86,11 @@ public class MatchController {
     }
 
     /** PATCH Mappings */
-    @RequestMapping(params = {"round", "matchNum"}, method = RequestMethod.PATCH)
+
+    @RequestMapping(method = RequestMethod.PATCH)
     @JsonView(View.Match.class)
     public ResponseEntity<Void> updateMatch(@RequestBody Match match) {
-
-        System.out.println(match.getTeam1().getName());
-
+        matchRepository.save(match);
         return ResponseEntity.ok(null);
     }
 }

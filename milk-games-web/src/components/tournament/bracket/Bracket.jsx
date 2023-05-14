@@ -20,23 +20,23 @@ const Bracket = ({ matches, teamLimit = 0 }) => {
   /**
    * @type {[Match[], Function]}
    */
-  const [matches, setMatches] = useState([]);
-
-  useEffect(() => {
-    setMatches(matches);
-  }, [matches]);
+  const [updatedMatches, setUpdatedMatches] = useState(matches);
 
   /**
    *
    * @param {Match} updatedMatch
    */
   const updateMatch = updatedMatch => {
-    matches.find(
-      ({ details: { tournamentId, round, matchNum } }) =>
-        tournamentId == updatedMatch.details.tournamentId &&
-        round == updatedMatch.details.round &&
-        matchNum == updatedMatch.details.matchNum
-    );
+    console.log(updatedMatch);
+
+    // let match = matches.find(
+    //   ({ details: { tournamentId, round, matchNum } }) =>
+    //     tournamentId == updatedMatch.details.tournamentId &&
+    //     round == updatedMatch.details.round &&
+    //     matchNum == updatedMatch.details.matchNum
+    // );
+
+    // console.log({ match });
   };
 
   return (
@@ -53,43 +53,43 @@ const Bracket = ({ matches, teamLimit = 0 }) => {
         <Flex alignContent="flex-start">
           <Flex flexDir="column" maxW="200px" minW="200px">
             <BracketMatch
-              match={matchesRef.current[0] || {}}
-              options={{ ...matchesRef.current[0]?.details, teamLimit }}
-              updateMatch={match => updateMatch(0, match)}
+              match={updatedMatches[0] || {}}
+              teamLimit={teamLimit}
+              updateMatch={updateMatch}
             />
             <BracketMatch
-              match={matchesRef.current[1] || {}}
-              options={{ ...matchesRef.current[1]?.details, teamLimit }}
-              updateMatch={match => updateMatch(1, match)}
+              match={updatedMatches[1] || {}}
+              teamLimit={teamLimit}
+              updateMatch={updateMatch}
             />
             <BracketMatch
-              match={matchesRef.current[2] || {}}
-              options={{ ...matchesRef.current[2]?.details, teamLimit }}
-              updateMatch={match => updateMatch(2, match)}
+              match={updatedMatches[2] || {}}
+              teamLimit={teamLimit}
+              updateMatch={updateMatch}
             />
             <BracketMatch
-              match={matchesRef.current[3] || {}}
-              options={{ ...matchesRef.current[3]?.details, teamLimit }}
-              updateMatch={match => updateMatch(3, match)}
-            />
-          </Flex>
-          <Flex flexDir="column" maxW="200px" minW="200px">
-            <BracketMatch
-              match={matchesRef.current[4] || {}}
-              options={{ ...matchesRef.current[4]?.details, teamLimit }}
-              updateMatch={match => updateMatch(4, match)}
-            />
-            <BracketMatch
-              match={matchesRef.current[5] || {}}
-              options={{ ...matchesRef.current[5]?.details, teamLimit }}
-              updateMatch={match => updateMatch(5, match)}
+              match={updatedMatches[3] || {}}
+              teamLimit={teamLimit}
+              updateMatch={updateMatch}
             />
           </Flex>
           <Flex flexDir="column" maxW="200px" minW="200px">
             <BracketMatch
-              match={matchesRef.current[6] || {}}
-              options={{ ...matchesRef.current[6]?.details, teamLimit }}
-              updateMatch={match => updateMatch(6, match)}
+              match={updatedMatches[4] || {}}
+              teamLimit={teamLimit}
+              updateMatch={updateMatch}
+            />
+            <BracketMatch
+              match={updatedMatches[5] || {}}
+              teamLimit={teamLimit}
+              updateMatch={updateMatch}
+            />
+          </Flex>
+          <Flex flexDir="column" maxW="200px" minW="200px">
+            <BracketMatch
+              match={updatedMatches[6] || {}}
+              teamLimit={teamLimit}
+              updateMatch={updateMatch}
             />
           </Flex>
           {/* <Flex flexDir="column" maxW="200px" minW="200px">

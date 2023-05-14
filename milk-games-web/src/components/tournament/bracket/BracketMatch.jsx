@@ -5,24 +5,23 @@
 
 import { Box, Flex, Text, useColorMode } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { updateMatch } from '@actions/tournament';
 
 import BracketTeam from './BracketTeam';
 import { getColor } from '@utils/theme-utils';
 
 import { isEqual } from 'lodash';
+import MatchService from '@utils/api-service/MatchService';
 
 /**
  *
  * @param {Object} props
  * @param {Match} props.match
  */
-const BracketMatch = ({ match, options = {}, updateMatch, ...rest }) => {
-  const dispatch = useDispatch();
-  let initialized = false;
-
+const BracketMatch = ({ match, teamLimit, updateMatch, ...rest }) => {
   const { colorMode } = useColorMode();
+
+  const [dataInitialized, setDataInitialized] = useState(false);
+
   /**
    * @type {[Team, Function]}
    */
@@ -36,17 +35,18 @@ const BracketMatch = ({ match, options = {}, updateMatch, ...rest }) => {
   const [team1Points, setTeam1Points] = useState(match.team1Points);
   const [team2Points, setTeam2Points] = useState(match.team2Points);
 
-  useEffect(() => {
-    setTeam1(match.team1);
-    setTeam1Points(match.team1Points);
-    setTeam2(match.team2);
-    setTeam2Points(match.team2Points);
-  }, [match]);
+  const updateState = (setter, value) => {
+    setter(value);
+  };
 
   useEffect(() => {
-    if (initialized) {
-      const newData = { ...match, team1, team2, team1Points, team2Points };
-      updateMatch(newData);
+    setDataInitialized(true);
+  }, []);
+
+  useEffect(() => {
+    if (dataInitialized) {
+      const newMatch = { ...match, team1, team2, team1Points, team2Points };
+      MatchService.update(newMatch);
     }
   }, [team1, team2, team1Points, team2Points]);
 
@@ -59,7 +59,7 @@ const BracketMatch = ({ match, options = {}, updateMatch, ...rest }) => {
       p={4}
       maxW="100%"
       {...rest}
-      {...getBracketLines(options)}
+      {...getBracketLines(match.details, teamLimit)}
     >
       <Box
         textAlign="center"
@@ -73,6 +73,7 @@ const BracketMatch = ({ match, options = {}, updateMatch, ...rest }) => {
           scoreLimit={match?.scoreLimit || 1}
           setTeam={setTeam1}
           setScore={setTeam1Points}
+          updateState={updateState}
         />
         <Text my={2}> vs </Text>
         <BracketTeam
@@ -81,13 +82,14 @@ const BracketMatch = ({ match, options = {}, updateMatch, ...rest }) => {
           scoreLimit={match?.scoreLimit || 1}
           setTeam={setTeam2}
           setScore={setTeam2Points}
+          updateState={updateState}
         />
       </Box>
     </Flex>
   );
 };
 
-function getBracketLines({ round, matchNum, teamLimit }) {
+function getBracketLines({ round, matchNum }, teamLimit) {
   let numRounds = Math.log(teamLimit) / Math.log(2);
 
   let _before = {
