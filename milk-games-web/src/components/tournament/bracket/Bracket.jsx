@@ -2,13 +2,11 @@
  * @typedef {import("@types/index.d").Match} Match
  */
 
-import { Box, Flex, IconButton } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { Box, Flex } from '@chakra-ui/react';
+import React, { useState } from 'react';
 
 import ScrollContainer from 'react-indiana-drag-scroll';
 import BracketMatch from './BracketMatch';
-import { useSelector } from 'react-redux';
-import { FaSave } from 'react-icons/fa';
 
 /**
  *
@@ -28,86 +26,30 @@ const Bracket = ({ matches, teamLimit = 0 }) => {
    */
   const updateMatch = updatedMatch => {
     console.log(updatedMatch);
-
-    // let match = matches.find(
-    //   ({ details: { tournamentId, round, matchNum } }) =>
-    //     tournamentId == updatedMatch.details.tournamentId &&
-    //     round == updatedMatch.details.round &&
-    //     matchNum == updatedMatch.details.matchNum
-    // );
-
-    // console.log({ match });
   };
 
   return (
-    <Box boxSize="900px" border="black" cursor="grab" p={4} position="relative">
-      <IconButton
-        icon={<FaSave />}
-        colorScheme="green"
-        position="absolute"
-        boxSize="40px"
-        right={8}
-        top={8}
-      />
+    <Box
+      boxSize={{ base: '100%', md: '800px' }}
+      border="black"
+      cursor="grab"
+      p={4}
+      position="relative"
+    >
       <ScrollContainer className="scroll-container" style={{ height: '100%' }}>
         <Flex alignContent="flex-start">
-          <Flex flexDir="column" maxW="200px" minW="200px">
-            <BracketMatch
-              match={updatedMatches[0] || {}}
-              teamLimit={teamLimit}
-              updateMatch={updateMatch}
-            />
-            <BracketMatch
-              match={updatedMatches[1] || {}}
-              teamLimit={teamLimit}
-              updateMatch={updateMatch}
-            />
-            <BracketMatch
-              match={updatedMatches[2] || {}}
-              teamLimit={teamLimit}
-              updateMatch={updateMatch}
-            />
-            <BracketMatch
-              match={updatedMatches[3] || {}}
-              teamLimit={teamLimit}
-              updateMatch={updateMatch}
-            />
-          </Flex>
-          <Flex flexDir="column" maxW="200px" minW="200px">
-            <BracketMatch
-              match={updatedMatches[4] || {}}
-              teamLimit={teamLimit}
-              updateMatch={updateMatch}
-            />
-            <BracketMatch
-              match={updatedMatches[5] || {}}
-              teamLimit={teamLimit}
-              updateMatch={updateMatch}
-            />
-          </Flex>
-          <Flex flexDir="column" maxW="200px" minW="200px">
-            <BracketMatch
-              match={updatedMatches[6] || {}}
-              teamLimit={teamLimit}
-              updateMatch={updateMatch}
-            />
-          </Flex>
-          {/* <Flex flexDir="column" maxW="200px" minW="200px">
-            <BracketMatch />
-            <BracketMatch />
-            <BracketMatch />
-            <BracketMatch />
-          </Flex>
-          <Flex flexDir="column" maxW="200px" minW="200px">
-            <BracketMatch />
-            <BracketMatch />
-          </Flex>
-          <Flex flexDir="column" maxW="200px" minW="200px">
-            <BracketMatch />
-          </Flex>
-          <Flex flexDir="column" maxW="200px" minW="200px">
-            <BracketMatch />
-          </Flex> */}
+          {createBracketMatches(matches, teamLimit).map(
+            (bracketMatches, index) => (
+              <Flex
+                flexDir="column"
+                maxW="200px"
+                minW="200px"
+                key={'round-' + index}
+              >
+                {bracketMatches.map(match => match)}
+              </Flex>
+            )
+          )}
         </Flex>
         {/* Loser bracket
         <Flex alignContent="flex-start" h="30%">
@@ -132,3 +74,38 @@ const Bracket = ({ matches, teamLimit = 0 }) => {
 };
 
 export default Bracket;
+
+/* Helpers */
+
+/**
+ *
+ * @param {Match[]} matches
+ * @param {number} teamLimit
+ */
+function createBracketMatches(matches, teamLimit) {
+  let numRounds = Math.log(teamLimit) / Math.log(2);
+
+  /**
+   * @type {[][]}
+   */
+  let roundMatches = [];
+
+  matches.map(match => {
+    const { round } = match.details;
+
+    if (roundMatches[round - 1] == null) {
+      roundMatches[round - 1] = [];
+    }
+
+    roundMatches[round - 1].push(
+      <BracketMatch
+        key={match.details}
+        match={match}
+        teamLimit={teamLimit}
+        numRounds={numRounds}
+      />
+    );
+  });
+
+  return roundMatches;
+}

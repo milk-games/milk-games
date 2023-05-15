@@ -74,7 +74,6 @@ const Tournament = () => {
         mx="auto"
         w={{ base: '100%', md: '3xl', lg: '4xl' }}
         p={{ base: 4, md: 4 }}
-        textAlign="center"
       >
         <SectionHeading title="BRACKET"></SectionHeading>
         {dataInitialized ? (
@@ -85,11 +84,6 @@ const Tournament = () => {
         ) : (
           <Spinner size="xl" m="36" p={4} />
         )}
-
-        {/* <Bracket
-          matches={tournament.matches}
-          teamLimit={tournament.teamLimit}
-        /> */}
 
         {/* Table of the teams? */}
         {/* List of all team cards */}
