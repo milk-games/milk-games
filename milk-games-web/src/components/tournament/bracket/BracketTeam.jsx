@@ -28,8 +28,10 @@ const BracketTeam = ({
    * @param {MouseEvent} e
    */
   const handlePointsOnClick = e => {
+
+    console.log({e})
     if (team != null) {
-      if (score > 0 && e.ctrlKey) {
+      if (score > 0 && (e.ctrlKey || e.metaKey)) {
         updateState(setScore, score - 1);
       } else if (score < scoreLimit && !e.ctrlKey) {
         updateState(setScore, score + 1);
@@ -41,7 +43,7 @@ const BracketTeam = ({
    * @param {MouseEvent} e
    */
   const handleTeamOnClick = e => {
-    if (e.ctrlKey) {
+    if (e.ctrlKey || e.metaKey) {
       updateState(setTeam, null);
     }
   };
