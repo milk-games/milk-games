@@ -17,7 +17,13 @@ import MatchService from '@utils/api-service/MatchService';
  * @param {Object} props
  * @param {Match} props.match
  */
-const BracketMatch = ({ match, teamLimit, updateMatch, ...rest }) => {
+const BracketMatch = ({
+  match,
+  teamLimit,
+  numRounds,
+  updateMatch,
+  ...rest
+}) => {
   const { colorMode } = useColorMode();
 
   const [dataInitialized, setDataInitialized] = useState(false);

@@ -99,7 +99,13 @@ function createBracketMatches(matches, teamLimit) {
 
     roundMatches[round - 1].push(
       <BracketMatch
-        key={match.details}
+        key={
+          match.details.tournamentId +
+          '-' +
+          match.details.round +
+          '-' +
+          match.details.matchNum
+        }
         match={match}
         teamLimit={teamLimit}
         numRounds={numRounds}
