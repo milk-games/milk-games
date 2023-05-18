@@ -4,13 +4,14 @@ import theme from './theme';
 import { RouterProvider } from 'react-router-dom';
 import router from './routes/routes';
 
-import Tournament from '@components/tournament/Tournament';
-import Auth from '@components/auth/Auth';
+import { AuthProvider } from '@components/auth/AuthContext';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </ChakraProvider>
   );
 }

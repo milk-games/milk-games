@@ -1,6 +1,7 @@
 package uk.co.sbarr.milkgames.config;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
@@ -15,14 +16,20 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.DefaultSavedRequest;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import uk.co.sbarr.milkgames.entities.Player;
 import uk.co.sbarr.milkgames.repositories.PlayerRepository;
 import uk.co.sbarr.milkgames.security.CustomOAuth2UserService;
@@ -69,7 +76,12 @@ public class SecurityConfig {
                 HttpServletResponse response, Authentication authentication)
                 throws IOException, ServletException {
 
-                response.sendRedirect("http://localhost:3000/auth?success=true");
+                HttpSession session = request.getSession();
+
+                DefaultSavedRequest savedRequest =
+                    (DefaultSavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+
+                response.sendRedirect(savedRequest.getRequestURL());
             }
         };
     }

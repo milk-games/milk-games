@@ -30,6 +30,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             repository.save(player);
         }
 
+
         return new CustomOAuth2User(user, player);
     }
 }
