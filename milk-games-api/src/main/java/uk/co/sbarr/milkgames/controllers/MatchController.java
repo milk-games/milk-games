@@ -90,7 +90,10 @@ public class MatchController {
     @RequestMapping(method = RequestMethod.PATCH)
     @JsonView(View.Match.class)
     public ResponseEntity<Void> updateMatch(@RequestBody Match match) {
+        System.out.println("hello");
+
         matchRepository.save(match);
+
         return ResponseEntity.ok(null);
     }
 }

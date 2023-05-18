@@ -11,6 +11,7 @@ import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 import uk.co.sbarr.milkgames.entities.Game;
 import uk.co.sbarr.milkgames.entities.Player;
+import uk.co.sbarr.milkgames.entities.Role;
 import uk.co.sbarr.milkgames.entities.Season;
 import uk.co.sbarr.milkgames.entities.Team;
 import uk.co.sbarr.milkgames.entities.Tournament;
@@ -18,6 +19,7 @@ import uk.co.sbarr.milkgames.entities.relationships.SeasonPlayer;
 import uk.co.sbarr.milkgames.repositories.GameRepository;
 import uk.co.sbarr.milkgames.repositories.MatchRepository;
 import uk.co.sbarr.milkgames.repositories.PlayerRepository;
+import uk.co.sbarr.milkgames.repositories.RoleRepository;
 import uk.co.sbarr.milkgames.repositories.SeasonPlayerRepository;
 import uk.co.sbarr.milkgames.repositories.SeasonRepository;
 import uk.co.sbarr.milkgames.repositories.TeamRepository;
@@ -47,6 +49,9 @@ public class Seeder implements CommandLineRunner {
     @Autowired
     SeasonPlayerRepository seasonPlayerRepository;
 
+    @Autowired
+    RoleRepository roleRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -54,12 +59,22 @@ public class Seeder implements CommandLineRunner {
         LocalDate date = LocalDate.now();
         Season season1 = new Season("Season 1", date.minusMonths(1), date.plusMonths(5));
 
-        Player player1 = new Player("Player 1");
-        Player player2 = new Player("Player 2");
-        Player player3 = new Player("Player 3");
-        Player player4 = new Player("Player 4");
-        Player player5 = new Player("Player 5");
-        Player player6 = new Player("Player 6");
+        Role adminRole = new Role("ADMIN");
+        Role moderatorRole = new Role("MODERATOR");
+        Role testRole = new Role("TEST");
+
+        roleRepository.save(adminRole);
+        roleRepository.save(moderatorRole);
+        roleRepository.save(testRole);
+
+        Player player1 = new Player(1l, "Player 1");
+        Player player2 = new Player(2l, "Player 2");
+        Player player3 = new Player(3l, "Player 3");
+        Player player4 = new Player(4l, "Player 4");
+        Player player5 = new Player(5l, "Player 5");
+        Player player6 = new Player(6l, "Player 6");
+
+        player1.addRole(adminRole);
 
         List<Player> players = Arrays.asList(player1, player2, player3, player4, player5, player6);
         // season1.getPlayers().addAll(players);
@@ -71,11 +86,11 @@ public class Seeder implements CommandLineRunner {
         gameRepository.save(game1);
 
         Tournament tournament1 = new Tournament("Tournament 1", season1, "single", game1, 8, 2, 0,
-                datetime.plusDays(1), datetime.plusDays(2));
+            datetime.plusDays(1), datetime.plusDays(2));
         Tournament tournament2 = new Tournament("Tournament 2", season1, "single", game1, 4, 2, 0,
-                datetime.minusDays(1), datetime.minusDays(2));
+            datetime.minusDays(1), datetime.minusDays(2));
         Tournament tournament3 = new Tournament("Tournament 3", season1, "single", game1, 4, 2, 0,
-                datetime.plusDays(5).plusHours(2), datetime.plusDays(8).plusHours(5));
+            datetime.plusDays(5).plusHours(2), datetime.plusDays(8).plusHours(5));
 
         tournamentRepository.save(tournament1);
         tournamentRepository.save(tournament2);

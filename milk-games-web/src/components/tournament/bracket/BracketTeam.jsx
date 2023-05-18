@@ -5,7 +5,7 @@
 import { Box, Flex, Text, useColorMode } from '@chakra-ui/react';
 import React from 'react';
 import { getColor } from '@utils/theme-utils';
-import { dragEnd, dragOver, dragStart } from './drag-events';
+import { dragStart } from './drag-events';
 
 /**
  *
@@ -74,6 +74,7 @@ const BracketTeam = ({
       onDragStart={e => dragStart(e, team)}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
+      className="bracket-team"
     >
       <Box
         p={2}

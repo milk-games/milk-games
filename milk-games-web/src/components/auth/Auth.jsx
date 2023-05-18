@@ -9,20 +9,16 @@ const Auth = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    return;
-    // if (!code) {
-    //   code = new URLSearchParams(window.location.search).get('code');
-    // }
+    const success = new URLSearchParams(window.location.search).get('success');
 
-    // if (!code) {
-    //   window.location.href = authURL;
-    //   return;
-    // } else {
-    //   AuthService.auth(code).then(res => {
-    //     console.log(res);
-    //   });
-    //   return;
-    // }
+    console.log({ success });
+    if (success) {
+      navigate('/');
+      return;
+    } else {
+      window.location.href = authURL;
+      return;
+    }
   }, []);
 
   return null;

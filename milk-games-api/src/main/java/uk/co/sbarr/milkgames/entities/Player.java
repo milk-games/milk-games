@@ -1,6 +1,7 @@
 package uk.co.sbarr.milkgames.entities;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
@@ -16,7 +17,6 @@ import lombok.Setter;
 public class Player {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView(View.Entity.class)
     private Long id;
 
@@ -28,13 +28,23 @@ public class Player {
     @JsonView(View.Player.class)
     private Set<Team> teams = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonView(View.Player.class)
+    private Set<Role> roles;
+
     // @OneToMany(mappedBy = "season")
     // @JsonView(View.Season.class)
     // private Set<SeasonPlayer> seasonPlayers = new HashSet<>();
 
     public Player() {}
 
-    public Player(String name) {
+    public Player(Long id, String name) {
+        this.id = id;
         this.name = name;
+        roles = new HashSet<>();
+    }
+
+    public void addRole(Role role) {
+        this.roles.add(role);
     }
 }

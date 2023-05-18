@@ -76,7 +76,7 @@ public class SeasonPlayer {
 
             for (Match match : tournament.getMatches()) {
                 if (match.isFinished() && (match.getTeam1().getId() == team.getId()
-                        || match.getTeam2().getId() == team.getId())) {
+                    || match.getTeam2().getId() == team.getId())) {
                     count++;
                 }
             }

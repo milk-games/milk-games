@@ -23,9 +23,9 @@ public class PlayerController {
     @RequestMapping(value = "/{id}")
     @JsonView(View.Player.class)
     public ResponseEntity<Player> getSeasonById(@PathVariable Long id) {
-        Optional<Player> optionalSeason = repository.findById(id);
-        if (optionalSeason.isPresent()) {
-            return ResponseEntity.ok(optionalSeason.get());
+        Optional<Player> oPlayer = repository.findById(id);
+        if (oPlayer.isPresent()) {
+            return ResponseEntity.ok(oPlayer.get());
         } else {
             return ResponseEntity.notFound().build();
         }

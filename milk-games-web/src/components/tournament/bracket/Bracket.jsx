@@ -36,7 +36,11 @@ const Bracket = ({ matches, teamLimit = 0 }) => {
       p={4}
       position="relative"
     >
-      <ScrollContainer className="scroll-container" style={{ height: '100%' }}>
+      <ScrollContainer
+        className="scroll-container"
+        style={{ height: '100%' }}
+        ignoreElements=".bracket-team"
+      >
         <Flex alignContent="flex-start">
           {createBracketMatches(matches, teamLimit).map(
             (bracketMatches, index) => (

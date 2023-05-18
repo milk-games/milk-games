@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import uk.co.sbarr.milkgames.entities.View;
 
-@SuppressWarnings("unused")
 @AllArgsConstructor
 @Embeddable
 public class MatchPK implements Serializable {
