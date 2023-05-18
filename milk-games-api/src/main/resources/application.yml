@@ -21,7 +21,7 @@ spring:
             scope: identify
             client-id: ${OAUTH2_CLIENT_ID}
             client-secret: ${OAUTH2_CLIENT_SECRET}
-            redirect-uri: ${OAUTH2_REDIRECT_URI}
+            redirect-uri: ${BASE_URL}/login/oauth2/code/discord
         provider:
           discord:
             authorization-uri: https://discord.com/oauth2/authorize
