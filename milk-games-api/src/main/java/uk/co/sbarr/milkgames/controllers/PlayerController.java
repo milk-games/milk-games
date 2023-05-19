@@ -20,7 +20,7 @@ import uk.co.sbarr.milkgames.security.CustomOAuth2User;
 import uk.co.sbarr.milkgames.security.CustomOAuth2UserService;
 
 @RestController
-@RequestMapping(value = "/player")
+@RequestMapping(value = "/api/player")
 public class PlayerController {
 
     private PlayerRepository repository;

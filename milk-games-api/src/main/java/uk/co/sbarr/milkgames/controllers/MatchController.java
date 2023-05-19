@@ -19,7 +19,7 @@ import uk.co.sbarr.milkgames.repositories.MatchRepository;
 import uk.co.sbarr.milkgames.schemas.Stats;
 
 @RestController
-@RequestMapping("/tournament/{tournamentId}/matches")
+@RequestMapping("/api/tournament/{tournamentId}/matches")
 public class MatchController {
     private ObjectMapper objectMapper;
 
@@ -42,7 +42,7 @@ public class MatchController {
     @RequestMapping(params = {"round"})
     @JsonView(View.Match.class)
     public ResponseEntity<List<Match>> getTournamentRoudnMatches(@PathVariable long tournamentId,
-            long round) {
+        long round) {
         List<Match> matches = matchRepository.findAllByTournamentIdAndId_Round(tournamentId, round);
         return ResponseEntity.ok(matches);
     }
@@ -50,9 +50,9 @@ public class MatchController {
     @RequestMapping(params = {"round", "match"})
     @JsonView(View.Match.class)
     public ResponseEntity<Match> getTournamentRoundMatch(@PathVariable long tournamentId,
-            long round, long match) {
+        long round, long match) {
         Optional<Match> optionalMatch =
-                matchRepository.findById(new MatchPK(tournamentId, round, match));
+            matchRepository.findById(new MatchPK(tournamentId, round, match));
         if (optionalMatch.isPresent()) {
             return ResponseEntity.ok(optionalMatch.get());
         } else {
@@ -62,14 +62,14 @@ public class MatchController {
 
     @RequestMapping(value = "/stats", method = RequestMethod.POST, params = {"round", "match"})
     public ResponseEntity<String> setMatchStats(@PathVariable long tournamentId, long round,
-            long match, @RequestBody Stats stats) throws JsonProcessingException {
+        long match, @RequestBody Stats stats) throws JsonProcessingException {
         String validationMessage = stats.validate();
         if (validationMessage != null) {
             return ResponseEntity.badRequest().body(validationMessage);
         }
 
         Optional<Match> optionalMatch = matchRepository
-                .findByTournamentIdAndId_RoundAndId_MatchNum(tournamentId, round, match);
+            .findByTournamentIdAndId_RoundAndId_MatchNum(tournamentId, round, match);
         if (optionalMatch.isPresent()) {
             String json = objectMapper.writeValueAsString(stats);
             System.out.println(json);

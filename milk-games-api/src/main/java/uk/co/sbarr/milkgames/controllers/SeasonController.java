@@ -12,7 +12,7 @@ import uk.co.sbarr.milkgames.entities.View;
 import uk.co.sbarr.milkgames.repositories.SeasonRepository;
 
 @RestController
-@RequestMapping(value = "/season")
+@RequestMapping(value = "/api/season")
 public class SeasonController {
 
     private SeasonRepository repository;

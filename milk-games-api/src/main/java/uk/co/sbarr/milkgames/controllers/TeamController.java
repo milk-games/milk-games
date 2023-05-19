@@ -11,7 +11,7 @@ import uk.co.sbarr.milkgames.entities.View;
 import uk.co.sbarr.milkgames.repositories.TeamRepository;
 
 @RestController
-@RequestMapping(value = "/team")
+@RequestMapping(value = "/api/team")
 public class TeamController {
     private TeamRepository repository;
 

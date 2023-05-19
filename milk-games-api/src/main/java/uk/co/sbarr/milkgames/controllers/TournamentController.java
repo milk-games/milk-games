@@ -11,7 +11,7 @@ import uk.co.sbarr.milkgames.entities.View;
 import uk.co.sbarr.milkgames.repositories.TournamentRepository;
 
 @RestController
-@RequestMapping(value = "/tournament")
+@RequestMapping(value = "/api/tournament")
 public class TournamentController {
     private TournamentRepository repository;
 

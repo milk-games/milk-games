@@ -1,9 +1,7 @@
-import api from './config';
-
-const baseUrl = 'auth';
+import { auth } from './config';
 
 export default {
-  auth(code) {
-    return api.post(baseUrl + '/callback', code);
+  logout() {
+    return auth.get('/logout');
   },
 };

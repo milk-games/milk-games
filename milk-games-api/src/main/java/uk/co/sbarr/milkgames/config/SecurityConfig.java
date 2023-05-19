@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,9 +22,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -47,7 +53,6 @@ public class SecurityConfig {
         this.userService = userService;
     }
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -58,9 +63,14 @@ public class SecurityConfig {
             .anyRequest().authenticated()
             .and()
             .oauth2Login(oauth2 -> oauth2
-                .successHandler(authSuccessHandler(playerRepository))
+                .successHandler(authSuccessHandler())
                 .failureHandler(authFailureHandler()))
-            .oauth2Client().and().httpBasic();
+            .oauth2Client();
+
+        RequestMatcher matcher = new AntPathRequestMatcher("/api/**");
+        http.exceptionHandling().defaultAuthenticationEntryPointFor(
+            new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED), matcher);
+
 
         http.addFilter(corsFilter());
         http.csrf().disable();
@@ -69,7 +79,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationSuccessHandler authSuccessHandler(PlayerRepository repository) {
+    public AuthenticationSuccessHandler authSuccessHandler() {
         return new AuthenticationSuccessHandler() {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request,
@@ -81,7 +91,11 @@ public class SecurityConfig {
                 DefaultSavedRequest savedRequest =
                     (DefaultSavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
 
-                response.sendRedirect(savedRequest.getRequestURL());
+                String redirect =
+                    savedRequest.getHeaderValues("referer").get(0)
+                        + savedRequest.getRequestURI().substring(1);
+
+                response.sendRedirect(redirect);
             }
         };
     }
@@ -93,10 +107,7 @@ public class SecurityConfig {
             @Override
             public void onAuthenticationFailure(HttpServletRequest request,
                 HttpServletResponse response, AuthenticationException exception)
-                throws IOException, ServletException {
-
-                response.sendRedirect("http://localhost:3000/auth?success=false");
-            }
+                throws IOException, ServletException {}
         };
     }
 

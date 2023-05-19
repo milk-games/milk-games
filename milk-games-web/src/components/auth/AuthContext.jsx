@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import { PlayerService } from '@utils/api-service';
+import AuthService from '@utils/api-service/AuthService';
+import Cookies from 'js-cookie';
+import React, { useEffect, useState } from 'react';
 import { createContext } from 'react';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const login = userData => {
     setUser(userData);
@@ -12,13 +16,18 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
-    document.cookie =
-      'JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    AuthService.logout();
   };
+
+  useEffect(() => {
+    PlayerService.getSelf()
+      .then(data => login(data))
+      .finally(() => setIsLoaded(true));
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
+      {isLoaded ? children : null}
     </AuthContext.Provider>
   );
 };
