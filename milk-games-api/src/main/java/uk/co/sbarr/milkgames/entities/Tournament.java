@@ -72,7 +72,7 @@ public class Tournament {
     }
 
     public Tournament(String name, Season season, String eliminationType, Game game, int teamLimit,
-            int teamSize, double prizePool, LocalDateTime start, LocalDateTime end) {
+        int teamSize, double prizePool, LocalDateTime start, LocalDateTime end) {
         this.name = name;
         this.season = season;
         this.eliminationType = eliminationType;
@@ -143,15 +143,6 @@ public class Tournament {
                     match.setTeam2(null);
                 } else {
                     match.setTeam2(teamIterator.next());
-                }
-
-                System.out.print(matchId.getRound() + ", " + matchId.getMatchNum() + ": ");
-
-                if (match.getTeam2() == null) {
-                    System.out.println(match.getTeam1().getName() + " vs (Bye)");
-                } else {
-                    System.out.println(
-                            match.getTeam1().getName() + " vs " + match.getTeam2().getName());
                 }
             }
         }
