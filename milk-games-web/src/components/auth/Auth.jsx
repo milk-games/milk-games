@@ -1,16 +1,12 @@
-import React, { useContext, useEffect } from 'react';
-import { redirect, useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
 
-import AuthService from '@utils/api-service/AuthService';
 import AuthContext from './AuthContext';
-import PlayerService from '@utils/api-service/PlayerService';
 import { Box, Button } from '@chakra-ui/react';
 
-const authURL = process.env.REACT_APP_AUTH_URL;
+const apiURL = process.env.REACT_APP_API_URL;
 
 const Auth = ({ children }) => {
-  const navigate = useNavigate();
-  const { user, login, logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
   if (!user) {
     return (
@@ -18,7 +14,7 @@ const Auth = ({ children }) => {
         You must log in
         <Button
           onClick={() =>
-            (window.location.href = authURL + window.location.pathname)
+            (window.location.href = apiURL + window.location.pathname)
           }
         >
           Login
@@ -33,26 +29,6 @@ const Auth = ({ children }) => {
       </Box>
     );
   }
-
-  // useEffect(() => {
-  //   console.log({ user });
-  //   if (!user) {
-  //     window.location.href = authURL;
-  //     return;
-  //   }
-
-  //   // const success = new URLSearchParams(window.location.search).get('success');
-  //   // console.log({ success });
-  //   // if (success) {
-  //   //   navigate('/');
-  //   //   return;
-  //   // } else {
-  //   //   window.location.href = authURL;
-  //   //   return;
-  //   // }
-  // }, []);
-
-  // return null;
 };
 
 export default Auth;

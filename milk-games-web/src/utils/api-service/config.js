@@ -4,7 +4,7 @@
 
 import axios from 'axios';
 
-const url = 'http://' + process.env.REACT_APP_API_URL + '/';
+const url = process.env.REACT_APP_API_URL + '/';
 
 /**
  * @type {AxiosInstance}
@@ -14,7 +14,7 @@ const api = {
     baseURL: url + 'api',
     withCredentials: true,
     headers: {
-      'Access-Control-Allow-Origin': 'localhost:8080',
+      'Access-Control-Allow-Origin': process.env.REACT_APP_API_URL,
     },
   }),
 };
@@ -27,7 +27,7 @@ const auth = {
     baseURL: url,
     withCredentials: true,
     headers: {
-      'Access-Control-Allow-Origin': 'localhost:8080',
+      'Access-Control-Allow-Origin': process.env.REACT_APP_API_URL,
     },
   }),
 };

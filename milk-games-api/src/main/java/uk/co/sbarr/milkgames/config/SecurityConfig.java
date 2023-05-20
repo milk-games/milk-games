@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,14 +45,8 @@ import uk.co.sbarr.milkgames.security.CustomOAuth2UserService;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private PlayerRepository playerRepository;
-
-    private final CustomOAuth2UserService userService;
-
-    public SecurityConfig(PlayerRepository playerRepository, CustomOAuth2UserService userService) {
-        this.playerRepository = playerRepository;
-        this.userService = userService;
-    }
+    @Value("${WEB_URL}")
+    private String webURL;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -114,7 +109,7 @@ public class SecurityConfig {
 
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("http://localhost:3000"); // Replace with the appropriate origin of your React frontend
+        corsConfiguration.addAllowedOrigin(webURL);
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.setAllowCredentials(true);

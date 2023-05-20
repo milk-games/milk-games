@@ -1,6 +1,5 @@
 import { PlayerService } from '@utils/api-service';
 import AuthService from '@utils/api-service/AuthService';
-import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import { createContext } from 'react';
 

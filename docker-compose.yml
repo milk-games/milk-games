@@ -1,0 +1,51 @@
+version: "3"
+
+networks:
+  app:
+    driver: bridge
+
+services:
+  milk-games-web:
+    build:
+      context: ./milk-games-web
+    container_name: milk-games-web
+    ports:
+      - "${WEB_PORT_FROM}:${WEB_PORT_TO}"
+    environment:
+      REACT_APP_API_URL: http://${API_HOST}:${API_PORT_FROM}
+    volumes:
+      - "./milk-games-web:/usr/src/web"
+    networks:
+      - app
+
+  milk-games-api:
+    build:
+      context: ./milk-games-api
+    container_name: milk-games-api
+    depends_on:
+      - mysql
+    ports:
+      - "${API_PORT_FROM}:${API_PORT_TO}"
+    env_file:
+      - .env
+    environment:
+      - WEB_URL=http://${WEB_HOST}:${WEB_PORT_FROM}
+      - API_URL=http://${API_HOST}:${API_PORT_FROM}
+    networks:
+      - app
+
+  mysql:
+    image: mysql:8.0.32
+    container_name: milk-mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "${MYSQL_PORT_FROM}:${MYSQL_PORT_TO}"
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: milk-mysql
+    networks:
+      - app
