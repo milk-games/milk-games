@@ -6,11 +6,12 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import player from './player';
 import Landing from 'Landing';
+import Playground from '@components/Playground';
 
 export default createBrowserRouter([
   {
     path: '/',
-    element: <Landing />,
+    element: <Playground />,
   },
   {
     path: '/auth',

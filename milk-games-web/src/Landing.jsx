@@ -20,6 +20,7 @@ const Landing = () => {
           transform="rotate(-12deg)"
         />
       </Box> */}
+      hekllo
     </Box>
   );
 };
