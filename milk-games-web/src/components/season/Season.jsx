@@ -25,6 +25,8 @@ import SectionHeading from '@components/common/section/SectionHeading';
 import { useTheme } from '@emotion/react';
 
 import bg from '@assets/bg1-small.png';
+import Section from '@components/common/section/Section';
+import { useLoaderData } from 'react-router-dom';
 
 const Season = () => {
   const theme = useTheme();
@@ -33,12 +35,13 @@ const Season = () => {
   /**
    * @type {[Season, Function]}
    */
-  const [season, setSeason] = useState({});
-  useEffect(() => {
-    SeasonService.getCurrent().then(season => {
-      setSeason(season);
-    });
-  }, []);
+  const season = useLoaderData();
+  // const [season, setSeason] = useState({});
+  // useEffect(() => {
+  //   SeasonService.getCurrent().then(season => {
+  //     setSeason(season);
+  //   });
+  // }, []);
 
   return (
     <Box w="100%">
@@ -108,19 +111,14 @@ const Season = () => {
         </Grid>
       </Box>
 
-      <Box
-        mt={24}
-        mx="auto"
-        w={{ base: '100%', md: '3xl', lg: '4xl' }}
-        p={{ base: 4, md: 4 }}
-      >
+      <Section>
         <SectionHeading title="LEADERBOARD" detail="Top Players">
           <Button colorScheme="green" mt={4} mb={8}>
             see all
           </Button>
         </SectionHeading>
         <SeasonLeaderboard data={season.seasonPlayers} />
-      </Box>
+      </Section>
 
       <Box h="400px"></Box>
     </Box>

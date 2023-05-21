@@ -11,6 +11,9 @@ import {
 import React from 'react';
 import { FaBars, FaHamburger } from 'react-icons/fa';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
+import { useContext } from 'react';
+import AuthContext from '@components/auth/AuthContext';
+import UserMenu from './UserMenu';
 
 const HeaderMenu = () => {
   return (
@@ -20,7 +23,7 @@ const HeaderMenu = () => {
       <Menu>
         <MenuButton as={IconButton} icon={<FaBars />} colorScheme="green" />
         <MenuList zIndex={2}>
-          <MenuItem> Profile </MenuItem>
+          <UserMenu />
           <MenuDivider />
           <MenuItem as="a" href="/season">
             Season

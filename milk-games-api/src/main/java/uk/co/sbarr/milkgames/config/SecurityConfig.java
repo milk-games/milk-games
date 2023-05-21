@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.context.annotation.Bean;
@@ -32,14 +34,11 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import uk.co.sbarr.milkgames.entities.Player;
-import uk.co.sbarr.milkgames.repositories.PlayerRepository;
-import uk.co.sbarr.milkgames.security.CustomOAuth2UserService;
+
 
 @Configuration
 @EnableWebSecurity
@@ -51,16 +50,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests()
-            .requestMatchers(HttpMethod.PATCH, "**").hasRole("ADMIN")
-            .requestMatchers(HttpMethod.POST, "**").hasRole("ADMIN")
-            .requestMatchers(HttpMethod.DELETE, "**").hasRole("ADMIN")
-            .anyRequest().authenticated()
-            .and()
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers(HttpMethod.GET, "**").permitAll()
+                .requestMatchers(HttpMethod.PATCH, "**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "**").hasRole("ADMIN")
+                .anyRequest().authenticated())
             .oauth2Login(oauth2 -> oauth2
                 .successHandler(authSuccessHandler())
                 .failureHandler(authFailureHandler()))
-            .oauth2Client();
+            .oauth2Client(withDefaults());
 
         RequestMatcher matcher = new AntPathRequestMatcher("/api/**");
         http.exceptionHandling().defaultAuthenticationEntryPointFor(

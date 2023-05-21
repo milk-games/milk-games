@@ -5,9 +5,7 @@ import { PlayerService } from '@utils/api-service';
 const playerLoader = async ({ params: { id } }) => {
   let data;
   if (!id) {
-    data = await PlayerService.getSelf().catch(e => {
-      console.log('nbing');
-    });
+    data = await PlayerService.getSelf();
   } else {
     data = await PlayerService.get(id);
   }

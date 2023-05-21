@@ -6,20 +6,16 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import player from './player';
 import tournament from './tournament';
-
+import season from './season';
 import Playground from '@components/Playground';
-import Season from '@components/season/Season';
 
 export default createBrowserRouter([
   {
     path: '/',
     element: <Playground />,
   },
-  {
-    path: '/season',
-    element: <Auth children={<Season />} />,
-  },
 
+  ...season,
   ...tournament,
   ...player,
 ]);

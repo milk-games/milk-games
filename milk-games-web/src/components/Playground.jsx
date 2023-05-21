@@ -18,8 +18,6 @@ import { getColor } from '@utils/theme-utils';
 import Header from './common/header/Header';
 
 const Playground = () => {
-  const variable = 'I am a javascript variable';
-
   const theme = useTheme();
   const { colorMode } = useColorMode();
 
