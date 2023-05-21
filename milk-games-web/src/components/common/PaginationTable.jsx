@@ -49,8 +49,6 @@ const PaginationTable = ({ headers, data }) => {
   const sortBy = header => {
     let newSort = { [header.key]: 0 };
 
-    console.log();
-
     switch (sort[header.key]) {
       case 1:
         newSort[header.key] = 0;
@@ -59,9 +57,7 @@ const PaginationTable = ({ headers, data }) => {
         newSort[header.key] = 1;
         break;
       default:
-        console.log('here');
         newSort[header.key] = -1;
-        console.log(newSort);
         break;
     }
 
@@ -83,7 +79,7 @@ const PaginationTable = ({ headers, data }) => {
   };
 
   return (
-    <TableContainer color="background.light">
+    <TableContainer color="bg.light">
       <Table border="none">
         <Thead bg="brown.900">
           <Tr>{mapHeaders(headers, sortBy, sort)}</Tr>

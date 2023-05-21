@@ -13,7 +13,7 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import React from 'react';
-import Header from '@components/common/Header';
+import Header from '@components/common/header/Header';
 
 import { SeasonService } from '@utils/api-service';
 import { useState, useEffect } from 'react';
@@ -21,55 +21,75 @@ import { getColor } from '@utils/theme-utils';
 import { TimeFormatter } from '@utils';
 import TournamentCard from '@components/tournament/TournamentCard';
 import SeasonLeaderboard from './SeasonLeaderboard';
-import SectionHeading from '@components/common/SectionHeading';
+import SectionHeading from '@components/common/section/SectionHeading';
+import { useTheme } from '@emotion/react';
+
+import bg from '@assets/bg1-small.png';
 
 const Season = () => {
+  const theme = useTheme();
   const { colorMode } = useColorMode();
 
   /**
    * @type {[Season, Function]}
    */
   const [season, setSeason] = useState({});
-  season.useEffect(() => {
+  useEffect(() => {
     SeasonService.getCurrent().then(season => {
       setSeason(season);
     });
   }, []);
 
-  season.return(
+  return (
     <Box w="100%">
-      <Box>
-        {/* Cow background here */}
-        <Header />
-        <Box>
-          <Flex
-            justifyContent="center"
-            alignItems="center"
-            flexDir="column"
-            h="80vh"
-            maxH={{ base: '700px', md: '850px' }}
-          >
-            <Heading size="4xl" color={getColor('accent', colorMode)}>
+      <Header />
+
+      <Box h="80vh" maxH={{ base: '800px', md: '950px' }} position="relative">
+        <Box
+          bgImage={bg}
+          bgRepeat="repeat"
+          bgPosition="center"
+          boxSize="100%"
+          filter="grayscale(100%) opacity(40%)"
+          position="absolute"
+        />
+        <Box
+          bgGradient={`linear(to-b, rgba(0,0,0,0), ${getColor(
+            'bg',
+            colorMode
+          )})`}
+          boxSize="100%"
+          position="absolute"
+        />
+
+        <Flex
+          position="relative"
+          justifyContent="center"
+          alignItems="center"
+          flexDir="column"
+          h="100%"
+        >
+          <Box textAlign="center" py={4} px={{ base: 4, md: 4 }} rounded="lg">
+            <Heading
+              size={{ base: '3xl', md: '4xl' }}
+              color={getColor('accent', colorMode)}
+            >
               {season.name}
             </Heading>
-            <Text fontSize="2xl" color="gray.500">
+            <Text fontSize={{ base: 'lg', md: '2xl' }} color="gray.500">
               {TimeFormatter.toMonthString(season.startDate) +
                 ' — ' +
                 TimeFormatter.toMonthString(season.endDate)}
             </Text>
-          </Flex>
-        </Box>
+          </Box>
+        </Flex>
       </Box>
 
-      <Box
-        mx="auto"
-        w={{ base: '100%', md: '3xl', lg: '4xl' }}
-        p={{ base: 4, md: 4 }}
-      >
+      <Box mx="auto" w={{ base: '100%', md: '3xl' }} p={{ base: 4, md: 4 }}>
         <SectionHeading title="TOURNAMENTS" detail="Upcoming">
           <Text textAlign="justify">
             The upcoming tournaments of the season Keep track of the dates and
-            times so you don’t miss out on your chance to become the milk
+            times so you don't miss out on your chance to become the milk
             champion!
           </Text>
 
@@ -80,8 +100,8 @@ const Season = () => {
 
         <Grid
           templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(3, 1fr)' }}
-          gap={8}
           justifyItems="center"
+          gap={4}
           mt={8}
         >
           {upcomingTournaments(season)}

@@ -1,24 +1,32 @@
-import { Box, Heading, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Text,
+  Button,
+  useColorMode,
+  useTheme,
+} from '@chakra-ui/react';
 import React from 'react';
+import { FaChevronDown } from 'react-icons/fa';
+
+import bg from '@assets/background.png';
+import { getColor } from '@utils/theme-utils';
+import Header from './common/header/Header';
 
 const Playground = () => {
   const variable = 'I am a javascript variable';
 
+  const theme = useTheme();
+  const { colorMode } = useColorMode();
+
   return (
     <Box>
-      <Box w="100%" textAlign="center" my={10}>
-        <Heading>Playground</Heading>
-      </Box>
-
-      <Box w="100%" textAlign="center" my={10}>
-        <Text> You can use "{'{variable}'}" to show a javascript variable</Text>
-        <Text> {variable} </Text>
-      </Box>
-
-      <Box w="100%" textAlign="center" my={10}>
-        <Text> You can also run any javascript within "{'{<js>}'}"</Text>
-        <Text> 5 + 5 = {5 + 5} </Text>
-      </Box>
+      <Header />
+      Hello
     </Box>
   );
 };

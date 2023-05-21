@@ -15,18 +15,9 @@ import BracketMatch from './BracketMatch';
  * @param {number} teamLimit
  */
 const Bracket = ({ matches, teamLimit = 0 }) => {
-  /**
-   * @type {[Match[], Function]}
-   */
-  const [updatedMatches, setUpdatedMatches] = useState(matches);
-
-  /**
-   *
-   * @param {Match} updatedMatch
-   */
-  const updateMatch = updatedMatch => {
-    console.log(updatedMatch);
-  };
+  if (matches.length == 0) {
+    return <Box w="100%">Bracket not Initialised</Box>;
+  }
 
   return (
     <Box

@@ -18,6 +18,10 @@ export const AuthProvider = ({ children }) => {
     AuthService.logout();
   };
 
+  const hasRole = role => {
+    console.log(user);
+  };
+
   useEffect(() => {
     PlayerService.getSelf()
       .then(data => login(data))

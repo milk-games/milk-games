@@ -18,7 +18,6 @@ import SectionHeading from '@components/common/section/SectionHeading';
 
 import { TournamentService } from '@utils/api-service';
 import Bracket from './bracket/Bracket';
-import { useLoaderData } from 'react-router-dom';
 
 /**
  *
@@ -27,16 +26,22 @@ import { useLoaderData } from 'react-router-dom';
  *
  */
 
-const Tournament = () => {
-  const tournament = useLoaderData();
-
-  console.log({ tournament });
+const Tournaments = () => {
+  const [dataInitialized, setDataInitialized] = useState(false);
 
   /**
    * @type {[Tournament, Function]}
    */
+  const [tournament, setTournament] = useState();
 
   const { colorMode } = useColorMode();
+
+  useEffect(() => {
+    TournamentService.get(1).then(tournament => {
+      setTournament(tournament);
+      setDataInitialized(true);
+    });
+  }, []);
 
   return (
     <Box w="100%">
@@ -71,11 +76,14 @@ const Tournament = () => {
         p={{ base: 4, md: 4 }}
       >
         <SectionHeading title="BRACKET"></SectionHeading>
-
-        <Bracket
-          matches={tournament.matches}
-          teamLimit={tournament.teamLimit}
-        />
+        {dataInitialized ? (
+          <Bracket
+            matches={tournament.matches}
+            teamLimit={tournament.teamLimit}
+          />
+        ) : (
+          <Spinner size="xl" m="36" p={4} />
+        )}
 
         {/* Table of the teams? */}
         {/* List of all team cards */}
@@ -86,4 +94,4 @@ const Tournament = () => {
   );
 };
 
-export default Tournament;
+export default Tournaments;

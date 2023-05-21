@@ -61,9 +61,6 @@ const theme = extendTheme({
       '.header': {
         background: theme.colors.bg.bg1[colorMode],
       },
-      '.header-wave': {
-        background: theme.colors.bg[colorMode],
-      },
       '.wave-1': {
         fill: theme.colors.bg.bg3[colorMode],
       },

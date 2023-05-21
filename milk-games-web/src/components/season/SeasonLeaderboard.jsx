@@ -1,17 +1,7 @@
-import {
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Tfoot,
-  Th,
-  Thead,
-  Tr,
-} from '@chakra-ui/react';
 import React from 'react';
 
-import '../../assets/styles/SeasonLeaderboard.css';
-import PaginationTable from '../../components/components/PaginationTable';
+import '@assets/styles/SeasonLeaderboard.css';
+import PaginationTable from '@components/common/PaginationTable';
 
 const headers = [
   {

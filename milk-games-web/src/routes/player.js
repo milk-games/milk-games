@@ -5,7 +5,9 @@ import { PlayerService } from '@utils/api-service';
 const playerLoader = async ({ params: { id } }) => {
   let data;
   if (!id) {
-    data = await PlayerService.getSelf();
+    data = await PlayerService.getSelf().catch(e => {
+      console.log('nbing');
+    });
   } else {
     data = await PlayerService.get(id);
   }
@@ -13,6 +15,11 @@ const playerLoader = async ({ params: { id } }) => {
 };
 
 export default [
+  {
+    path: '/players',
+    element: <Auth children={<Player />} />,
+    loader: playerLoader,
+  },
   {
     path: '/player',
     element: <Auth children={<Player />} />,

@@ -32,10 +32,7 @@ const auth = {
   }),
 };
 
-api.interceptors.response.use(
-  response => response.data,
-  err => console.log({ err: err.toJSON() })
-);
+api.interceptors.response.use(response => response.data);
 
 export default api;
 

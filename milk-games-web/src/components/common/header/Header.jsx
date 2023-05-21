@@ -15,15 +15,15 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
-import logo from '@assets/logo.png';
 import { getColor } from '@utils/theme-utils';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
+import HeaderMenu from './HeaderMenu';
+import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
 const Header = () => {
   const { colorMode } = useColorMode();
 
   return (
-    <Flex w="100%" flexDir="column" fill={getColor('bg1', colorMode)}>
+    <Box position="relative">
       <Flex
         p={16}
         alignItems="center"
@@ -39,22 +39,9 @@ const Header = () => {
           <Heading size="lg">Games</Heading>
         </Flex>
 
-        <Box>
-          <Menu>
-            <MenuButton>Actions</MenuButton>
-            <MenuList>
-              <MenuItem> Profile </MenuItem>
-              <MenuDivider />
-              <MenuItem>Season</MenuItem>
-              <MenuItem>Tournaments</MenuItem>
-              <MenuItem>Players</MenuItem>
-            </MenuList>
-          </Menu>
-          <ColorModeSwitcher justifySelf="flex-end" />
-        </Box>
+        <HeaderMenu />
       </Flex>
-
-      <Box h="70px" position="absolute" w="100%">
+      <Box h="70px" w="100%" position="absolute" zIndex={1}>
         <chakra.svg
           viewBox="0 0 1440 108"
           xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +63,7 @@ const Header = () => {
           />
         </chakra.svg>
       </Box>
-    </Flex>
+    </Box>
   );
 };
 
