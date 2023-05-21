@@ -1,3 +1,7 @@
+/**
+ * @typedef {import("@types/index.d").Tournament} Tournament
+ */
+
 import {
   Box,
   Flex,
@@ -15,32 +19,19 @@ import {
   FaCalendar,
   FaClock,
   FaMoneyBill,
-  FaMoneyCheck,
   FaSkullCrossbones,
   FaUsers,
 } from 'react-icons/fa';
-
-/**
- * @typedef {Object} Tournament - A tournament entity
- * @property {string} name - The name of the tournament
- * @property {string} eliminationType - The name of the tournament
- * @property {Date} startDate - The start date of the tournament
- * @property {Date} endDate - The end date of the tournament
- * @property {number} prize - The prize amount of the tournament
- */
-
-/**
- * @typedef {Object} TournamentCardProps - Props for the TournamentCard component
- * @property {Tournament} tournament - The tournament to display
- */
+import { useNavigate } from 'react-router-dom';
 
 /**
  * Renders a card displaying information about a tournament
- * @param {TournamentCardProps} props - The component props
- * @returns {JSX.Element} - The JSX element representing the TournamentCard
+ * @param {Object} props - The component props
+ * @param {Tournament} props.tournament
  */
 const TournamentCard = ({ tournament }) => {
   const { colorMode } = useColorMode();
+  const navigate = useNavigate();
 
   if (!tournament) return <TournamentSkeleton />;
 
@@ -50,6 +41,7 @@ const TournamentCard = ({ tournament }) => {
     month: 'long',
     year: 'numeric',
   });
+
   const time = tournamentDate.toLocaleTimeString('default', {
     hour: 'numeric',
     minute: 'numeric',
@@ -61,9 +53,7 @@ const TournamentCard = ({ tournament }) => {
       bg="green.500"
       w="220px"
       h="100%"
-      onClick={() => {
-        console.log('yeet');
-      }}
+      onClick={() => navigate('/tournament/' + tournament.id)}
       cursor="pointer"
       _hover={{ boxShadow: 'md', transform: 'scale(1.05)' }}
       transition="transform 0.2s ease-out, box-shadow 0.2s ease-out"

@@ -88,7 +88,7 @@ const Season = () => {
         </Flex>
       </Box>
 
-      <Box mx="auto" w={{ base: '100%', md: '3xl' }} p={{ base: 4, md: 4 }}>
+      <Section>
         <SectionHeading title="TOURNAMENTS" detail="Upcoming">
           <Text textAlign="justify">
             The upcoming tournaments of the season Keep track of the dates and
@@ -109,7 +109,7 @@ const Season = () => {
         >
           {upcomingTournaments(season)}
         </Grid>
-      </Box>
+      </Section>
 
       <Section>
         <SectionHeading title="LEADERBOARD" detail="Top Players">
