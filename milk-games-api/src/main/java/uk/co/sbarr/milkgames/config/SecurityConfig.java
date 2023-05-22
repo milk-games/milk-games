@@ -34,7 +34,7 @@ public class SecurityConfig {
 
     @Value("${WEB_URL}")
     private String webURL;
-    
+
     @Value("${OAUTH2_ENABLED}")
     private boolean oauth2Enabled;
 
@@ -46,7 +46,9 @@ public class SecurityConfig {
         } else {
             http
                 .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers(HttpMethod.GET, "/api/season**", "/api/tournament**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/season**", "/api/season/**",
+                        "/api/tournament**")
+                    .permitAll()
                     .requestMatchers(HttpMethod.PATCH, "**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "**").hasRole("ADMIN")
@@ -56,7 +58,7 @@ public class SecurityConfig {
                     .failureHandler(authFailureHandler()))
                 .oauth2Client(withDefaults());
         }
-        
+
         RequestMatcher matcher = new AntPathRequestMatcher("/api/**");
         http.exceptionHandling().defaultAuthenticationEntryPointFor(
             new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED), matcher);

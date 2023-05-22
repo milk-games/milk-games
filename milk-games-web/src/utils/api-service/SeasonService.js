@@ -11,12 +11,7 @@ export default {
     return api.get(baseUrl + '/' + id);
   },
 
-  //   getAll(page, size) {
-  //     const params = new URLSearchParams({ page, size });
-  //     return api.get(baseUrl + '?' + params.toString());
-  //   },
-
-  //   create(nounData) {
-  //     return api.post(baseUrl + '/create', nounData);
-  //   },
+  getTournaments(id) {
+    return api.get(baseUrl + '/' + id + '/tournaments');
+  },
 };

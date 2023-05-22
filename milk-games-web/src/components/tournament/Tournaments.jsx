@@ -18,6 +18,7 @@ import SectionHeading from '@components/common/section/SectionHeading';
 
 import { TournamentService } from '@utils/api-service';
 import Bracket from './bracket/Bracket';
+import { useLoaderData } from 'react-router-dom';
 
 /**
  *
@@ -27,69 +28,18 @@ import Bracket from './bracket/Bracket';
  */
 
 const Tournaments = () => {
-  const [dataInitialized, setDataInitialized] = useState(false);
-
-  /**
-   * @type {[Tournament, Function]}
-   */
-  const [tournament, setTournament] = useState();
-
   const { colorMode } = useColorMode();
+  /**
+   * @type {Tournament}
+   */
+  const tournamentsPage = useLoaderData();
 
-  useEffect(() => {
-    TournamentService.get(1).then(tournament => {
-      setTournament(tournament);
-      setDataInitialized(true);
-    });
-  }, []);
+  console.log(tournamentsPage);
 
   return (
     <Box w="100%">
       <Header />
-
-      <Box
-        mt={24}
-        mx="auto"
-        w={{ base: '100%', md: '3xl', lg: '4xl' }}
-        p={{ base: 4, md: 4 }}
-      >
-        <SectionHeading title="RULES"></SectionHeading>
-        {/* Table of the teams? */}
-        {/* List of all team cards */}
-      </Box>
-
-      <Box
-        mt={24}
-        mx="auto"
-        w={{ base: '100%', md: '3xl', lg: '4xl' }}
-        p={{ base: 4, md: 4 }}
-      >
-        <SectionHeading title="TEAMS"></SectionHeading>
-        {/* Table of the teams? */}
-        {/* List of all team cards */}
-      </Box>
-
-      <Box
-        mt={24}
-        mx="auto"
-        w={{ base: '100%', md: '3xl', lg: '4xl' }}
-        p={{ base: 4, md: 4 }}
-      >
-        <SectionHeading title="BRACKET"></SectionHeading>
-        {dataInitialized ? (
-          <Bracket
-            matches={tournament.matches}
-            teamLimit={tournament.teamLimit}
-          />
-        ) : (
-          <Spinner size="xl" m="36" p={4} />
-        )}
-
-        {/* Table of the teams? */}
-        {/* List of all team cards */}
-      </Box>
-
-      <Box h="300px"></Box>
+      hello
     </Box>
   );
 };

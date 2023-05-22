@@ -26,22 +26,17 @@ import { useTheme } from '@emotion/react';
 
 import bg from '@assets/bg1-small.png';
 import Section from '@components/common/section/Section';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 
-const Season = () => {
+const Season = ({ children }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { colorMode } = useColorMode();
 
   /**
-   * @type {[Season, Function]}
+   * @type {Season}
    */
   const season = useLoaderData();
-  // const [season, setSeason] = useState({});
-  // useEffect(() => {
-  //   SeasonService.getCurrent().then(season => {
-  //     setSeason(season);
-  //   });
-  // }, []);
 
   return (
     <Box w="100%">
@@ -96,7 +91,11 @@ const Season = () => {
             champion!
           </Text>
 
-          <Button colorScheme="green" mt={4}>
+          <Button
+            colorScheme="green"
+            mt={4}
+            onClick={() => navigate(`/season/${season.id}/tournaments`)}
+          >
             see all
           </Button>
         </SectionHeading>
@@ -121,6 +120,8 @@ const Season = () => {
       </Section>
 
       <Box h="400px"></Box>
+
+      {children}
     </Box>
   );
 };
