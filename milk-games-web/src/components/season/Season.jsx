@@ -142,13 +142,13 @@ function upcomingTournaments(season) {
   for (let i = 0; i < 3; i++) {
     if (i < tournaments.length) {
       elements.push(
-        <GridItem>
+        <GridItem key={i}>
           <TournamentCard tournament={tournaments[i]} />
         </GridItem>
       );
     } else {
       elements.push(
-        <GridItem>
+        <GridItem key={i}>
           <TournamentCard tournament={null} />
         </GridItem>
       );

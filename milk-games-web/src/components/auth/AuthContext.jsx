@@ -23,9 +23,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    PlayerService.getSelf()
-      .then(data => login(data))
-      .finally(() => setIsLoaded(true));
+    if (process.env.REACT_APP_AUTH_ENABLED) {
+      PlayerService.getSelf()
+        .then(data => login(data))
+        .finally(() => setIsLoaded(true));
+    } else { //TODO: remove
+      login({name: "User", id: "123", roles: ["ADMIN"]})
+      setIsLoaded(true);
+    }
+
   }, []);
 
   return (

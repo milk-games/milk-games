@@ -1,34 +1,22 @@
 package uk.co.sbarr.milkgames.config;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.savedrequest.DefaultSavedRequest;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
@@ -46,25 +34,32 @@ public class SecurityConfig {
 
     @Value("${WEB_URL}")
     private String webURL;
+    
+    @Value("${OAUTH2_ENABLED}")
+    private boolean oauth2Enabled;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(HttpMethod.GET, "/api/season**", "/api/tournament**").permitAll()
-                .requestMatchers(HttpMethod.PATCH, "**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.POST, "**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "**").hasRole("ADMIN")
-                .anyRequest().authenticated())
-            .oauth2Login(oauth2 -> oauth2
-                .successHandler(authSuccessHandler())
-                .failureHandler(authFailureHandler()))
-            .oauth2Client(withDefaults());
 
+        if (!oauth2Enabled) {
+            http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
+        } else {
+            http
+                .authorizeHttpRequests(authorize -> authorize
+                    .requestMatchers(HttpMethod.GET, "/api/season**", "/api/tournament**").permitAll()
+                    .requestMatchers(HttpMethod.PATCH, "**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "**").hasRole("ADMIN")
+                    .anyRequest().authenticated())
+                .oauth2Login(oauth2 -> oauth2
+                    .successHandler(authSuccessHandler())
+                    .failureHandler(authFailureHandler()))
+                .oauth2Client(withDefaults());
+        }
+        
         RequestMatcher matcher = new AntPathRequestMatcher("/api/**");
         http.exceptionHandling().defaultAuthenticationEntryPointFor(
             new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED), matcher);
-
 
         http.addFilter(corsFilter());
         http.csrf().disable();

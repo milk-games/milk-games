@@ -163,15 +163,16 @@ function mapHeaders(headers, sortBy, sort) {
   ));
 }
 
-function mapRow(row, headers) {
+function mapRow(row, rowNum, headers) {
   return (
-    <Tr>
+    <Tr key={rowNum}>
       {headers.map(header => {
         let value = getRowValue(row, header);
 
         return (
           <Td
             key={header.name}
+            k={header.name}
             {...header.style}
             border="none"
             m="auto"
@@ -188,7 +189,7 @@ function mapRow(row, headers) {
 function mapData(data, headers, page, rowsPerPage) {
   const start = page * rowsPerPage;
   const end = start + rowsPerPage;
-  return data.slice(start, end).map(row => mapRow(row, headers));
+  return data.slice(start, end).map((row, rowNum) => mapRow(row, rowNum, headers));
 }
 
 function getSortIcon(key, sort) {
