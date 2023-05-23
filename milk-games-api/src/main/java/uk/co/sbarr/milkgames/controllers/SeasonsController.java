@@ -21,8 +21,8 @@ public class SeasonsController {
 
     @RequestMapping
     @JsonView(View.Season.class)
-    public ResponseEntity<List<Season>> getAllSeasons() {
-        List<Season> seasonsList = repository.selectAllSeasons();
+    public ResponseEntity<Iterable<Season>> getAllSeasons() {
+        Iterable<Season> seasonsList = repository.findAll();
         return ResponseEntity.ok(seasonsList);
 
     }

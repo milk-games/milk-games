@@ -11,9 +11,6 @@ import java.util.List;
 public interface SeasonRepository extends CrudRepository<Season, Long> {
     @Query("SELECT s FROM Season s WHERE s.startDate <= :today AND s.endDate >= :today")
     Optional<Season> findCurrentSeason(@Param("today") LocalDate today);
-
-    @Query(value = "SELECT * FROM seasons", nativeQuery = true)
-    List<Season> selectAllSeasons();
 }
 
 
