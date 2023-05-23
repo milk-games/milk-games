@@ -47,7 +47,7 @@ public class SecurityConfig {
             http
                 .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers(HttpMethod.GET, "/api/season**", "/api/season/**",
-                        "/api/tournament**")
+                        "/api/tournament/**")
                     .permitAll()
                     .requestMatchers(HttpMethod.PATCH, "**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "**").hasRole("ADMIN")
