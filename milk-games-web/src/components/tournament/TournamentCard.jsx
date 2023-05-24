@@ -68,7 +68,7 @@ const TournamentCard = ({ tournament }) => {
         bgPosition: 'left',
         bgSize: '50%',
         bgRepeat: 'repeat',
-        filter: 'grayscale(75%) opacity(20%)',
+        filter: 'grayscale(75%) opacity(15%)',
         top: 0,
         left: 0,
         w: '100%',

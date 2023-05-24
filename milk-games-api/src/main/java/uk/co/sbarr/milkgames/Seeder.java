@@ -86,11 +86,11 @@ public class Seeder implements CommandLineRunner {
         gameRepository.save(game1);
 
         Tournament tournament1 = new Tournament("Tournament 1", season1, "single", game1, 8, 2, 0,
-            datetime.plusDays(1), datetime.plusDays(2));
+            datetime.plusDays(1));
         Tournament tournament2 = new Tournament("Tournament 2", season1, "single", game1, 4, 2, 0,
-            datetime.minusDays(1), datetime.minusDays(2));
+            datetime.minusDays(1));
         Tournament tournament3 = new Tournament("Tournament 3", season1, "single", game1, 4, 2, 0,
-            datetime.plusDays(5).plusHours(2), datetime.plusDays(8).plusHours(5));
+            datetime.plusDays(5).plusHours(2));
 
         tournamentRepository.save(tournament1);
         tournamentRepository.save(tournament2);
