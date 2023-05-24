@@ -10,7 +10,9 @@ const Root = () => {
       <Flex flexDir="column" minH="inherit">
         <Header />
 
-        <Outlet />
+        <Box minH="75vh">
+          <Outlet />
+        </Box>
 
         <Footer />
       </Flex>

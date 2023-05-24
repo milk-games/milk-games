@@ -1,13 +1,9 @@
-import { Box } from '@chakra-ui/react'
-import Header from '@components/common/header/Header'
-import React from 'react'
+import { Box } from '@chakra-ui/react';
+import Header from '@components/common/header/Header';
+import React from 'react';
 
 const Seasons = () => {
-  return (
-    <Box>
-        <Header />
-    </Box>
-  )
-}
+  return <Box></Box>;
+};
 
-export default Seasons
+export default Seasons;

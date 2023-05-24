@@ -46,7 +46,9 @@ const Tournaments = () => {
     <Box w="100%" pb={24}>
       <Section>
         <SectionHeading title="TOURNAMENTS">
-          <IconButton colorScheme="green" icon={<BiPlus />} />
+          {hasRole(roles.ADMIN) && (
+            <IconButton colorScheme="green" icon={<BiPlus />} />
+          )}
         </SectionHeading>
         <Flex justifyContent="center" flexWrap="wrap">
           {tournaments.map(tournament => (
@@ -54,11 +56,6 @@ const Tournaments = () => {
           ))}
         </Flex>
       </Section>
-      {hasRole(roles.ADMIN) && (
-        <Section>
-          <SectionHeading title="CREATE" />
-        </Section>
-      )}
     </Box>
   );
 };

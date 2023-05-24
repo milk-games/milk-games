@@ -23,6 +23,7 @@ import {
   FaUsers,
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import bg from '@assets/KowArmy.png';
 
 /**
  * Renders a card displaying information about a tournament
@@ -49,15 +50,30 @@ const TournamentCard = ({ tournament }) => {
 
   return (
     <Box
+      position="relative"
+      // overflow="hidden"
       rounded="md"
       bg="green.500"
       w="220px"
       h="100%"
       m={3}
-      onClick={() => navigate('/tournament/' + tournament.id)}
+      onClick={() => navigate('/tournaments/' + tournament.id)}
       cursor="pointer"
       _hover={{ boxShadow: 'md', transform: 'scale(1.05)' }}
       transition="transform 0.2s ease-out, box-shadow 0.2s ease-out"
+      _before={{
+        content: '""',
+        position: 'absolute',
+        bgImage: bg,
+        bgPosition: 'left',
+        bgSize: '50%',
+        bgRepeat: 'repeat',
+        filter: 'grayscale(75%) opacity(20%)',
+        top: 0,
+        left: 0,
+        w: '100%',
+        h: '100%',
+      }}
     >
       <Box h="100px" textAlign="center" overflow="hidden" position="relative">
         <Image
@@ -73,6 +89,7 @@ const TournamentCard = ({ tournament }) => {
         color={getColor('header', 'light')}
         textAlign="center"
         fontSize="lg"
+        position="relative"
       >
         <Box bg="brown.900">
           <Text fontSize="xl">{tournament.name || 'Unknown Name'}</Text>

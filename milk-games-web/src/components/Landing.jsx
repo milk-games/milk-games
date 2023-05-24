@@ -3,7 +3,7 @@ import { Box, Image } from '@chakra-ui/react';
 import Header from '@components/common/header/Header';
 
 const Landing = () => {
-  return <Box minH="75vh"></Box>;
+  return <Box></Box>;
 };
 
 export default Landing;

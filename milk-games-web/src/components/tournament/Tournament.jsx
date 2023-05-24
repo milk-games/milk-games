@@ -20,8 +20,6 @@ import Section from '@components/common/section/Section';
 const Tournament = () => {
   const tournament = useLoaderData();
 
-  console.log({ tournament });
-
   /**
    * @type {[Tournament, Function]}
    */
