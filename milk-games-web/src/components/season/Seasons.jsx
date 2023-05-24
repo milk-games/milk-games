@@ -102,15 +102,7 @@ const Seasons = () => {
               </Tbody>
             </Table>
           </TableContainer>
-          {/* <Button
-            colorScheme="green"
-            mt={4}
-            onClick={async () => {
-              await SeasonService.postSeason({"name":"Season 2", "start":"2022-01-01", "end":"2022-07-05"});
-            }}
-          >
-            Create new season
-          </Button> */}
+
           <Button colorScheme="green" mt={4} onClick={onOpen}>
             Create new season
           </Button>
