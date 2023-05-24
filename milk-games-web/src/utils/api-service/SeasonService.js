@@ -14,4 +14,12 @@ export default {
   getTournaments(id) {
     return api.get(baseUrl + '/' + id + '/tournaments');
   },
+
+  getAllSeasons() {
+    return api.get(baseUrl + '/all');
+  },
+
+  postSeason(data) {
+    return api.post(baseUrl + '/create', data);
+  },
 };

@@ -14,10 +14,18 @@ const seasonLoader = async ({ params: { id } }) => {
   return data || null;
 };
 
+const seasonsLoader = async () => {
+  let data;
+  console.log('seasons loader');
+  data = await SeasonService.getAllSeasons(); 
+  return data || null;
+};
+
 export default [
   {
     path: '/seasons',
     element: <Seasons />,
+    loader: seasonsLoader,
   },
   {
     path: '/seasons/:id',

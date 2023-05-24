@@ -25,7 +25,7 @@ const HeaderMenu = () => {
         <MenuList zIndex={2}>
           <UserMenu />
           <MenuDivider />
-          <MenuItem as="a" href="/season">
+          <MenuItem as="a" href="/seasons">
             Season
           </MenuItem>
           <MenuItem as="a" href="/tournaments">
