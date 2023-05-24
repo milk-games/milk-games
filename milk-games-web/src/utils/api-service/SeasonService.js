@@ -18,4 +18,8 @@ export default {
   getAllSeasons() {
     return api.get(baseUrl + '/all');
   },
+
+  postSeason(data) {
+    return api.post(baseUrl, data);
+  }
 };
