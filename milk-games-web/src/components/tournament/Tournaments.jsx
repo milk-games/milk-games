@@ -40,7 +40,7 @@ const Tournaments = () => {
     <Box w="100%" pb={24}>
       <Section>
         <SectionHeading title="TOURNAMENTS" />
-        <Flex justifyContent="center">
+        <Flex justifyContent="center" flexWrap="wrap">
           {tournaments.map(tournament => (
             <TournamentCard tournament={tournament} />
           ))}

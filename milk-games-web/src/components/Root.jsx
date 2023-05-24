@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import Footer from '@components/common/footer/Footer';
 import Header from '@components/common/header/Header';
 import React from 'react';
@@ -6,12 +6,14 @@ import { Outlet } from 'react-router-dom';
 
 const Root = () => {
   return (
-    <Box position="relative" minH="100vh">
-      <Header />
+    <Box minH="100vh">
+      <Flex flexDir="column" minH="inherit">
+        <Header />
 
-      <Outlet />
+        <Outlet />
 
-      <Footer />
+        <Footer />
+      </Flex>
     </Box>
   );
 };

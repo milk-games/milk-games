@@ -7,13 +7,14 @@ import { createBrowserRouter } from 'react-router-dom';
 import player from './player';
 import tournament from './tournament';
 import season from './season';
-import Root from '@components/auth/Root';
-import Landing from 'Landing';
+import Root from '@components/Root';
+import Landing from '@components/Landing';
 
 export default createBrowserRouter([
   {
     path: '/',
     element: <Root />,
+    errorElement: <NotFound />,
     children: [
       {
         index: true,
