@@ -53,8 +53,6 @@ const Seasons = () => {
 
   return (
     <Box w="100%">
-      <Header />
-
       <Box h="80vh" maxH={{ base: '800px', md: '950px' }} position="relative">
         <Box
           bgImage={bg}
