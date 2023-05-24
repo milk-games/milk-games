@@ -11,4 +11,8 @@ export default {
     const params = new URLSearchParams({ season, page, size });
     return api.get(baseUrl + '?' + params.toString());
   },
+
+  getAllTournaments() {
+    return api.get(baseUrl + '/all');
+  },
 };
