@@ -1,7 +1,7 @@
 import Season from '@components/season/Season';
 import Seasons from '@components/season/Seasons';
 import Tournaments from '@components/tournament/Tournaments';
-import { SeasonService, SeasonsService } from '@utils/api-service';
+import { SeasonService } from '@utils/api-service';
 
 const seasonLoader = async ({ params: { id } }) => {
   let data;
@@ -17,7 +17,7 @@ const seasonLoader = async ({ params: { id } }) => {
 const seasonsLoader = async () => {
   let data;
   console.log('seasons loader');
-  data = await SeasonsService.getAllSeasons(); 
+  data = await SeasonService.getAllSeasons(); 
   return data || null;
 };
 

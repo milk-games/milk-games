@@ -69,4 +69,11 @@ public class SeasonController {
             return null;
         }
     }
+
+    @RequestMapping(value = "/all")
+    @JsonView(View.Season.class)
+    public ResponseEntity<Iterable<Season>> getAllSeasons() {
+        Iterable<Season> seasonsList = repository.findAll();
+        return ResponseEntity.ok(seasonsList);
+    }
 }
