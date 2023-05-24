@@ -20,6 +20,6 @@ export default {
   },
 
   postSeason(data) {
-    return api.post(baseUrl, data);
-  }
+    return api.post(baseUrl + '/create', data);
+  },
 };
