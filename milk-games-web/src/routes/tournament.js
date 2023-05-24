@@ -14,7 +14,7 @@ const tournamentLoader = async ({ params: { id } }) => {
 
 export default [
   {
-    path: '/tournament/:id',
+    path: '/tournaments/:id',
     element: <Tournament />,
     loader: tournamentLoader,
   },

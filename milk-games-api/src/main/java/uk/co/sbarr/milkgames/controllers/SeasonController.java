@@ -3,7 +3,6 @@ package uk.co.sbarr.milkgames.controllers;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -42,33 +41,33 @@ public class SeasonController {
   @RequestMapping(value = "/{id}")
   @JsonView(View.Season.class)
   public ResponseEntity<Season> getSeasonById(@PathVariable Long id) {
-    Optional<Season> optionalSeason = repository.findById(id);
-    if (optionalSeason.isPresent()) {
-      return ResponseEntity.ok(optionalSeason.get());
-    } else {
-      return ResponseEntity.notFound().build();
-    }
+      Optional<Season> optionalSeason = repository.findById(id);
+      if (optionalSeason.isPresent()) {
+          return ResponseEntity.ok(optionalSeason.get());
+      } else {
+          return ResponseEntity.notFound().build();
+      }
   }
 
   @RequestMapping(value = "/{id}/tournaments")
   @JsonView(View.Tournament.class)
   public ResponseEntity<Set<Tournament>> getTournaments(@PathVariable long id) {
-    Season season = getSeason(id);
+      Season season = getSeason(id);
 
-    if (season == null) {
-      return ResponseEntity.notFound().build();
-    }
+      if (season == null) {
+          return ResponseEntity.notFound().build();
+      }
 
-    return ResponseEntity.ok(season.getTournaments());
+      return ResponseEntity.ok(season.getTournaments());
   }
 
   private Season getSeason(long id) {
-    Optional<Season> optionalSeason = repository.findById(id);
-    if (optionalSeason.isPresent()) {
-      return optionalSeason.get();
-    } else {
-      return null;
-    }
+      Optional<Season> optionalSeason = repository.findById(id);
+      if (optionalSeason.isPresent()) {
+          return optionalSeason.get();
+      } else {
+          return null;
+      }
   }
 
   @RequestMapping(value = "/all")

@@ -6,7 +6,6 @@ import {
   Box,
   Button,
   Flex,
-  Grid,
   GridItem,
   Heading,
   Text,
@@ -15,8 +14,6 @@ import {
 import React from 'react';
 import Header from '@components/common/header/Header';
 
-import { SeasonService } from '@utils/api-service';
-import { useState, useEffect } from 'react';
 import { getColor } from '@utils/theme-utils';
 import { TimeFormatter } from '@utils';
 import TournamentCard from '@components/tournament/TournamentCard';
@@ -40,8 +37,6 @@ const Season = ({ children }) => {
 
   return (
     <Box w="100%">
-      <Header />
-
       <Box h="80vh" maxH={{ base: '800px', md: '950px' }} position="relative">
         <Box
           bgImage={bg}
@@ -100,14 +95,15 @@ const Season = ({ children }) => {
           </Button>
         </SectionHeading>
 
-        <Grid
+        {/* <Grid
           templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(3, 1fr)' }}
           justifyItems="center"
-          gap={4}
           mt={8}
         >
           {upcomingTournaments(season)}
-        </Grid>
+        </Grid> */}
+
+        <Flex justifyContent="center">{upcomingTournaments(season)}</Flex>
       </Section>
 
       <Section>
@@ -118,10 +114,6 @@ const Season = ({ children }) => {
         </SectionHeading>
         <SeasonLeaderboard data={season.seasonPlayers} />
       </Section>
-
-      <Box h="400px"></Box>
-
-      {children}
     </Box>
   );
 };

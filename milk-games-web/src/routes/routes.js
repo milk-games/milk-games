@@ -7,15 +7,22 @@ import { createBrowserRouter } from 'react-router-dom';
 import player from './player';
 import tournament from './tournament';
 import season from './season';
-import Playground from '@components/Playground';
+import Root from '@components/Root';
+import Landing from '@components/Landing';
 
 export default createBrowserRouter([
   {
     path: '/',
-    element: <Playground />,
+    element: <Root />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        index: true,
+        element: <Landing />,
+      },
+      ...season,
+      ...tournament,
+      ...player,
+    ],
   },
-
-  ...season,
-  ...tournament,
-  ...player,
 ]);
