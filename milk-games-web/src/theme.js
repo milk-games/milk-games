@@ -58,6 +58,7 @@ const theme = extendTheme({
         background: theme.colors.bg[colorMode],
         color: theme.colors.primary[colorMode],
       },
+
       '.header': {
         background: theme.colors.bg.bg1[colorMode],
       },

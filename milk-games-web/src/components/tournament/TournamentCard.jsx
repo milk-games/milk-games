@@ -53,6 +53,7 @@ const TournamentCard = ({ tournament }) => {
       bg="green.500"
       w="220px"
       h="100%"
+      m={3}
       onClick={() => navigate('/tournament/' + tournament.id)}
       cursor="pointer"
       _hover={{ boxShadow: 'md', transform: 'scale(1.05)' }}
@@ -109,7 +110,7 @@ const TournamentCard = ({ tournament }) => {
 export default TournamentCard;
 
 const TournamentSkeleton = () => (
-  <Box rounded="md" bg="gray.300" w="220px" h="100%">
+  <Box rounded="md" bg="gray.300" w="220px" h="100%" m={3}>
     <Box roundedTop="md" h="100px" bg="gray.400"></Box>
     <Flex
       flexDir="column"

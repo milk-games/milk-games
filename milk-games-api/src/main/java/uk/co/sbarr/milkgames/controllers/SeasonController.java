@@ -1,7 +1,6 @@
 package uk.co.sbarr.milkgames.controllers;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +34,6 @@ public class SeasonController {
         }
     }
 
-
     @RequestMapping(value = "/{id}")
     @JsonView(View.Season.class)
     public ResponseEntity<Season> getSeasonById(@PathVariable Long id) {
@@ -58,8 +56,6 @@ public class SeasonController {
 
         return ResponseEntity.ok(season.getTournaments());
     }
-
-
 
     private Season getSeason(long id) {
         Optional<Season> optionalSeason = repository.findById(id);

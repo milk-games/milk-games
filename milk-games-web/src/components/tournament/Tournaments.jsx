@@ -19,6 +19,8 @@ import SectionHeading from '@components/common/section/SectionHeading';
 import { TournamentService } from '@utils/api-service';
 import Bracket from './bracket/Bracket';
 import { useLoaderData } from 'react-router-dom';
+import TournamentCard from './TournamentCard';
+import Section from '@components/common/section/Section';
 
 /**
  *
@@ -32,14 +34,18 @@ const Tournaments = () => {
   /**
    * @type {Tournament}
    */
-  const tournamentsPage = useLoaderData();
-
-  console.log(tournamentsPage);
+  const tournaments = useLoaderData();
 
   return (
-    <Box w="100%">
-      <Header />
-      hello
+    <Box w="100%" pb={24}>
+      <Section>
+        <SectionHeading title="TOURNAMENTS" />
+        <Flex justifyContent="center">
+          {tournaments.map(tournament => (
+            <TournamentCard tournament={tournament} />
+          ))}
+        </Flex>
+      </Section>
     </Box>
   );
 };
