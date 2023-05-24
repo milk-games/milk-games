@@ -5,7 +5,7 @@ import React from 'react';
 const Footer = () => {
   const { colorMode } = useColorMode();
   return (
-    <Box w="100%" h="200px" mt={24} bg={getColor('bg.bg2', colorMode)}></Box>
+    <Box w="100%" h="300px" mt={24} bg={getColor('bg.bg2', colorMode)}></Box>
   );
 };
 
