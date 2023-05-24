@@ -78,8 +78,8 @@ public class SeasonController {
   }
 
   @PostMapping()
-  public ResponseEntity<Object> postSeason(@RequestBody SeasonModel seasonModel) {
-    Season savedSeason = repository.save(new Season(seasonModel.getName(), seasonModel.getStart(), seasonModel.getEnd()));
+  public ResponseEntity<Object> postSeason(@RequestBody Season seasonModel) {
+    Season savedSeason = repository.save(new Season(seasonModel.getName(), seasonModel.getStartDate(), seasonModel.getEndDate()));
     return new ResponseEntity<Object>(savedSeason, HttpStatus.OK);
 
   }

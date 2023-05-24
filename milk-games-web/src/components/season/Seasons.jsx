@@ -118,8 +118,8 @@ const Seasons = () => {
                     console.log('fds');
                     await SeasonService.postSeason({
                       name: newSeasonName,
-                      start: newSeasonStart,
-                      end: newSeasonEnd,
+                      startDate: newSeasonStart,
+                      endDate: newSeasonEnd,
                     });
                   }}
                 >
