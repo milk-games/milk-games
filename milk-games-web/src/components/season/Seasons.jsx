@@ -11,6 +11,15 @@ import {
   Heading,
   Text,
   useColorMode,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
 } from '@chakra-ui/react';
 import Header from '@components/common/header/Header';
 import React from 'react';
@@ -58,28 +67,27 @@ const Seasons = () => {
           flexDir="column"
           h="100%"
         >
-          {seasons.map((item, i) => (
-            <Box textAlign="center" py={4} px={{ base: 4, md: 4 }} rounded="lg">
-              <Heading
-                size={{ base: '3xl', md: '4xl' }}
-                color={getColor('accent', colorMode)}
-              >
-                {item.name}
-              </Heading>
-              <Text fontSize={{ base: 'lg', md: '2xl' }} color="gray.500">
-                {TimeFormatter.toMonthString(item.startDate) +
-                  ' — ' +
-                  TimeFormatter.toMonthString(item.endDate)}
-              </Text>
-              <Button
-            colorScheme="green"
-            mt={4}
-            onClick={() => navigate(`/seasons/${item.id}`)}
-          >
-            See more
-          </Button>
-            </Box>
-          ))}
+          <TableContainer>
+            <Table variant="simple">
+              <TableCaption>Past Milk Games Seasons</TableCaption>
+              <Thead>
+                <Tr>
+                  <Th>Season Name</Th>
+                  <Th>Start Date</Th>
+                  <Th>End Date</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {seasons.map((item, i) => (
+                  <Tr onClick={() => navigate(`/seasons/${item.id}`)} cursor="pointer">
+                    <Td>{item.name}</Td>
+                    <Td>{TimeFormatter.toMonthString(item.startDate)}</Td>
+                    <Td>{TimeFormatter.toMonthString(item.endDate)}</Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
         </Flex>
       </Box>
     </Box>
