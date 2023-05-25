@@ -11,4 +11,8 @@ export default {
     const params = new URLSearchParams({ season, page, size });
     return api.get(baseUrl + '?' + params.toString());
   },
+
+  create(tournament) {
+    return api.post(baseUrl + '/create', tournament);
+  },
 };

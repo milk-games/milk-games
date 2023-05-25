@@ -89,7 +89,7 @@ const Season = ({ children }) => {
           <Button
             colorScheme="green"
             mt={4}
-            onClick={() => navigate(`/season/${season.id}/tournaments`)}
+            onClick={() => navigate(`/seasons/${season.id}/tournaments`)}
           >
             see all
           </Button>
