@@ -43,8 +43,6 @@ public class Tournament {
     @JsonView(View.Entity.class)
     private LocalDateTime startDate;
 
-    @JsonView(View.Entity.class)
-    private LocalDateTime endDate;
 
     @JsonView(View.Entity.class)
     private boolean finished;
@@ -72,7 +70,7 @@ public class Tournament {
     }
 
     public Tournament(String name, Season season, String eliminationType, Game game, int teamLimit,
-        int teamSize, double prizePool, LocalDateTime start, LocalDateTime end) {
+        int teamSize, double prizePool, LocalDateTime start) {
         this.name = name;
         this.season = season;
         this.eliminationType = eliminationType;
@@ -81,7 +79,6 @@ public class Tournament {
         this.teamSize = teamSize;
         this.prizePool = prizePool;
         this.startDate = start;
-        this.endDate = end;
         this.finished = false;
     }
 
