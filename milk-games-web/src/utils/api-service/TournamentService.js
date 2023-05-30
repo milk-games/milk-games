@@ -12,6 +12,11 @@ export default {
     return api.get(baseUrl + '?' + params.toString());
   },
 
+
+  getAllTournaments() {
+    return api.get(baseUrl + '/all');
+  },
+
   create(tournament) {
     return api.post(baseUrl + '/create', tournament);
   },

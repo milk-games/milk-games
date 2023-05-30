@@ -12,10 +12,22 @@ const tournamentLoader = async ({ params: { id } }) => {
   return data || null;
 };
 
+const tournamentsLoader = async () => {
+  let data;
+  console.log('tournaments loader');
+  data = await TournamentService.getAllTournaments(); 
+  return data || null;
+};
+
 export default [
   {
     path: '/tournaments/:id',
     element: <Tournament />,
     loader: tournamentLoader,
+  },
+  {
+    path: '/tournaments',
+    element: <Tournaments />,
+    loader: tournamentsLoader,
   },
 ];

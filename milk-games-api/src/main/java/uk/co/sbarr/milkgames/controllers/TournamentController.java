@@ -28,6 +28,13 @@ public class TournamentController {
         this.repository = repository;
     }
 
+    @RequestMapping(value = "/all")
+    @JsonView(View.Tournament.class)
+    public ResponseEntity<Iterable<Tournament>> getAllTournaments() {
+        Iterable<Tournament> tournamentList = repository.findAll();
+        return ResponseEntity.ok(tournamentList);
+    }
+
     @RequestMapping(value = "/{id}")
     @JsonView(View.Tournament.class)
     public ResponseEntity<Tournament> getTournamentById(@PathVariable Long id) {
