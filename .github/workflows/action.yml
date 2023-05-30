@@ -11,4 +11,4 @@ jobs:
           java-version: '20'
           distribution: 'temurin'
       - name: Clean install
-        run: mvn clean install -DskipTests
+        run: mvn clean install -DskipTests -ntp
