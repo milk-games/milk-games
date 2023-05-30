@@ -22,11 +22,12 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
+import jakarta.annotation.security.PermitAll;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 
 @Configuration
 @EnableWebSecurity
@@ -45,23 +46,21 @@ public class SecurityConfig {
             http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
         } else {
             http
-                .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers(HttpMethod.GET, "/api/season**", "/api/season/**",
-                        "/api/tournament/**")
-                    .permitAll()
-                    .requestMatchers(HttpMethod.PATCH, "**").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.POST, "**").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.DELETE, "**").hasRole("ADMIN")
-                    .anyRequest().authenticated())
-                .oauth2Login(oauth2 -> oauth2
-                    .successHandler(authSuccessHandler())
-                    .failureHandler(authFailureHandler()))
-                .oauth2Client(withDefaults());
+                    .authorizeHttpRequests(authorize -> authorize
+                            .requestMatchers(HttpMethod.GET).permitAll()
+                            .requestMatchers(HttpMethod.PATCH, "**").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.POST, "**").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.DELETE, "**").hasRole("ADMIN")
+                            .anyRequest().authenticated())
+                    .oauth2Login(oauth2 -> oauth2
+                            .successHandler(authSuccessHandler())
+                            .failureHandler(authFailureHandler()))
+                    .oauth2Client(withDefaults());
         }
 
         RequestMatcher matcher = new AntPathRequestMatcher("/api/**");
         http.exceptionHandling().defaultAuthenticationEntryPointFor(
-            new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED), matcher);
+                new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED), matcher);
 
         http.addFilter(corsFilter());
         http.csrf().disable();
@@ -74,16 +73,15 @@ public class SecurityConfig {
         return new AuthenticationSuccessHandler() {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request,
-                HttpServletResponse response, Authentication authentication)
-                throws IOException, ServletException {
+                    HttpServletResponse response, Authentication authentication)
+                    throws IOException, ServletException {
 
                 HttpSession session = request.getSession();
 
-                DefaultSavedRequest savedRequest =
-                    (DefaultSavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+                DefaultSavedRequest savedRequest = (DefaultSavedRequest) session
+                        .getAttribute("SPRING_SECURITY_SAVED_REQUEST");
 
-                String redirect =
-                    savedRequest.getHeaderValues("referer").get(0)
+                String redirect = savedRequest.getHeaderValues("referer").get(0)
                         + savedRequest.getRequestURI().substring(1);
 
                 response.sendRedirect(redirect);
@@ -97,11 +95,11 @@ public class SecurityConfig {
 
             @Override
             public void onAuthenticationFailure(HttpServletRequest request,
-                HttpServletResponse response, AuthenticationException exception)
-                throws IOException, ServletException {}
+                    HttpServletResponse response, AuthenticationException exception)
+                    throws IOException, ServletException {
+            }
         };
     }
-
 
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();

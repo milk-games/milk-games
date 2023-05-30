@@ -1,14 +1,8 @@
 package uk.co.sbarr.milkgames.controllers;
 
-import java.security.Principal;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,10 +11,9 @@ import uk.co.sbarr.milkgames.entities.Player;
 import uk.co.sbarr.milkgames.entities.View;
 import uk.co.sbarr.milkgames.repositories.PlayerRepository;
 import uk.co.sbarr.milkgames.security.CustomOAuth2User;
-import uk.co.sbarr.milkgames.security.CustomOAuth2UserService;
 
 @RestController
-@RequestMapping(value = "/api/player")
+@RequestMapping(value = "/api/players")
 public class PlayerController {
 
     private PlayerRepository repository;
@@ -46,6 +39,12 @@ public class PlayerController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @RequestMapping
+    @JsonView(View.Player.class)
+    public ResponseEntity<Iterable<Player>> getAll() {
+        return ResponseEntity.ok(repository.findAll());
     }
 
     @RequestMapping(value = "/{id}")

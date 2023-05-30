@@ -12,6 +12,7 @@ import {
   Spinner,
   Text,
   useColorMode,
+  useDisclosure,
 } from '@chakra-ui/react';
 
 import Header from '@components/common/header/Header';
@@ -25,6 +26,7 @@ import Section from '@components/common/section/Section';
 import AuthContext from '@components/auth/AuthContext';
 import { roles } from '@utils/auth-utils';
 import { BiPlus } from 'react-icons/bi';
+import TournamentForm from './TournamentForm';
 
 /**
  *
@@ -34,6 +36,7 @@ import { BiPlus } from 'react-icons/bi';
  */
 
 const Tournaments = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { hasRole } = useContext(AuthContext);
 
   /**
@@ -47,7 +50,11 @@ const Tournaments = () => {
       <Section>
         <SectionHeading title="TOURNAMENTS">
           {hasRole(roles.ADMIN) && (
-            <IconButton colorScheme="green" icon={<BiPlus />} />
+            <IconButton
+              colorScheme="green"
+              icon={<BiPlus />}
+              onClick={onOpen}
+            />
           )}
         </SectionHeading>
         <Flex justifyContent="center" flexWrap="wrap">
@@ -56,6 +63,8 @@ const Tournaments = () => {
           ))}
         </Flex>
       </Section>
+
+      <TournamentForm isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </Box>
   );
 };

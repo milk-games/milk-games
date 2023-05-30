@@ -39,26 +39,4 @@ export default [
       return (await SeasonService.getTournaments(params.id)) || null;
     },
   },
-  // {
-  //   path: '/season',
-  //   element: <Season />,
-  //   loader: seasonLoader,
-  //   children: [
-  //     {
-  //       path: '/season/:id',
-  //       element: <Season />,
-  //       loader: seasonLoader,
-  //       children: [
-  //         {
-  //           path: '/season/:id/tournaments',
-  //           element: <Tournaments />,
-  //           loader: async ({ params }) => {
-  //             console.log('touranment loader');
-  //             return await SeasonService.getTournaments(params.id);
-  //           },
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
 ];
