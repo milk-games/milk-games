@@ -37,7 +37,7 @@ export default createBrowserRouter([
       {
         path: '/admin',
         element: (
-          <Auth>
+          <Auth isAdmin>
             <Admin />
           </Auth>
         ),

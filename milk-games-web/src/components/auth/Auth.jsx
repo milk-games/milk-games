@@ -11,13 +11,16 @@ const auth = process.env.REACT_APP_AUTH_ENABLED;
 const Auth = ({ isAdmin, children }) => {
   const { user, hasRole } = useContext(AuthContext);
 
+  console.log({ user });
+
   if (!user) {
     return <Section>You must log in to access this page</Section>;
   }
 
-  if (isAdmin && hasRole(roles.ADMIN)) {
+  if (isAdmin && !hasRole(roles.ADMIN)) {
     return <Section>You do not have access to this page</Section>;
   }
+
   return <Box>{children}</Box>;
 };
 
