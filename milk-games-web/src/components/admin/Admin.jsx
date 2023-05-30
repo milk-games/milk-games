@@ -21,7 +21,7 @@ const Admin = () => {
 
           <TabPanels>
             <TabPanel>
-              <PlayerAdmin />
+              <PlayerAdmin players={players} />
             </TabPanel>
             <TabPanel>
               <GameAdmin games={games} />
