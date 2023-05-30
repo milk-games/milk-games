@@ -2,36 +2,23 @@ import React, { useContext } from 'react';
 
 import AuthContext from './AuthContext';
 import { Box, Button } from '@chakra-ui/react';
+import Section from '@components/common/section/Section';
+import { roles } from '@utils/auth-utils';
 
 const apiURL = process.env.REACT_APP_API_URL;
 const auth = process.env.REACT_APP_AUTH_ENABLED;
 
-const Auth = ({ children }) => {
-  const { user, login, logout } = useContext(AuthContext);
-  console.log({auth});
+const Auth = ({ isAdmin, children }) => {
+  const { user, hasRole } = useContext(AuthContext);
+
   if (!user) {
-    return (
-      <Box>
-        You must log in
-        <Button
-          onClick={() =>
-            auth
-              ? (window.location.href = apiURL + window.location.pathname)
-              : login({ name: 'User', id: '123', roles: ['ADMIN'] })
-          }
-        >
-          Login
-        </Button>
-      </Box>
-    );
-  } else {
-    return (
-      <Box>
-        {children}
-        <Button onClick={() => logout()}>Logout</Button>
-      </Box>
-    );
+    return <Section>You must log in to access this page</Section>;
   }
+
+  if (isAdmin && hasRole(roles.ADMIN)) {
+    return <Section>You do not have access to this page</Section>;
+  }
+  return <Box>{children}</Box>;
 };
 
 export default Auth;

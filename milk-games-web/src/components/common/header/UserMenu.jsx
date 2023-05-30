@@ -1,11 +1,12 @@
 import { Box, Icon, MenuGroup, MenuItem } from '@chakra-ui/react';
 import AuthContext from '@components/auth/AuthContext';
-import { loginRedirect } from '@utils/auth-utils';
+import { loginRedirect, roles } from '@utils/auth-utils';
 import React, { useContext } from 'react';
 import { BiLogIn, BiLogOut, BiUser } from 'react-icons/bi';
+import { FaWrench } from 'react-icons/fa';
 
 const UserMenu = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, hasRole, logout } = useContext(AuthContext);
 
   if (!user) {
     return (
@@ -21,6 +22,11 @@ const UserMenu = () => {
         <MenuItem as="a" href="/player">
           <Icon as={BiUser} mr={2} /> {user.name}
         </MenuItem>
+        {hasRole(roles.ADMIN) && (
+          <MenuItem as="a" href="/admin">
+            <Icon as={FaWrench} mr={2} /> Admin
+          </MenuItem>
+        )}
         <MenuItem onClick={logout}>
           <Icon as={BiLogOut} mr={2} /> Log out
         </MenuItem>

@@ -5,6 +5,7 @@ const roles = {
 };
 
 function loginRedirect() {
+  console.log('redirecting: ' + apiURL + window.location.pathname);
   window.location.href = apiURL + window.location.pathname;
 }
 

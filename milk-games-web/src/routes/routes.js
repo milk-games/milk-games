@@ -36,7 +36,11 @@ export default createBrowserRouter([
       ...player,
       {
         path: '/admin',
-        element: <Admin />,
+        element: (
+          <Auth>
+            <Admin />
+          </Auth>
+        ),
         loader: adminLoader,
       },
     ],
