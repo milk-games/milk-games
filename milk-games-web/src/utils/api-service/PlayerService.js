@@ -1,10 +1,14 @@
 import api from './config';
 
-const baseUrl = '/player';
+const baseUrl = '/players';
 
 export default {
   getSelf() {
     return api.get(baseUrl + '/@me');
+  },
+
+  getAll() {
+    return api.get(baseUrl);
   },
 
   get(id) {

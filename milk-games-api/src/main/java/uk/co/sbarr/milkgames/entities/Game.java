@@ -18,12 +18,15 @@ public class Game {
     @JsonView(View.Entity.class)
     private String name;
 
+    private String imgUrl;
+
     private String statsSchema;
 
-    public Game(String name, String statsSchema) {
+    public Game(String name, String imgUrl) {
         this.name = name;
-        this.statsSchema = statsSchema;
+        this.imgUrl = imgUrl;
     }
 
-    public Game() {}
+    public Game() {
+    }
 }

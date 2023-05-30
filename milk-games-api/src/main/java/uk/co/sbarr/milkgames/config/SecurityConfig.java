@@ -47,9 +47,7 @@ public class SecurityConfig {
         } else {
             http
                     .authorizeHttpRequests(authorize -> authorize
-                            .requestMatchers(HttpMethod.GET, "/api/season**", "/api/season/**",
-                                    "/api/tournament/**")
-                            .permitAll()
+                            .requestMatchers(HttpMethod.GET).permitAll()
                             .requestMatchers(HttpMethod.PATCH, "**").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.POST, "**").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.DELETE, "**").hasRole("ADMIN")

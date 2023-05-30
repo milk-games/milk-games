@@ -9,12 +9,23 @@ import tournament from './tournament';
 import season from './season';
 import Root from '@components/Root';
 import Landing from '@components/Landing';
+import Admin from '@components/admin/Admin';
+import GameService from '@utils/api-service/GameService';
+import { PlayerService } from '@utils/api-service';
+
+const adminLoader = async () => {
+  const [games, players] = await Promise.all([
+    GameService.getAll(),
+    PlayerService.getAll(),
+  ]);
+
+  return { games, players };
+};
 
 export default createBrowserRouter([
   {
     path: '/',
     element: <Root />,
-    errorElement: <NotFound />,
     children: [
       {
         index: true,
@@ -23,6 +34,11 @@ export default createBrowserRouter([
       ...season,
       ...tournament,
       ...player,
+      {
+        path: '/admin',
+        element: <Admin />,
+        loader: adminLoader,
+      },
     ],
   },
 ]);
