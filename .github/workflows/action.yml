@@ -1,0 +1,9 @@
+name: Maven Build API
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the stack
+        run: mvn clean install -DskipTests
