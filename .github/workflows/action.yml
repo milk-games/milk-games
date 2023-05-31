@@ -28,4 +28,4 @@ jobs:
           #Set artifact name
           name: artifact
           #From this path
-          path: target/milk-games-api-0.0.1-SNAPSHOT.jar
+          path: milk-games-api/target/milk-games-api-0.0.1-SNAPSHOT.jar
