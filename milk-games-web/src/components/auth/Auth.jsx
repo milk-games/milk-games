@@ -8,7 +8,6 @@ const auth = process.env.REACT_APP_AUTH_ENABLED;
 
 const Auth = ({ children }) => {
   const { user, login, logout } = useContext(AuthContext);
-  console.log({auth});
   if (!user) {
     return (
       <Box>
@@ -25,12 +24,7 @@ const Auth = ({ children }) => {
       </Box>
     );
   } else {
-    return (
-      <Box>
-        {children}
-        <Button onClick={() => logout()}>Logout</Button>
-      </Box>
-    );
+    return <Box>{children}</Box>;
   }
 };
 
