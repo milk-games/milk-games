@@ -1,5 +1,5 @@
 server:
-  port: ${API_PORT_FROM}
+  port: ${API_PORT_TO}
 
 spring:
   jpa:
@@ -34,4 +34,7 @@ logging:
     jdbc:
       sqltiming: DEBUG
       resultsettable: DEBUG
-    org.springframework.security: DEBUG
+    org:
+      springframework:
+        security: DEBUG
+        web: ERROR

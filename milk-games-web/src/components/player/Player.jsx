@@ -7,12 +7,7 @@ import { useLoaderData } from 'react-router-dom';
 const Player = () => {
   const user = useLoaderData();
 
-  return (
-    <Box>
-      <Header />
-      <Section>{user.name}</Section>
-    </Box>
-  );
+  return <Section>{user.name}</Section>;
 };
 
 export default Player;

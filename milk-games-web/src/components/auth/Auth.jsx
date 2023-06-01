@@ -2,17 +2,17 @@ import React, { useContext } from 'react';
 
 import AuthContext from './AuthContext';
 import { Box, Button } from '@chakra-ui/react';
+import Section from '@components/common/section/Section';
 
 const apiURL = process.env.REACT_APP_API_URL;
 const auth = process.env.REACT_APP_AUTH_ENABLED;
 
 const Auth = ({ children }) => {
   const { user, login, logout } = useContext(AuthContext);
-  console.log({auth});
   if (!user) {
     return (
-      <Box>
-        You must log in
+      <Section textAlign="center">
+        <Box> You must log in </Box>
         <Button
           onClick={() =>
             auth
@@ -22,15 +22,10 @@ const Auth = ({ children }) => {
         >
           Login
         </Button>
-      </Box>
+      </Section>
     );
   } else {
-    return (
-      <Box>
-        {children}
-        <Button onClick={() => logout()}>Logout</Button>
-      </Box>
-    );
+    return <Box>{children}</Box>;
   }
 };
 

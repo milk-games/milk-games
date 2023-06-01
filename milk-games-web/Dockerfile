@@ -1,6 +1,6 @@
 FROM node:latest
 
-WORKDIR /usr/src/web
+WORKDIR /var/www/react
 
 ### if u dont wanna map the volume
 # COPY package*.json ./

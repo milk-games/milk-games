@@ -26,7 +26,7 @@ public class PlayerController {
     @JsonView(View.Player.class)
     public ResponseEntity<Player> getCurrentProfile(OAuth2AuthenticationToken token) {
 
-        if (!(token.getPrincipal() instanceof CustomOAuth2User)) {
+        if (token == null || !(token.getPrincipal() instanceof CustomOAuth2User)) {
             return ResponseEntity.notFound().build();
         }
 

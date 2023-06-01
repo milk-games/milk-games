@@ -5,6 +5,18 @@ networks:
     driver: bridge
 
 services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - app
+
   milk-games-web:
     build:
       context: ./milk-games-web
@@ -12,9 +24,9 @@ services:
     ports:
       - "${WEB_PORT_FROM}:${WEB_PORT_TO}"
     environment:
-      REACT_APP_API_URL: http://${API_HOST}:${API_PORT_FROM}
+      REACT_APP_API_URL: http://${API_HOST}
     volumes:
-      - "./milk-games-web:/usr/src/web"
+      - "./milk-games-web:/var/www/react"
     networks:
       - app
 
@@ -29,8 +41,8 @@ services:
     env_file:
       - .env
     environment:
-      - WEB_URL=http://${WEB_HOST}:${WEB_PORT_FROM}
-      - API_URL=http://${API_HOST}:${API_PORT_FROM}
+      - WEB_URL=http://${WEB_HOST}
+      - API_URL=http://${API_HOST}
     networks:
       - app
 
@@ -41,10 +53,10 @@ services:
     tty: true
     ports:
       - "${MYSQL_PORT_FROM}:${MYSQL_PORT_TO}"
+    env_file:
+      - .env
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ""
       SERVICE_TAGS: dev
       SERVICE_NAME: milk-mysql
     networks:

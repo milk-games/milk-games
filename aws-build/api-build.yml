@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: latest
+  build:
+    commands:
+      - echo "Building Maven Java project"
+      - mvn clean install
+  post_build:
+    commands:
+      - echo "Checking Artifacts"
+      - ls -al
+      # Add your deployment commands here
+
+artifacts:
+  files:
+    - "milk-games-api/target/*.jar"
+  discard-paths: yes

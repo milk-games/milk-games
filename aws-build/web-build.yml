@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      node: latest
+  pre_build:
+    commands:
+      - cd milk-games-web
+      - npm install
+  build:
+    commands:
+      - echo "Building Web Project"
+      - npm run build
+  post_build:
+    commands:
+      - echo "Checking Artifacts"
+      - ls -al
+
+artifacts:
+  files:
+    - "milk-games-web/build"
+  discard-paths: yes

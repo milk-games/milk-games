@@ -11,25 +11,23 @@ const Admin = () => {
   console.log({ games, players });
 
   return (
-    <Box>
-      <Section>
-        <Tabs>
-          <TabList>
-            <Tab>Players</Tab>
-            <Tab>Games</Tab>
-          </TabList>
+    <Section>
+      <Tabs>
+        <TabList>
+          <Tab>Players</Tab>
+          <Tab>Games</Tab>
+        </TabList>
 
-          <TabPanels>
-            <TabPanel>
-              <PlayerAdmin />
-            </TabPanel>
-            <TabPanel>
-              <GameAdmin games={games} />
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-      </Section>
-    </Box>
+        <TabPanels>
+          <TabPanel>
+            <PlayerAdmin />
+          </TabPanel>
+          <TabPanel>
+            <GameAdmin games={games} />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </Section>
   );
 };
 
