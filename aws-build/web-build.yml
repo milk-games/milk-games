@@ -19,5 +19,5 @@ phases:
 
 artifacts:
   files:
-    - "milk-games-web/build"
-  discard-paths: yes
+    - "build/**/*"
+  base-directory: milk-games-web
