@@ -4,7 +4,7 @@ const baseUrl = '/players';
 
 export default {
   getSelf() {
-    return api.get(baseUrl + '/@me');
+    return api.get(baseUrl + '/@me').catch(e => null);
   },
 
   getAll() {
