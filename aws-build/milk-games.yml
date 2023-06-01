@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Resources:
+  PipelineRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: pipeline-role
+      Description: Allows pipeline to build the things it needs
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - codepipeline.amazonaws.com
+                - codebuild.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: pipeline-role
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - cloudformation:*
+                  - codepipeline:StartPipelineExecution
+                Resource: "*"
+
+  # Pipeline:
+  #   Type: AWS::CodePipeline::Pipeline
+  #   Properties:
+  #     Name: MilkGames
+  #     RoleArn: !GetAtt PipelineRole.Arn
+  #     Stages:
+  #       - Name: Stage
+  #         Actions:
+  #           - ActionTypeId:
+  #               Category: Source
