@@ -5,7 +5,8 @@ const roles = {
 };
 
 function loginRedirect() {
-  window.location.href = apiURL + window.location.pathname;
+  window.location.href =
+    apiURL + '/oauth2?redirectPath=' + window.location.pathname;
 }
 
 export { roles, loginRedirect };
