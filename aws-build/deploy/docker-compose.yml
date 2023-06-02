@@ -26,8 +26,9 @@ services:
       - "${WEB_PORT_FROM}:${WEB_PORT_TO}"
     environment:
       REACT_APP_API_URL: http://${API_HOST}
+      REACT_APP_AUTH_ENABLED: true
     volumes:
-      - "./milk-games-web:/var/www/react"
+      - "./build:/var/www/react"
     networks:
       - app
 
@@ -38,6 +39,7 @@ services:
     container_name: milk-games-api
     depends_on:
       - mysql
+    restart: unless-stopped
     ports:
       - "${API_PORT_FROM}:${API_PORT_TO}"
     env_file:
