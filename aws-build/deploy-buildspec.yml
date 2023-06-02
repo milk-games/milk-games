@@ -13,11 +13,11 @@ phases:
   build:
     commands:
       - mkdir package
-      - cp -r $WEB/build *.jar aws-build/deploy/* package
+      - cp -r $WEB/build $API_JAR aws-build/deploy/* package
       - ls -al
       - scp
         -r
         -o StrictHostKeyChecking=no
         -i ./id_rsa
-        package
+        package/*
         milk-games-aws@milkgames.co.uk:./
