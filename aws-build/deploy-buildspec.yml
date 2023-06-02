@@ -1,0 +1,23 @@
+version: 0.2
+
+env:
+  secrets-manager:
+    SSH_KEY: milk-games-ssh-key
+phases:
+  pre_build:
+    commands:
+      - API_JAR=$(ls $CODEBUILD_SRC_DIR_api/*.jar)
+      - WEB=$CODEBUILD_SRC_DIR_web
+      - echo "$SSH_KEY" > ./id_rsa
+      - sudo chmod 600 ./id_rsa
+  build:
+    commands:
+      - mkdir package
+      - cp -r $WEB/build *.jar aws-build/deploy/* package
+      - ls -al
+      - scp
+        -r
+        -o StrictHostKeyChecking=no
+        -i ./id_rsa
+        package
+        milk-games-aws@milkgames.co.uk:./
