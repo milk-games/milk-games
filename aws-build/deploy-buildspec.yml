@@ -21,3 +21,7 @@ phases:
         -i ./id_rsa
         package/*
         milk-games-aws@milkgames.co.uk:./
+      - ssh
+        -o StrictHostKeyChecking=no
+        -i ./id_rsa
+        "chmod +x ./deploy.sh && ./deploy.sh"
