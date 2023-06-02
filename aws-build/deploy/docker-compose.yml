@@ -26,7 +26,7 @@ services:
       - "${WEB_PORT_FROM}:${WEB_PORT_TO}"
     environment:
       REACT_APP_API_URL: http://${API_HOST}
-      REACT_APP_AUTH_ENABLED: true
+      REACT_APP_AUTH_ENABLED: "true"
     volumes:
       - "./build:/var/www/react"
     networks:
