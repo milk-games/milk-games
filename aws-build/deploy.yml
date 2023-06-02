@@ -7,6 +7,5 @@ env:
 phases:
     build:
         commands:
-            - echo $SSH_KEY
-            # - ssh -i $SSH_KEY milk-games-aws@milkgames.co.uk
-            - echo "$SSH_KEY" | ssh -q -i /dev/stdin milk-games-aws@milkgames.co.uk
+            - ssh -i "$SSH_KEY" milk-games-aws@milkgames.co.uk -o StrictHostKeyChecking=no
+            # - echo "$SSH_KEY" | ssh -q -i /dev/stdin milk-games-aws@milkgames.co.uk
