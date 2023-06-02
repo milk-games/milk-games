@@ -6,6 +6,8 @@ phases:
       nodejs: latest
   pre_build:
     commands:
+      - export REACT_APP_API_URL=http://milkgames.co.uk
+      - export REACT_APP_AUTH_ENABLED=true
       - cd milk-games-web
       - npm ci
   build:
@@ -15,7 +17,6 @@ phases:
   post_build:
     commands:
       - echo "Checking Artifacts"
-
 artifacts:
   files:
     - "build/**/*"
