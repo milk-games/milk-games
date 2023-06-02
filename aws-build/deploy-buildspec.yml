@@ -3,6 +3,7 @@ version: 0.2
 env:
   secrets-manager:
     SSH_KEY: milk-games-ssh-key
+    SSH_USER: milk-games-user
 phases:
   pre_build:
     commands:
@@ -20,8 +21,8 @@ phases:
         -o StrictHostKeyChecking=no
         -i ./id_rsa
         package/*
-        milk-games-aws@milkgames.co.uk:./
+        $SSH_USER@milkgames.co.uk:./
       - ssh
-        -o StrictHostKeyChecking=no
         -i ./id_rsa
+        $SSH_USER@milkgames.co.uk
         "chmod +x ./deploy.sh && ./deploy.sh"
