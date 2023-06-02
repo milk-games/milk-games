@@ -1,0 +1,12 @@
+version: 0.2
+
+env:
+    secrets-manager:
+        SSH_KEY: milk-games-ssh-key:aws-milkgames
+
+phases:
+    build:
+        commands:
+            - echo $SSH_KEY
+            # - ssh -i $SSH_KEY milk-games-aws@milkgames.co.uk
+            - echo "$SSH_KEY" | ssh -q -i /dev/stdin milk-games-aws@milkgames.co.uk
