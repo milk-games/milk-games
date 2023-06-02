@@ -7,7 +7,7 @@ phases:
   pre_build:
     commands:
       - cd milk-games-web
-      - npm install
+      - npm ci
   build:
     commands:
       - echo "Building Web Project"
@@ -15,7 +15,6 @@ phases:
   post_build:
     commands:
       - echo "Checking Artifacts"
-      - ls -al
 
 artifacts:
   files:
